@@ -678,26 +678,24 @@
     <!-- AOS Initialization -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
+        // Common AOS configuration for consistent behavior
+        const aosConfig = {
+            duration: 800,
+            easing: 'ease-out',
+            once: false,
+            mirror: true, // Enable animations when scrolling back up
+            offset: 120,
+            anchorPlacement: 'top-bottom' // Trigger when element top reaches bottom of viewport
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
-            AOS.init({
-                duration: 800,
-                easing: 'ease-out',
-                once: false,
-                mirror: false,
-                offset: 120
-            });
+            AOS.init(aosConfig);
         });
 
         // Fallback initialization in case DOMContentLoaded already fired
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
             setTimeout(function() {
-                AOS.init({
-                    duration: 800,
-                    easing: 'ease-out',
-                    once: false,
-                    mirror: false,
-                    offset: 120
-                });
+                AOS.init(aosConfig);
             }, 100);
         }
     </script>
