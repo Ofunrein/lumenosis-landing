@@ -83,6 +83,19 @@
                 transform: translateY(0px);
             }
         }
+        
+        /* Hide DeepSite credit badge */
+        [class*="deepsite-credit"],
+        [id*="deepsite-credit"],
+        a[href*="deepsite.io"],
+        a[href*="remix"],
+        div[style*="position: fixed"][style*="bottom: 0"],
+        div[style*="position: fixed"][style*="z-index: 9999"] {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
     </style>
 </head>
 <body id="top" class="min-h-screen">
