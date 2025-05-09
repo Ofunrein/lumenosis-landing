@@ -13,6 +13,8 @@
     <meta property="og:url" content="https://lumenosis.com">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Library for scroll animations -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
@@ -181,7 +183,7 @@
     </section>
     
     <!-- Results Section -->
-    <section id="results" class="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-indigo-900/50 to-purple-900/50">
+    <section id="results" class="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-indigo-900/50 to-purple-900/50" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-extrabold text-white text-center sm:text-4xl">
                 Real <span class="gradient-text">Results</span>
@@ -208,7 +210,7 @@
     </section>
     
     <!-- Industries Section -->
-    <section id="industries" class="py-20 px-4 sm:px-6 lg:px-8">
+    <section id="industries" class="py-20 px-4 sm:px-6 lg:px-8" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
         <div class="max-w-7xl mx-auto">
             <div class="text-center">
                 <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
@@ -306,7 +308,7 @@
     </section>
     
     <!-- Services Section -->
-    <section id="services" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900/50">
+    <section id="services" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900/50" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
         <div class="max-w-7xl mx-auto">
             <div class="text-center">
                 <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
@@ -319,7 +321,7 @@
             
             <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 <!-- Service 1 -->
-                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]">
+                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
                         <i class="fas fa-envelope text-xl"></i>
                     </div>
@@ -330,7 +332,7 @@
                 </div>
                 
                 <!-- Service 2 -->
-                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]">
+                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="200">
                     <div class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 text-white">
                         <i class="fas fa-robot text-xl"></i>
                     </div>
@@ -341,7 +343,7 @@
                 </div>
                 
                 <!-- Service 3 -->
-                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]">
+                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="300">
                     <div class="flex items-center justify-center h-12 w-12 rounded-md bg-pink-500 text-white">
                         <i class="fas fa-calendar-check text-xl"></i>
                     </div>
@@ -352,7 +354,7 @@
                 </div>
                 
                 <!-- Service 4 -->
-                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]">
+                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
                         <i class="fas fa-file-alt text-xl"></i>
                     </div>
@@ -363,7 +365,7 @@
                 </div>
                 
                 <!-- Service 5 -->
-                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]">
+                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="200">
                     <div class="flex items-center justify-center h-12 w-12 rounded-md bg-green-500 text-white">
                         <i class="fas fa-tasks text-xl"></i>
                     </div>
@@ -374,7 +376,7 @@
                 </div>
                 
                 <!-- Service 6 -->
-                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]">
+                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="300">
                     <div class="flex items-center justify-center h-12 w-12 rounded-md bg-yellow-500 text-white">
                         <i class="fas fa-cogs text-xl"></i>
                     </div>
@@ -388,7 +390,7 @@
     </section>
     
     <!-- Testimonials Section -->
-    <section class="py-20 px-4 sm:px-6 lg:px-8">
+    <section class="py-20 px-4 sm:px-6 lg:px-8" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
         <div class="max-w-7xl mx-auto">
             <div class="text-center">
                 <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
@@ -399,7 +401,7 @@
             <div class="mt-12">
                 <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
                     <!-- Testimonial 1 -->
-                    <div class="card-gradient rounded-xl p-8">
+                    <div class="card-gradient rounded-xl p-8" data-aos="fade-right" data-aos-delay="100">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <div class="h-12 w-12 rounded-full bg-indigo-500 flex items-center justify-center">
@@ -424,7 +426,7 @@
                     </div>
                     
                     <!-- Testimonial 2 -->
-                    <div class="card-gradient rounded-xl p-8">
+                    <div class="card-gradient rounded-xl p-8" data-aos="fade-left" data-aos-delay="200">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <div class="h-12 w-12 rounded-full bg-purple-500 flex items-center justify-center">
@@ -453,7 +455,7 @@
     </section>
     
     <!-- CTA Section -->
-    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-indigo-900 to-purple-900">
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-indigo-900 to-purple-900" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
         <div class="max-w-7xl mx-auto text-center">
             <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
                 Ready to <span class="gradient-text">Automate</span> Your Business?
@@ -473,7 +475,7 @@
     </section>
     
     <!-- Contact Section -->
-    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8">
+    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
         <div class="max-w-7xl mx-auto">
             <div class="lg:grid lg:grid-cols-12 lg:gap-8">
                 <div class="lg:col-span-5">
@@ -657,5 +659,19 @@
             });
         }
     </script>
-<p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=ofunrein/lumenosis" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
+    
+    <!-- AOS Initialization -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-out-cubic',
+                once: true,
+                offset: 50,
+                disable: 'mobile'
+            });
+        });
+    </script>
+</body>
 </html>
