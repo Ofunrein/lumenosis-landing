@@ -37,7 +37,7 @@ The website is deployed on GitHub Pages and can be accessed at:
 
 ## Contact
 
-For questions about Lumenosis AI automation services, please use the contact form on the website or email directly at martin@lumenosis.com.
+For questions about Lumenosis AI automation services, please use the contact form on the website or email directly at ofunrein123@gmail.com.
 
 ## License
 
