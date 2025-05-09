@@ -524,9 +524,8 @@
                 <div class="mt-12 lg:mt-0 lg:col-span-7">
                     <div class="bg-gray-800/50 rounded-lg shadow-xl overflow-hidden">
                         <div class="px-6 py-8 sm:p-10">
-                            <form class="space-y-6" id="contact-form" action="https://formsubmit.co/53ac61fd52cf10051c7a2a26df56edb4" method="POST">
+                            <form class="space-y-6" id="contact-form" onsubmit="return handleFormSubmit(event)">
                                 <input type="hidden" name="_subject" value="New message from Lumenosis website">
-                                <input type="hidden" name="_next" value="https://ofunrein.github.io/lumenosis-landing/thanks.html">
                                 <input type="hidden" name="_captcha" value="false">
                                 <input type="hidden" name="_replyto" value="%email%">
                                 <div>
@@ -557,10 +556,18 @@
                                         <textarea id="message" name="message" rows="4" required class="py-3 px-4 block w-full bg-gray-700 border-gray-600 rounded-md text-white focus:ring-indigo-500 focus:border-indigo-500"></textarea>
                                     </div>
                                 </div>
-                                <div>
+                                <div id="submit-container">
                                     <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
                                         Send Message
                                     </button>
+                                </div>
+                                <div id="success-message" class="hidden">
+                                    <div class="flex justify-center items-center space-x-2">
+                                        <div class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center">
+                                            <i class="fas fa-check text-white"></i>
+                                        </div>
+                                        <p class="text-green-400 font-medium">Message sent successfully!</p>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -668,9 +675,45 @@
             });
         });
         
-        // Form submission - removed the default handler since we're using formsubmit.co now
-        // The form will be submitted directly to the email address
-        
+        // Handle form submission with animation
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const submitContainer = document.getElementById('submit-container');
+            const successMessage = document.getElementById('success-message');
+            const formData = new FormData(form);
+            
+            // Show loading state
+            submitContainer.innerHTML = '<div class="flex justify-center py-3"><div class="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div></div>';
+            
+            // Send the form data to FormSubmit endpoint
+            fetch('https://formsubmit.co/53ac61fd52cf10051c7a2a26df56edb4', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                // Show success message
+                submitContainer.classList.add('hidden');
+                successMessage.classList.remove('hidden');
+                
+                // Reset form
+                form.reset();
+                
+                // After 5 seconds, restore the submit button
+                setTimeout(() => {
+                    submitContainer.innerHTML = '<button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">Send Message</button>';
+                    submitContainer.classList.remove('hidden');
+                    successMessage.classList.add('hidden');
+                }, 5000);
+            })
+            .catch(error => {
+                // Handle error
+                submitContainer.innerHTML = '<button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">Try Again</button>';
+            });
+            
+            return false;
+        }
     </script>
     
     <!-- AOS Initialization -->
