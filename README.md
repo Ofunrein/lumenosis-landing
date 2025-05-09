@@ -41,4 +41,4 @@ For questions about Lumenosis AI automation services, please use the contact for
 
 ## License
 
-© 2023 Lumenosis. All rights reserved.
+© 2025 Lumenosis. All rights reserved.
