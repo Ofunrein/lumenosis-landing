@@ -11,10 +11,12 @@
     <meta property="og:description" content="Transform your business with custom AI systems for lead gen, scheduling, and client interaction.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lumenosis.com">
+    
+    <!-- AOS Library -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- AOS Library for scroll animations -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
@@ -661,17 +663,30 @@
     </script>
     
     <!-- AOS Initialization -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             AOS.init({
                 duration: 800,
-                easing: 'ease-out-cubic',
-                once: true,
-                offset: 50,
-                disable: 'mobile'
+                easing: 'ease-out',
+                once: false,
+                mirror: false,
+                offset: 120
             });
         });
+
+        // Fallback initialization in case DOMContentLoaded already fired
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(function() {
+                AOS.init({
+                    duration: 800,
+                    easing: 'ease-out',
+                    once: false,
+                    mirror: false,
+                    offset: 120
+                });
+            }, 100);
+        }
     </script>
 </body>
 </html>
