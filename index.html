@@ -528,6 +528,7 @@
                                 <input type="hidden" name="_subject" value="New message from Lumenosis website">
                                 <input type="hidden" name="_captcha" value="false">
                                 <input type="hidden" name="_replyto" value="%email%">
+                                <input type="hidden" name="_to" value="martin@lumenosis.com">
                                 <div>
                                     <label for="name" class="block text-sm font-medium text-gray-300">Name</label>
                                     <div class="mt-1">
@@ -679,7 +680,7 @@
             submitContainer.innerHTML = '<button type="submit" disabled class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-gray-300 bg-indigo-500 focus:outline-none transition-all duration-150 ease-out" aria-label="Sending..."><div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>Sending...</button>';
             
             // Send the form data to FormSubmit endpoint
-            fetch('https://formsubmit.co/53ac61fd52cf10051c7a2a26df56edb4', {
+            fetch('https://formsubmit.co/martin@lumenosis.com', {
                 method: 'POST',
                 body: formData
             })
