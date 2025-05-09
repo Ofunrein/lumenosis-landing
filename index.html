@@ -524,11 +524,12 @@
                 <div class="mt-12 lg:mt-0 lg:col-span-7">
                     <div class="bg-gray-800/50 rounded-lg shadow-xl overflow-hidden">
                         <div class="px-6 py-8 sm:p-10">
-                            <form class="space-y-6" id="contact-form" onsubmit="return handleFormSubmit(event)">
+                            <form class="space-y-6" id="contact-form" action="https://formsubmit.co/martin@lumenosis.com" method="POST" onsubmit="return handleFormSubmit(event)">
                                 <input type="hidden" name="_subject" value="New message from Lumenosis website">
                                 <input type="hidden" name="_captcha" value="false">
                                 <input type="hidden" name="_replyto" value="%email%">
-                                <input type="hidden" name="_to" value="martin@lumenosis.com">
+                                <input type="hidden" name="_next" value="https://ofunrein.github.io/lumenosis-landing/">
+                                <input type="hidden" name="_template" value="table">
                                 <div>
                                     <label for="name" class="block text-sm font-medium text-gray-300">Name</label>
                                     <div class="mt-1">
@@ -679,13 +680,23 @@
             // Show loading state
             submitContainer.innerHTML = '<button type="submit" disabled class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-gray-300 bg-indigo-500 focus:outline-none transition-all duration-150 ease-out" aria-label="Sending..."><div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>Sending...</button>';
             
+            // Convert FormData to URL-encoded string for better compatibility
+            const data = new URLSearchParams(formData);
+            
             // Send the form data to FormSubmit endpoint
             fetch('https://formsubmit.co/martin@lumenosis.com', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept': 'application/json'
+                },
+                body: data
             })
             .then(response => {
-                // Show success message
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Show success message with checkmark
                 submitContainer.innerHTML = '<button type="button" disabled class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 focus:outline-none transition-all duration-150 ease-out" aria-label="Sent"><svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Message Sent!</button>';
                 
                 // Disable form fields
@@ -694,6 +705,14 @@
                         input.disabled = true;
                     }
                 });
+                
+                // Optional: Create a hidden link to acknowledge success for screen readers
+                const successAnnouncement = document.createElement('div');
+                successAnnouncement.setAttribute('role', 'status');
+                successAnnouncement.setAttribute('aria-live', 'polite');
+                successAnnouncement.className = 'sr-only';
+                successAnnouncement.textContent = 'Your message has been sent successfully.';
+                form.appendChild(successAnnouncement);
                 
                 // After 5 seconds, restore the form
                 setTimeout(() => {
@@ -709,9 +728,16 @@
                     
                     // Reset the form
                     form.reset();
+                    
+                    // Remove the success announcement
+                    if (successAnnouncement && successAnnouncement.parentNode) {
+                        successAnnouncement.parentNode.removeChild(successAnnouncement);
+                    }
                 }, 5000);
             })
             .catch(error => {
+                console.error('Error submitting form:', error);
+                
                 // Handle error
                 submitContainer.innerHTML = '<button type="submit" id="submit-button" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-150 ease-out" aria-label="Try again"><span>Try Again</span></button>';
                 
@@ -719,6 +745,7 @@
                 const errorDiv = document.createElement('div');
                 errorDiv.className = 'mt-2 text-center text-sm text-red-400';
                 errorDiv.textContent = 'Something went wrong. Please try again.';
+                errorDiv.setAttribute('role', 'alert');
                 submitContainer.appendChild(errorDiv);
             });
             
