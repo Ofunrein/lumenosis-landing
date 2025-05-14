@@ -102,24 +102,19 @@
             resultsDiv.style.display = 'block';
             resultsContent.innerHTML = 'Sending test message...';
             
-            // Prepare form data
-            const formData = new FormData();
-            formData.append('name', document.getElementById('test-name').value);
-            formData.append('email', document.getElementById('test-email').value);
-            formData.append('message', document.getElementById('test-message').value);
-            formData.append('_subject', 'TEST: Form Submission from Test Page');
-            
-            // Convert to URL encoded
-            const data = new URLSearchParams(formData);
-            
             // Send to FormSubmit
-            fetch('https://formsubmit.co/martin@lumenosis.com', {
+            fetch('https://formsubmit.co/ajax/martin@lumenosis.com', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: data
+                body: JSON.stringify({
+                    name: document.getElementById('test-name').value,
+                    email: document.getElementById('test-email').value,
+                    message: document.getElementById('test-message').value,
+                    _subject: 'TEST: Form Submission from Test Page'
+                })
             })
             .then(response => {
                 if (!response.ok) {

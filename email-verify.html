@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .step {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f5f5f5;
+        }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Email Verification Test</h1>
+    <p>This page will help determine if FormSubmit.co can send emails to your domain.</p>
+    
+    <div class="step">
+        <h2>Step 1: Direct FormSubmit Link</h2>
+        <p>Click the button below to open FormSubmit's direct activation page:</p>
+        <a href="https://formsubmit.co/activate/martin@lumenosis.com" target="_blank" class="button">
+            Open Activation Page
+        </a>
+        <p>This will attempt to send a confirmation email to martin@lumenosis.com</p>
+    </div>
+    
+    <div class="step">
+        <h2>Step 2: Try Alternative Email Service</h2>
+        <p>If FormSubmit isn't working, test with another service:</p>
+        <form id="formspree-form">
+            <input type="email" name="email" value="martin@lumenosis.com" hidden>
+            <input type="text" name="message" value="Test email from Formspree" hidden>
+            <button type="submit" class="button">Test with Formspree</button>
+        </form>
+        <div id="formspree-result" class="result" style="display:none;"></div>
+        <script>
+            const formspreeForm = document.getElementById('formspree-form');
+            const formspreeResult = document.getElementById('formspree-result');
+            
+            formspreeForm.addEventListener('submit', e => {
+                e.preventDefault();
+                formspreeResult.style.display = 'block';
+                formspreeResult.textContent = 'Sending test email...';
+                
+                fetch('https://formspree.io/f/xayraaaq', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    body: new FormData(formspreeForm)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        formspreeResult.innerHTML = '<span class="success">✓ Test email sent! Check your inbox.</span>';
+                    } else {
+                        formspreeResult.innerHTML = `<span class="error">✗ Error: ${data.error || 'Unknown error'}</span>`;
+                    }
+                })
+                .catch(error => {
+                    formspreeResult.innerHTML = `<span class="error">✗ Error: ${error.message}</span>`;
+                });
+            });
+        </script>
+    </div>
+    
+    <div class="step">
+        <h2>Step 3: Check Your Email Provider</h2>
+        <p>If neither service works:</p>
+        <ol>
+            <li>Check if your email domain has strict DMARC/SPF policies that block third-party senders</li>
+            <li>Check your email provider's spam filter settings</li>
+            <li>Try using a Gmail address temporarily to verify the form works</li>
+        </ol>
+    </div>
+</body>
+</html> 
