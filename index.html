@@ -996,18 +996,40 @@
     <!-- AOS Initialization -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
-        // Common AOS configuration for consistent behavior
+        // Debounce function to limit how often the scroll handler fires
+        function debounce(func, wait) {
+            let timeout;
+            return function() {
+                const context = this;
+                const args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), wait);
+            };
+        }
+
+        // Enhanced AOS configuration with performance optimizations
         const aosConfig = {
             duration: 800,
             easing: 'ease-out',
             once: false,
             mirror: true, // Enable animations when scrolling back up
             offset: 120,
-            anchorPlacement: 'top-bottom' // Trigger when element top reaches bottom of viewport
+            anchorPlacement: 'top-bottom', // Trigger when element top reaches bottom of viewport
+            throttleDelay: 100, // Limit animation updates to every 100ms for better performance
+            debounceDelay: 50 // Add debouncing for smoother movement
         };
 
+        // Refresh animations whenever content might change
+        function refreshAnimations() {
+            AOS.refresh();
+        }
+
+        // Initialize AOS with optimized settings
         document.addEventListener('DOMContentLoaded', function() {
             AOS.init(aosConfig);
+            
+            // Re-trigger animations on window resize (debounced)
+            window.addEventListener('resize', debounce(refreshAnimations, 150));
         });
 
         // Fallback initialization in case DOMContentLoaded already fired
