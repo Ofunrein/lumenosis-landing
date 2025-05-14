@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumenosis Form Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-form {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #3b82f6;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .results {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lumenosis Form Email Test</h1>
+    
+    <div class="test-form">
+        <h2>Test Form Submission</h2>
+        <p>This page will help you confirm that your form emails are being delivered correctly.</p>
+        
+        <form id="test-form">
+            <div>
+                <label for="test-name">Test Name:</label><br>
+                <input type="text" id="test-name" value="Test User" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="test-email">Your Email (for confirmation):</label><br>
+                <input type="email" id="test-email" value="martin@lumenosis.com" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="test-message">Test Message:</label><br>
+                <textarea id="test-message" rows="3">This is a test submission from the form test page.</textarea>
+            </div>
+            <div style="margin-top: 20px;">
+                <button type="submit">Send Test Message</button>
+            </div>
+        </form>
+        
+        <div id="results" class="results" style="display:none;">
+            <h3>Test Results:</h3>
+            <div id="results-content"></div>
+        </div>
+    </div>
+    
+    <div>
+        <h2>How to Verify Email Delivery</h2>
+        <ol>
+            <li>Check your inbox at <strong>martin@lumenosis.com</strong> for the test email</li>
+            <li>If using FormSubmit.co for the first time, you may need to confirm your email address</li>
+            <li>Check your spam folder if you don't see the email</li>
+            <li>When live submissions come in, you'll see them at the same email address</li>
+        </ol>
+        
+        <h2>Troubleshooting</h2>
+        <ul>
+            <li>Make sure your domain's DNS is properly configured</li>
+            <li>Verify that FormSubmit.co supports your email domain</li>
+            <li>If emails go to spam, add FormSubmit to your safe senders list</li>
+        </ul>
+    </div>
+    
+    <script>
+        document.getElementById('test-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const resultsDiv = document.getElementById('results');
+            const resultsContent = document.getElementById('results-content');
+            
+            // Show loader
+            resultsDiv.style.display = 'block';
+            resultsContent.innerHTML = 'Sending test message...';
+            
+            // Prepare form data
+            const formData = new FormData();
+            formData.append('name', document.getElementById('test-name').value);
+            formData.append('email', document.getElementById('test-email').value);
+            formData.append('message', document.getElementById('test-message').value);
+            formData.append('_subject', 'TEST: Form Submission from Test Page');
+            
+            // Convert to URL encoded
+            const data = new URLSearchParams(formData);
+            
+            // Send to FormSubmit
+            fetch('https://formsubmit.co/martin@lumenosis.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept': 'application/json'
+                },
+                body: data
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json().catch(() => {
+                    // If not JSON, assume success
+                    return { success: true };
+                });
+            })
+            .then(data => {
+                resultsContent.innerHTML = `
+                    <p class="success">✅ Test message sent successfully!</p>
+                    <p>Please check your inbox at <strong>${document.getElementById('test-email').value}</strong> for the test email.</p>
+                    <p>You should receive the email within a few minutes. Check your spam folder if you don't see it.</p>
+                `;
+            })
+            .catch(error => {
+                resultsContent.innerHTML = `
+                    <p class="error">❌ Error sending test message: ${error.message}</p>
+                    <p>This could indicate a problem with the FormSubmit service or your form configuration.</p>
+                `;
+            });
+        });
+    </script>
+</body>
+</html> 
