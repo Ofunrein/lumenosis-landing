@@ -20,6 +20,11 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
+        html {
+            scroll-padding-top: 100px; /* Add scroll padding to account for fixed navbar */
+            scroll-behavior: smooth;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0f172a;
@@ -84,6 +89,43 @@
             }
         }
         
+        /* FAQ Accordion Styles */
+        .faq-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            overflow: hidden;
+        }
+        
+        .faq-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        /* Bottom CTA Bar Animations */
+        .sticky-cta-enter {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        
+        .sticky-cta-enter-active {
+            transform: translateY(0);
+            opacity: 1;
+            transition: all 0.3s ease-out;
+        }
+        
+        .sticky-cta-exit {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .sticky-cta-exit-active {
+            transform: translateY(100%);
+            opacity: 0;
+            transition: all 0.3s ease-out;
+        }
+        
         /* Hide DeepSite credit badge */
         [class*="deepsite-credit"],
         [id*="deepsite-credit"],
@@ -100,132 +142,302 @@
 </head>
 <body id="top" class="min-h-screen">
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-opacity-80 backdrop-blur-md bg-gray-900/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <a href="#top" class="text-2xl font-bold gradient-text">Lumenosis</a>
-                    </div>
+    <nav class="fixed w-full z-50 flex justify-center px-4 sm:px-6 lg:px-8 pt-4">
+        <div class="bg-gray-900/80 backdrop-blur-lg rounded-full px-6 py-3 inline-flex items-center space-x-8 shadow-inner flex-wrap">
+            <div class="flex-shrink-0 flex items-center">
+                <a href="#top" class="text-2xl font-bold gradient-text">Lumenosis</a>
+            </div>
+            <div class="hidden sm:block">
+                <div class="flex space-x-6">
+                    <a href="#services" class="text-gray-300 hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">What We Do</a>
+                    <a href="#industries" class="text-gray-300 hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">Industries</a>
+                    <a href="#results" class="text-gray-300 hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">Results</a>
+                    <a href="#faq" class="text-gray-300 hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">FAQ</a>
                 </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#services" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">What We Do</a>
-                        <a href="#industries" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Industries</a>
-                        <a href="#results" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Results</a>
-                    </div>
-                </div>
-                <div class="hidden md:block">
-                    <a href="https://calendly.com/lumenosis" target="_blank" rel="noopener" class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
-                        Let's Talk
-                    </a>
-                </div>
-                <div class="-mr-2 flex md:hidden">
-                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
-                        <span class="sr-only">Open main menu</span>
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
+            </div>
+            <div class="hidden sm:block">
+                <a href="https://calendly.com/lumenosis" target="_blank" rel="noopener" class="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
+                    Book a Call
+                </a>
+            </div>
+            <div class="sm:hidden">
+                <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                    <span class="sr-only">Open main menu</span>
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
         
         <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-gray-900/95 backdrop-blur-lg">
+        <div id="mobile-menu" class="hidden sm:hidden bg-gray-900/95 backdrop-blur-lg mt-16 rounded-xl absolute top-0 left-4 right-4">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#services" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">What We Do</a>
                 <a href="#industries" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Industries</a>
                 <a href="#results" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Results</a>
+                <a href="#faq" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
+                <a href="#contact" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
                 <a href="https://calendly.com/lumenosis" target="_blank" rel="noopener" class="mt-4 block w-full px-5 py-3 text-center font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors">
-                    Let's Talk
+                    Book a Call
                 </a>
             </div>
         </div>
     </nav>
     
     <!-- Hero Section -->
-    <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 hero-pattern">
+    <section class="pt-32 pb-8 px-4 sm:px-6 lg:px-8 hero-pattern">
         <div class="max-w-7xl mx-auto">
-            <div class="lg:grid lg:grid-cols-12 lg:gap-8">
-                <div class="px-4 sm:px-6 lg:px-0 lg:col-span-6">
-                    <h1 class="text-4xl tracking-tight font-extrabold sm:text-5xl md:text-6xl">
-                        <span class="block">AI Automation for</span>
-                        <span class="block gradient-text">Real Estate & Healthcare</span>
-                    </h1>
-                    <p class="mt-3 text-base text-gray-300 sm:mt-5 sm:text-lg sm:max-w-xl md:mt-5 md:text-xl">
-                        We build AI systems that automate your workflows, save time, and grow your business.
-                    </p>
-                    <div class="mt-8 sm:flex sm:justify-start">
-                        <div class="rounded-md shadow">
-                            <a href="https://calendly.com/lumenosis" target="_blank" rel="noopener" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10 transition-colors">
-                                Let's Talk
-                            </a>
-                        </div>
-                        <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
-                            <a href="#services" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-300 bg-gray-800 hover:bg-gray-700 md:py-4 md:text-lg md:px-10 transition-colors">
-                                See How It Works
-                            </a>
+            <div class="flex flex-col items-center text-center mb-8">
+                <img src="Lumenosis AI transparent logo.png" alt="Lumenosis Logo" class="h-28 w-auto mb-4">
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-center max-w-4xl mx-auto">
+                    <span class="block">Growth Systems for <span class="gradient-text">Real Estate & Healthcare</span></span>
+                </h1>
+                <p class="mt-5 text-lg text-gray-300 max-w-2xl mx-auto">
+                    Streamline property workflows and patient processes with 24/7 AI.
+                </p>
+                <div class="mt-6 flex flex-wrap justify-center gap-4">
+                    <div class="rounded-md shadow">
+                        <a href="https://calendly.com/lumenosis" target="_blank" rel="noopener" class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10 transition-colors">
+                            Book a Call
+                        </a>
+                    </div>
+                    <div class="rounded-md shadow">
+                        <a href="#services" class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-indigo-300 bg-gray-800 hover:bg-gray-700 md:py-4 md:text-lg md:px-10 transition-colors">
+                            See Solutions
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mt-8 w-full max-w-sm mx-auto">
+                    <div class="relative w-full h-28 rounded-2xl overflow-hidden glow floating">
+                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 opacity-90"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="flex flex-col items-center text-center">
+                                <h3 class="text-md font-bold text-white">Working 24/7 for you</h3>
+                                <div class="flex space-x-4 mt-2">
+                                    <div class="flex items-center">
+                                        <div class="h-2 w-2 rounded-full bg-green-400 mr-1"></div>
+                                        <span class="text-xs text-white">AI Active</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="h-2 w-2 rounded-full bg-blue-400 mr-1"></div>
+                                        <span class="text-xs text-white">Processing</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
-                    <div class="relative mx-auto w-full rounded-lg lg:max-w-md">
-                        <div class="relative w-full h-96 rounded-lg overflow-hidden glow floating">
-                            <div class="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 opacity-70"></div>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="text-center p-8">
-                                    <i class="fas fa-robot text-6xl text-white mb-4"></i>
-                                    <h3 class="text-2xl font-bold text-white">Your AI Employees</h3>
-                                    <p class="mt-2 text-white">Working 24/7 for your business</p>
-                                </div>
-                            </div>
-                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
-                                <div class="flex space-x-4">
-                                    <div class="flex items-center">
-                                        <div class="h-2 w-2 rounded-full bg-green-400 mr-2"></div>
-                                        <span class="text-xs text-white">AI System Active</span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <div class="h-2 w-2 rounded-full bg-blue-400 mr-2"></div>
-                                        <span class="text-xs text-white">Processing Data</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section id="services" class="pt-24 py-16 px-4 sm:px-6 lg:px-8 bg-gray-900/50" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                    What We <span class="gradient-text">Do</span>
+                </h2>
+                <p class="mt-2 max-w-2xl mx-auto text-gray-300">
+                    AI systems that work for your business 24/7
+                </p>
+            </div>
+            
+            <div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Service 1 - Lead Generation AI -->
+                <div class="card-gradient rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-indigo-500/20 group cursor-pointer" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white transition-all group-hover:bg-indigo-600">
+                        <i class="fas fa-envelope text-lg"></i>
                     </div>
+                    <h3 class="mt-3 text-base font-medium text-white">Lead Generation AI</h3>
+                    <p class="mt-1 text-sm text-gray-300">
+                        Automatically source and qualify leads so you can focus on closing deals.
+                    </p>
+                </div>
+                
+                <!-- Service 2 - Customer Service Email -->
+                <div class="card-gradient rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-purple-500/20 group cursor-pointer" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-md bg-purple-500 text-white transition-all group-hover:bg-purple-600">
+                        <i class="fas fa-envelope-open-text text-lg"></i>
+                    </div>
+                    <h3 class="mt-3 text-base font-medium text-white">Customer Service Email</h3>
+                    <p class="mt-1 text-sm text-gray-300">
+                        AI-driven email agents that field property inquiries and deliver instant, human-like responses.
+                    </p>
+                </div>
+                
+                <!-- Service 3 - Tenant Pre-Screening -->
+                <div class="card-gradient rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-green-500/20 group cursor-pointer" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-md bg-green-500 text-white transition-all group-hover:bg-green-600">
+                        <i class="fas fa-user-check text-lg"></i>
+                    </div>
+                    <h3 class="mt-3 text-base font-medium text-white">Tenant Pre-Screening</h3>
+                    <p class="mt-1 text-sm text-gray-300">
+                        Instantly evaluate applicants and deliver tenant-fit scores.
+                    </p>
+                </div>
+                
+                <!-- Service 4 - Automated Content Creation -->
+                <div class="card-gradient rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-yellow-500/20 group cursor-pointer" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-md bg-yellow-500 text-white transition-all group-hover:bg-yellow-600">
+                        <i class="fas fa-pencil-alt text-lg"></i>
+                    </div>
+                    <h3 class="mt-3 text-base font-medium text-white">Automated Content Creation</h3>
+                    <p class="mt-1 text-sm text-gray-300">
+                        Generate high-quality, audience-focused content at scale.
+                    </p>
+                </div>
+                
+                <!-- Service 5 - Intelligent Intake Systems -->
+                <div class="card-gradient rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/20 group cursor-pointer" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-md bg-blue-500 text-white transition-all group-hover:bg-blue-600">
+                        <i class="fas fa-file-alt text-lg"></i>
+                    </div>
+                    <h3 class="mt-3 text-base font-medium text-white">Intelligent Intake Systems</h3>
+                    <p class="mt-1 text-sm text-gray-300">
+                        Streamline forms and pre-screening with HIPAA-compliant workflows.
+                    </p>
+                </div>
+                
+                <!-- Service 6 - Dynamic Scheduling Automation -->
+                <div class="card-gradient rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-pink-500/20 group cursor-pointer" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-md bg-pink-500 text-white transition-all group-hover:bg-pink-600">
+                        <i class="fas fa-calendar-check text-lg"></i>
+                    </div>
+                    <h3 class="mt-3 text-base font-medium text-white">Dynamic Scheduling</h3>
+                    <p class="mt-1 text-sm text-gray-300">
+                        Automate appointments and follow-ups without lifting a finger.
+                    </p>
+                </div>
+                
+                <!-- Service 7 - Voice Agents -->
+                <div class="card-gradient rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-500/20 group cursor-pointer" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-md bg-red-500 text-white transition-all group-hover:bg-red-600">
+                        <i class="fas fa-headset text-lg"></i>
+                    </div>
+                    <h3 class="mt-3 text-base font-medium text-white">Voice Agents</h3>
+                    <p class="mt-1 text-sm text-gray-300">
+                        AI-powered voice assistants that answer calls, schedule viewings, and provide 24/7 support.
+                    </p>
+                </div>
+                
+                <!-- Service 8 - Workflow Automation -->
+                <div class="card-gradient rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-cyan-500/20 group cursor-pointer" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-md bg-cyan-500 text-white transition-all group-hover:bg-cyan-600">
+                        <i class="fas fa-cogs text-lg"></i>
+                    </div>
+                    <h3 class="mt-3 text-base font-medium text-white">Workflow Automation</h3>
+                    <p class="mt-1 text-sm text-gray-300">
+                        We analyze your processes and implement tailored workflows to automate tasks and optimize operations efficiently.
+                    </p>
+                </div>
+                
+                <!-- Service 9 - AI Cold Email Systems -->
+                <div class="card-gradient rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-orange-500/20 group cursor-pointer" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-md bg-orange-500 text-white transition-all group-hover:bg-orange-600">
+                        <i class="fas fa-paper-plane text-lg"></i>
+                    </div>
+                    <h3 class="mt-3 text-base font-medium text-white">AI Cold Email Systems</h3>
+                    <p class="mt-1 text-sm text-gray-300">
+                        Automated email outreach campaigns that personalize at scale and adapt to recipient engagement patterns.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
     
     <!-- Results Section -->
-    <section id="results" class="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-indigo-900/50 to-purple-900/50" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
+    <section id="results" class="pt-24 py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-indigo-900/30 to-purple-900/30" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-extrabold text-white text-center sm:text-4xl">
-                Real <span class="gradient-text">Results</span>
-            </h2>
-            <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-                <div class="bg-gray-800/50 rounded-xl p-6 text-center">
-                    <div class="text-4xl font-bold gradient-text">$10.5K → $92K</div>
-                    <p class="mt-2 text-gray-300">Monthly revenue growth with automated lead gen</p>
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                    Discover the <span class="gradient-text">Advantages</span> of Partnering With Us
+                </h2>
+            </div>
+            
+            <div class="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Benefit 1 - Increased Efficiency -->
+                <div class="bg-gray-800/40 rounded-2xl p-5 text-center shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-500/10 mx-auto mb-3">
+                        <i class="fas fa-chart-line text-indigo-400 text-lg"></i>
+                    </div>
+                    <div class="text-lg font-bold text-white">Increased Efficiency</div>
+                    <p class="mt-2 text-sm text-gray-300">We streamline processes with AI automation, reducing manual effort and saving time.</p>
                 </div>
-                <div class="bg-gray-800/50 rounded-xl p-6 text-center">
-                    <div class="text-4xl font-bold gradient-text">50K</div>
-                    <p class="mt-2 text-gray-300">New followers in 2 months with automated outreach</p>
+                
+                <!-- Benefit 2 - Cost Savings -->
+                <div class="bg-gray-800/40 rounded-2xl p-5 text-center shadow-lg" data-aos="fade-up" data-aos-delay="150">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-500/10 mx-auto mb-3">
+                        <i class="fas fa-wallet text-green-400 text-lg"></i>
+                    </div>
+                    <div class="text-lg font-bold text-white">Cost Savings</div>
+                    <p class="mt-2 text-sm text-gray-300">By automating tasks, we lower operational costs and reallocate resources effectively.</p>
                 </div>
-                <div class="bg-gray-800/50 rounded-xl p-6 text-center">
-                    <div class="text-4xl font-bold gradient-text">$125K → $225K</div>
-                    <p class="mt-2 text-gray-300">Monthly revenue for coaching business</p>
+                
+                <!-- Benefit 3 - Personalization -->
+                <div class="bg-gray-800/40 rounded-2xl p-5 text-center shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-500/10 mx-auto mb-3">
+                        <i class="fas fa-user-circle text-purple-400 text-lg"></i>
+                    </div>
+                    <div class="text-lg font-bold text-white">Personalization</div>
+                    <p class="mt-2 text-sm text-gray-300">We deliver personalized experiences, enhancing customer satisfaction.</p>
                 </div>
-                <div class="bg-gray-800/50 rounded-xl p-6 text-center">
-                    <div class="text-4xl font-bold gradient-text">8-Figure</div>
-                    <p class="mt-2 text-gray-300">Content generation systems</p>
+                
+                <!-- Benefit 4 - Scalability -->
+                <div class="bg-gray-800/40 rounded-2xl p-5 text-center shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-500/10 mx-auto mb-3">
+                        <i class="fas fa-expand-arrows-alt text-blue-400 text-lg"></i>
+                    </div>
+                    <div class="text-lg font-bold text-white">Scalability</div>
+                    <p class="mt-2 text-sm text-gray-300">Our AI automation solutions allow you to scale operations easily to meet growing demands.</p>
+                </div>
+                
+                <!-- Benefit 5 - Faster Decision-Making -->
+                <div class="bg-gray-800/40 rounded-2xl p-5 text-center shadow-lg" data-aos="fade-up" data-aos-delay="150">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-yellow-500/10 mx-auto mb-3">
+                        <i class="fas fa-bolt text-yellow-400 text-lg"></i>
+                    </div>
+                    <div class="text-lg font-bold text-white">Increased Revenue</div>
+                    <p class="mt-2 text-sm text-gray-300">Our solutions drive more sales and conversions, helping you generate higher profits with less effort.</p>
+                </div>
+                
+                <!-- Benefit 6 - Adaptive Solutions -->
+                <div class="bg-gray-800/40 rounded-2xl p-5 text-center shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-pink-500/10 mx-auto mb-3">
+                        <i class="fas fa-puzzle-piece text-pink-400 text-lg"></i>
+                    </div>
+                    <div class="text-lg font-bold text-white">Adaptive Solutions</div>
+                    <p class="mt-2 text-sm text-gray-300">We adapt to changing circumstances, ensuring our solutions remain effective.</p>
                 </div>
             </div>
         </div>
     </section>
     
+    <!-- About Section (NEW) -->
+    <section id="about" class="pt-28 py-20 px-4 sm:px-6 lg:px-8" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                Who We <span class="gradient-text">Are</span>
+            </h2>
+            <p class="mt-3 text-xl font-semibold text-gray-200">
+                Lumenosis: Your AI Automation Partner
+            </p>
+            <div class="mt-6 space-y-4 text-gray-300">
+                <p>
+                    Lumenosis bridges cutting-edge AI with real estate and healthcare workflows—automating tasks to save time and reduce costs. Our mission: deliver enterprise-grade AI that's simple to integrate and scales with your business.
+                </p>
+            </div>
+            <div class="mt-8">
+                <a href="#contact" class="inline-flex items-center justify-center px-8 py-3 border border-transparent rounded-full shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors" data-aos="fade-up" data-aos-delay="200">
+                    Learn More
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
     <!-- Industries Section -->
-    <section id="industries" class="py-20 px-4 sm:px-6 lg:px-8" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
+    <section id="industries" class="pt-28 py-20 px-4 sm:px-6 lg:px-8" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
         <div class="max-w-7xl mx-auto">
             <div class="text-center">
                 <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
@@ -238,7 +450,7 @@
             
             <div class="mt-12 grid gap-8 md:grid-cols-2">
                 <!-- Real Estate -->
-                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]">
+                <div class="card-gradient rounded-xl p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-indigo-500/20">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 h-12 w-12 rounded-md bg-indigo-500 text-white flex items-center justify-center">
                             <i class="fas fa-home text-xl"></i>
@@ -279,7 +491,7 @@
                 </div>
                 
                 <!-- Healthcare -->
-                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]">
+                <div class="card-gradient rounded-xl p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-purple-500/20">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 h-12 w-12 rounded-md bg-purple-500 text-white flex items-center justify-center">
                             <i class="fas fa-heartbeat text-xl"></i>
@@ -322,116 +534,34 @@
         </div>
     </section>
     
-    <!-- Services Section -->
-    <section id="services" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900/50" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center">
-                <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                    What We <span class="gradient-text">Do</span>
-                </h2>
-                <p class="mt-3 max-w-2xl mx-auto text-lg text-gray-300">
-                    AI systems that work for your business 24/7
-                </p>
-            </div>
-            
-            <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                <!-- Service 1 -->
-                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="100">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                        <i class="fas fa-envelope text-xl"></i>
-                    </div>
-                    <h3 class="mt-4 text-lg font-medium text-white">Lead Generation AI</h3>
-                    <p class="mt-2 text-gray-300">
-                        Automatically find and qualify leads so you can focus on closing deals.
-                    </p>
-                </div>
-                
-                <!-- Service 2 -->
-                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 text-white">
-                        <i class="fas fa-robot text-xl"></i>
-                    </div>
-                    <h3 class="mt-4 text-lg font-medium text-white">Customer Service AI</h3>
-                    <p class="mt-2 text-gray-300">
-                        AI agents that handle inquiries 24/7 with human-like responses.
-                    </p>
-                </div>
-                
-                <!-- Service 3 -->
-                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="300">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-pink-500 text-white">
-                        <i class="fas fa-calendar-check text-xl"></i>
-                    </div>
-                    <h3 class="mt-4 text-lg font-medium text-white">Scheduling Systems</h3>
-                    <p class="mt-2 text-gray-300">
-                        Automate appointments, viewings, and follow-ups.
-                    </p>
-                </div>
-                
-                <!-- Service 4 -->
-                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="100">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
-                        <i class="fas fa-file-alt text-xl"></i>
-                    </div>
-                    <h3 class="mt-4 text-lg font-medium text-white">Intake Systems</h3>
-                    <p class="mt-2 text-gray-300">
-                        Automate forms, applications, and pre-screening.
-                    </p>
-                </div>
-                
-                <!-- Service 5 -->
-                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-green-500 text-white">
-                        <i class="fas fa-tasks text-xl"></i>
-                    </div>
-                    <h3 class="mt-4 text-lg font-medium text-white">Workflow Automation</h3>
-                    <p class="mt-2 text-gray-300">
-                        Streamline your repetitive tasks and business processes.
-                    </p>
-                </div>
-                
-                <!-- Service 6 -->
-                <div class="card-gradient rounded-xl p-8 transition-all hover:scale-[1.02]" data-aos="fade-up" data-aos-delay="300">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-yellow-500 text-white">
-                        <i class="fas fa-cogs text-xl"></i>
-                    </div>
-                    <h3 class="mt-4 text-lg font-medium text-white">Custom AI Solutions</h3>
-                    <p class="mt-2 text-gray-300">
-                        Tailored AI systems for your unique business needs.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
     <!-- Testimonials Section -->
-    <section class="py-20 px-4 sm:px-6 lg:px-8" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
+    <section class="pt-24 py-16 px-4 sm:px-6 lg:px-8" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center">
+            <div class="text-center mb-8">
                 <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
                     What Our <span class="gradient-text">Clients Say</span>
                 </h2>
             </div>
             
-            <div class="mt-12">
-                <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div class="mt-8">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <!-- Testimonial 1 -->
-                    <div class="card-gradient rounded-xl p-8" data-aos="fade-right" data-aos-delay="100">
+                    <div class="card-gradient rounded-xl p-6" data-aos="fade-right" data-aos-delay="100">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
-                                <div class="h-12 w-12 rounded-full bg-indigo-500 flex items-center justify-center">
-                                    <span class="text-white font-bold">JD</span>
+                                <div class="h-10 w-10 rounded-full bg-indigo-500 flex items-center justify-center">
+                                    <span class="text-white font-bold text-sm">JD</span>
                                 </div>
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-white">Joe Davies</h3>
-                                <p class="text-gray-400">Cofounder, FATJOE</p>
+                                <p class="text-gray-400 text-sm">Cofounder, FATJOE</p>
                             </div>
                         </div>
-                        <p class="mt-4 text-gray-300">
+                        <p class="mt-3 text-gray-300 text-sm">
                             "Lumenosis knows their stuff. Their AI systems are incredible and saved us countless hours."
                         </p>
-                        <div class="mt-4 flex">
+                        <div class="mt-2 flex">
                             <i class="fas fa-star text-yellow-400"></i>
                             <i class="fas fa-star text-yellow-400"></i>
                             <i class="fas fa-star text-yellow-400"></i>
@@ -441,22 +571,22 @@
                     </div>
                     
                     <!-- Testimonial 2 -->
-                    <div class="card-gradient rounded-xl p-8" data-aos="fade-left" data-aos-delay="200">
+                    <div class="card-gradient rounded-xl p-6" data-aos="fade-left" data-aos-delay="200">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
-                                <div class="h-12 w-12 rounded-full bg-purple-500 flex items-center justify-center">
-                                    <span class="text-white font-bold">ZB</span>
+                                <div class="h-10 w-10 rounded-full bg-purple-500 flex items-center justify-center">
+                                    <span class="text-white font-bold text-sm">ZB</span>
                                 </div>
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-white">Zak Blake</h3>
-                                <p class="text-gray-400">Former CTO at Scaling With Systems</p>
+                                <p class="text-gray-400 text-sm">Former CTO at Scaling With Systems</p>
                             </div>
                         </div>
-                        <p class="mt-4 text-gray-300">
+                        <p class="mt-3 text-gray-300 text-sm">
                             "An hour long call is all it took to improve our margins ~20%. You need to work with Lumenosis."
                         </p>
-                        <div class="mt-4 flex">
+                        <div class="mt-2 flex">
                             <i class="fas fa-star text-yellow-400"></i>
                             <i class="fas fa-star text-yellow-400"></i>
                             <i class="fas fa-star text-yellow-400"></i>
@@ -469,50 +599,121 @@
         </div>
     </section>
     
-    <!-- CTA Section -->
-    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-indigo-900 to-purple-900" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
-        <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                Ready to <span class="gradient-text">Automate</span> Your Business?
-            </h2>
-            <p class="mt-3 max-w-2xl mx-auto text-lg text-gray-300">
-                Book a free consultation to see how AI can transform your operations.
-            </p>
-            <div class="mt-8 flex justify-center">
-                <div class="inline-flex rounded-md shadow">
-                    <a href="https://calendly.com/lumenosis" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-8 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10 transition-colors">
-                        Let's Talk
-                        <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
+    <!-- FAQ Section -->
+    <section id="faq" class="pt-24 py-16 px-4 sm:px-6 lg:px-8 bg-gray-900/50" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                    Your Questions, <span class="gradient-text">Answered</span>
+                </h2>
+                <p class="mt-2 max-w-2xl mx-auto text-gray-300">
+                    Everything you need to know about our AI automation solutions
+                </p>
+            </div>
+            
+            <div class="mt-6 space-y-3">
+                <!-- FAQ Item 1 -->
+                <div class="card-gradient rounded-xl overflow-hidden">
+                    <button class="faq-toggle w-full px-5 py-3 flex items-center justify-between focus:outline-none" aria-expanded="false">
+                        <span class="text-left text-base font-medium text-white">What is AI-driven workflow automation?</span>
+                        <svg class="faq-icon w-5 h-5 text-indigo-400 transform transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="faq-content px-5 pb-4 hidden">
+                        <p class="text-gray-300 text-sm">
+                            AI-driven workflow automation uses artificial intelligence to handle repetitive tasks, analyze patterns, and make decisions that would typically require human input. It continuously learns from your business processes, optimizing them over time while freeing your team to focus on strategic work that requires creativity and critical thinking. Our solutions can reduce manual workload by up to 80% while increasing accuracy and consistency.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="card-gradient rounded-xl overflow-hidden">
+                    <button class="faq-toggle w-full px-5 py-3 flex items-center justify-between focus:outline-none" aria-expanded="false">
+                        <span class="text-left text-base font-medium text-white">How fast can I see results?</span>
+                        <svg class="faq-icon w-5 h-5 text-indigo-400 transform transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="faq-content px-5 pb-4 hidden">
+                        <p class="text-gray-300 text-sm">
+                            Most clients see measurable improvements within 2-4 weeks of implementation. Basic automations like lead qualification or customer service responses show immediate benefits, while more complex systems reach full efficiency after 6-8 weeks. Our real estate clients typically experience a 35% increase in lead conversion within the first month, and healthcare providers report saving 15-20 hours per week on administrative tasks within three weeks of deployment.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="card-gradient rounded-xl overflow-hidden">
+                    <button class="faq-toggle w-full px-5 py-3 flex items-center justify-between focus:outline-none" aria-expanded="false">
+                        <span class="text-left text-base font-medium text-white">Will this integrate with my current tools?</span>
+                        <svg class="faq-icon w-5 h-5 text-indigo-400 transform transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="faq-content px-5 pb-4 hidden">
+                        <p class="text-gray-300 text-sm">
+                            Yes, our solutions are designed with integration in mind. We have built-in connectors for over 200 popular business tools including Salesforce, HubSpot, Zapier, Microsoft 365, Google Workspace, and most CRM, EHR, and property management systems. For specialized or legacy software, our team develops custom API connections to ensure seamless data flow. We follow a "no disruption" philosophy — your existing systems remain operational while we enhance their capabilities.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="card-gradient rounded-xl overflow-hidden">
+                    <button class="faq-toggle w-full px-5 py-3 flex items-center justify-between focus:outline-none" aria-expanded="false">
+                        <span class="text-left text-base font-medium text-white">How do you ensure data security?</span>
+                        <svg class="faq-icon w-5 h-5 text-indigo-400 transform transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="faq-content px-5 pb-4 hidden">
+                        <p class="text-gray-300 text-sm">
+                            Security is foundational to our platform. We implement end-to-end encryption (AES-256) for all data in transit and at rest, role-based access controls, and regular penetration testing. Our healthcare solutions are fully HIPAA-compliant, with BAA agreements available. For real estate clients, we ensure compliance with fair housing laws and financial data protection standards. All systems undergo SOC 2 Type II audits annually, and we maintain a comprehensive security incident response plan with 24/7 monitoring.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 5 -->
+                <div class="card-gradient rounded-xl overflow-hidden">
+                    <button class="faq-toggle w-full px-5 py-3 flex items-center justify-between focus:outline-none" aria-expanded="false">
+                        <span class="text-left text-base font-medium text-white">What pricing options do you offer?</span>
+                        <svg class="faq-icon w-5 h-5 text-indigo-400 transform transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="faq-content px-5 pb-4 hidden">
+                        <p class="text-gray-300 text-sm">
+                            We offer three flexible pricing tiers: Essentials ($1,500-3,000/month), Professional ($3,000-6,000/month), and Enterprise (custom pricing). Each tier includes different levels of automation complexity, integration capacity, and support options. We also provide outcome-based pricing for specific use cases, where you pay based on measurable results like lead conversions or time saved. All plans include implementation, training, and ongoing optimization, with no long-term contracts required — we earn your business each month through results.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     
     <!-- Contact Section -->
-    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
+    <section id="contact" class="pt-28 py-16 px-4 sm:px-6 lg:px-8 bg-gray-900/10" data-aos="fade-up" data-aos-duration="800" data-aos-offset="200">
         <div class="max-w-7xl mx-auto">
             <div class="lg:grid lg:grid-cols-12 lg:gap-8">
                 <div class="lg:col-span-5">
                     <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                        Let's <span class="gradient-text">Talk</span>
+                        Book a <span class="gradient-text">Call</span>
                     </h2>
                     <p class="mt-3 text-lg text-gray-300">
                         Tell us about your business and we'll show you how AI can help.
                     </p>
-                    <div class="mt-8">
+                    <div class="mt-8 space-y-6">
                         <div class="flex items-start">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-500 flex items-center justify-center">
-                                <i class="fas fa-envelope text-white"></i>
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-500/20 flex items-center justify-center">
+                                <i class="fas fa-envelope text-indigo-400"></i>
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-white">Email</h3>
-                                <p class="mt-1 text-gray-300">ofunrein123@gmail.com</p>
+                                <p class="mt-1 text-gray-300">martin@lumenosis.com</p>
                             </div>
                         </div>
-                        <div class="mt-6 flex items-start">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-500 flex items-center justify-center">
-                                <i class="fas fa-phone-alt text-white"></i>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                <i class="fas fa-phone-alt text-purple-400"></i>
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-white">Phone</h3>
@@ -521,30 +722,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-12 lg:mt-0 lg:col-span-7">
-                    <div class="bg-gray-800/50 rounded-lg shadow-xl overflow-hidden">
+                <div class="mt-10 lg:mt-0 lg:col-span-7">
+                    <div class="bg-gray-800/30 rounded-lg shadow-xl overflow-hidden">
                         <div class="px-6 py-8 sm:p-10">
-                            <form class="space-y-6" action="https://formsubmit.co/ofunrein123@gmail.com" method="POST">
+                            <form class="space-y-6" action="https://formsubmit.co/martin@lumenosis.com" method="POST">
                                 <input type="hidden" name="_subject" value="New message from Lumenosis website">
                                 <input type="hidden" name="_captcha" value="false">
-                                <input type="hidden" name="_next" value="https://ofunrein.github.io/lumenosis-landing/">
+                                <input type="hidden" name="_next" value="">
                                 <input type="hidden" name="_template" value="table">
                                 <div>
                                     <label for="name" class="block text-sm font-medium text-gray-300">Name</label>
                                     <div class="mt-1">
-                                        <input type="text" id="name" name="name" required class="py-3 px-4 block w-full bg-gray-700 border-gray-600 rounded-md text-white focus:ring-indigo-500 focus:border-indigo-500">
+                                        <input type="text" id="name" name="name" required class="py-3 px-4 block w-full bg-gray-700/50 border-gray-600 rounded-md text-white focus:ring-indigo-500 focus:border-indigo-500">
                                     </div>
                                 </div>
                                 <div>
                                     <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
                                     <div class="mt-1">
-                                        <input type="email" id="email" name="email" required class="py-3 px-4 block w-full bg-gray-700 border-gray-600 rounded-md text-white focus:ring-indigo-500 focus:border-indigo-500">
+                                        <input type="email" id="email" name="email" required class="py-3 px-4 block w-full bg-gray-700/50 border-gray-600 rounded-md text-white focus:ring-indigo-500 focus:border-indigo-500">
                                     </div>
                                 </div>
                                 <div>
                                     <label for="business" class="block text-sm font-medium text-gray-300">Business Type</label>
                                     <div class="mt-1">
-                                        <select id="business" name="business" class="py-3 px-4 block w-full bg-gray-700 border-gray-600 rounded-md text-white focus:ring-indigo-500 focus:border-indigo-500">
+                                        <select id="business" name="business" class="py-3 px-4 block w-full bg-gray-700/50 border-gray-600 rounded-md text-white focus:ring-indigo-500 focus:border-indigo-500">
                                             <option>Real Estate</option>
                                             <option>Healthcare</option>
                                             <option>Other</option>
@@ -554,7 +755,7 @@
                                 <div>
                                     <label for="message" class="block text-sm font-medium text-gray-300">How can we help?</label>
                                     <div class="mt-1">
-                                        <textarea id="message" name="message" rows="4" required class="py-3 px-4 block w-full bg-gray-700 border-gray-600 rounded-md text-white focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                                        <textarea id="message" name="message" rows="4" required class="py-3 px-4 block w-full bg-gray-700/50 border-gray-600 rounded-md text-white focus:ring-indigo-500 focus:border-indigo-500"></textarea>
                                     </div>
                                 </div>
                                 <div id="submit-container">
@@ -571,66 +772,50 @@
     </section>
     
     <!-- Footer -->
-    <footer class="bg-gray-900/80 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-                <div class="space-y-8 xl:col-span-1">
-                    <span class="text-2xl font-bold gradient-text">Lumenosis</span>
-                    <p class="text-gray-300 text-sm">
-                        AI automation for real estate and healthcare businesses.
-                    </p>
+    <footer class="bg-gray-900/50 border-t border-gray-800/30 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center">
+                <!-- Center Logo -->
+                <div class="flex items-center justify-center mb-6">
+                    <img src="Lumenosis AI transparent logo.png" alt="Lumenosis Logo" class="h-12 w-auto">
                 </div>
-                <div class="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
-                    <div class="md:grid md:grid-cols-2 md:gap-8">
-                        <div>
-                            <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">
-                                Solutions
-                            </h3>
-                            <ul class="mt-4 space-y-4">
-                                <li>
-                                    <a href="#" class="text-base text-gray-400 hover:text-white">
-                                        Lead Generation
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="text-base text-gray-400 hover:text-white">
-                                        Customer Service AI
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="text-base text-gray-400 hover:text-white">
-                                        Workflow Automation
-                                    </a>
-                                </li>
-                            </ul>
+                
+                <!-- Horizontal Nav -->
+                <nav class="flex flex-wrap justify-center space-x-4 sm:space-x-8 mb-6">
+                    <a href="#services" class="text-gray-300 hover:text-white px-2 py-1 text-sm font-medium transition-colors">What We Do</a>
+                    <a href="#industries" class="text-gray-300 hover:text-white px-2 py-1 text-sm font-medium transition-colors">Industries</a>
+                    <a href="#results" class="text-gray-300 hover:text-white px-2 py-1 text-sm font-medium transition-colors">Results</a>
+                    <a href="#faq" class="text-gray-300 hover:text-white px-2 py-1 text-sm font-medium transition-colors">FAQ</a>
+                    <a href="#contact" class="text-gray-300 hover:text-white px-2 py-1 text-sm font-medium transition-colors">Contact</a>
+                </nav>
+                
+                <!-- Social Media Icons -->
+                <div class="flex justify-center space-x-4 mb-6">
+                    <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition-all hover:scale-110">
+                        <div class="h-8 w-8 rounded-full bg-gray-800/70 flex items-center justify-center">
+                            <i class="fab fa-linkedin-in text-sm"></i>
                         </div>
-                        <div class="mt-12 md:mt-0">
-                            <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">
-                                Company
-                            </h3>
-                            <ul class="mt-4 space-y-4">
-                                <li>
-                                    <a href="#" class="text-base text-gray-400 hover:text-white">
-                                        About
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="text-base text-gray-400 hover:text-white">
-                                        Contact
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="text-base text-gray-400 hover:text-white">
-                                        Careers
-                                    </a>
-                                </li>
-                            </ul>
+                    </a>
+                    <a href="#" aria-label="Twitter" class="text-gray-400 hover:text-white transition-all hover:scale-110">
+                        <div class="h-8 w-8 rounded-full bg-gray-800/70 flex items-center justify-center">
+                            <i class="fab fa-twitter text-sm"></i>
                         </div>
-                    </div>
+                    </a>
+                    <a href="#" aria-label="Instagram" class="text-gray-400 hover:text-white transition-all hover:scale-110">
+                        <div class="h-8 w-8 rounded-full bg-gray-800/70 flex items-center justify-center">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </div>
+                    </a>
+                    <a href="#" aria-label="Facebook" class="text-gray-400 hover:text-white transition-all hover:scale-110">
+                        <div class="h-8 w-8 rounded-full bg-gray-800/70 flex items-center justify-center">
+                            <i class="fab fa-facebook-f text-sm"></i>
+                        </div>
+                    </a>
                 </div>
             </div>
-            <div class="mt-12 border-t border-gray-800 pt-8">
-                <p class="text-base text-gray-400 text-center">
+            
+            <div class="text-center">
+                <p class="text-sm text-gray-400">
                     &copy; 2023 Lumenosis. All rights reserved.
                 </p>
             </div>
@@ -660,11 +845,67 @@
                         mobileMenu.classList.add('hidden');
                     }
                     
-                    // Scroll to target
-                    targetElement.scrollIntoView({
+                    // Scroll to target with offset for fixed header
+                    const navHeight = 100; // Approximate height of navbar
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
                         behavior: 'smooth'
                     });
                 }
+            });
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Attach form submission handler
+            const contactForm = document.querySelector('#contact form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', handleFormSubmit);
+            }
+            
+            // FAQ Accordion functionality
+            const faqToggles = document.querySelectorAll('.faq-toggle');
+            
+            faqToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('.faq-icon');
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    
+                    // Update aria-expanded attribute
+                    this.setAttribute('aria-expanded', !isExpanded);
+                    
+                    // Toggle content visibility with slide animation
+                    if (isExpanded) {
+                        // Close accordion
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        setTimeout(() => {
+                            content.style.maxHeight = '0px';
+                            content.style.opacity = '0';
+                            setTimeout(() => {
+                                content.classList.add('hidden');
+                                content.style.maxHeight = '';
+                                // Rotate icon back
+                                icon.style.transform = 'rotate(0deg)';
+                            }, 200);
+                        }, 10);
+                    } else {
+                        // Open accordion
+                        content.classList.remove('hidden');
+                        content.style.maxHeight = '0px';
+                        content.style.opacity = '0';
+                        setTimeout(() => {
+                            content.style.maxHeight = content.scrollHeight + 'px';
+                            content.style.opacity = '1';
+                            // Rotate icon to show minus
+                            icon.style.transform = 'rotate(45deg)';
+                            setTimeout(() => {
+                                content.style.maxHeight = '';
+                            }, 200);
+                        }, 10);
+                    }
+                });
             });
         });
         
@@ -683,7 +924,7 @@
             const data = new URLSearchParams(formData);
             
             // Send the form data to FormSubmit endpoint
-            fetch('https://formsubmit.co/ofunrein123@gmail.com', {
+            fetch('https://formsubmit.co/martin@lumenosis.com', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
