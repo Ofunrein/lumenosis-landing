@@ -35,6 +35,15 @@ This landing page showcases Lumenosis's AI automation services for real estate a
 The website is deployed on GitHub Pages and can be accessed at:
 [https://ofunrein.github.io/lumenosis-landing/](https://ofunrein.github.io/lumenosis-landing/)
 
+## Email Signature Resources
+
+For Google Workspace administrators setting up email signatures in the Admin Console:
+
+- **Scaled Logo for Email Signatures**: 
+  - URL: [https://lumenosis.com/logo-footer.png](https://lumenosis.com/logo-footer.png)
+  - Purpose: Specifically sized (100px) for use in email footers and signatures in Google Workspace
+  - Admin Console Integration: Use this URL when configuring the "Append footer" feature in Google Workspace Admin Console
+
 ## Contact
 
 For questions about Lumenosis AI automation services, please use the contact form on the website or email directly at martin@lumenosis.com.
