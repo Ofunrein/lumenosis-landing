@@ -138,6 +138,17 @@
             visibility: hidden !important;
             pointer-events: none !important;
         }
+        
+        /* Calendly Animation */
+        .calendly-inline-widget {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to   { transform: translateY(0);     opacity: 1; }
+        }
     </style>
 </head>
 <body id="top" class="min-h-screen">
@@ -703,8 +714,12 @@
                     </p>
                     
                     <!-- Calendly inline widget begin -->
-                    <div class="calendly-inline-widget mt-6" data-url="https://calendly.com/lumenosis?hide_landing_page_details=1&hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
-                    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+                    <div 
+                      class="calendly-inline-widget mt-6" 
+                      data-url="https://calendly.com/lumenosis?hide_gdpr_banner=1" 
+                      style="width:100%;max-width:900px;min-width:320px;height:800px;">
+                    </div>
+                    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
                     <!-- Calendly inline widget end -->
                     
                     <div class="mt-8 space-y-6">
