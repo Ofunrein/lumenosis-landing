@@ -149,6 +149,16 @@
             from { transform: translateY(30px); opacity: 0; }
             to   { transform: translateY(0);     opacity: 1; }
         }
+        
+        /* Chat button animations */
+        .chat-btn-animation {
+            animation: pulseScale 2s infinite alternate ease-in-out;
+        }
+        
+        @keyframes pulseScale {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
     </style>
 </head>
 <body id="top" class="min-h-screen">
@@ -195,6 +205,14 @@
             </div>
         </div>
     </nav>
+    
+    <!-- Chat CTA -->
+    <div class="fixed bottom-5 right-5 z-40">
+        <a href="#contact" class="flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-lg transition-all duration-300 group chat-btn-animation">
+            <span class="mr-2">Still have a question? We would love to chat</span>
+            <i class="fas fa-comment-dots group-hover:animate-pulse"></i>
+        </a>
+    </div>
     
     <!-- Hero Section -->
     <section class="pt-32 pb-8 px-4 sm:px-6 lg:px-8 hero-pattern">
