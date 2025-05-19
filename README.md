@@ -1,10 +1,10 @@
-# Lumenosis - Business Landing Page
+# Lumenosis AI - Business Landing Page
 
-A modern, responsive landing page for Lumenosis, a company specializing in AI automation for real estate and healthcare businesses.
+A modern, responsive landing page for Lumenosis AI, a company specializing in AI automation for real estate and healthcare businesses.
 
 ## Overview
 
-This landing page showcases Lumenosis's AI automation services for real estate and healthcare. The website features:
+This landing page showcases Lumenosis AI's AI automation services for real estate and healthcare. The website features:
 
 - Modern, responsive design built with Tailwind CSS
 - Smooth scroll animations with AOS library
@@ -14,7 +14,7 @@ This landing page showcases Lumenosis's AI automation services for real estate a
 
 ## Features
 
-- **Hero Section**: Introduction to Lumenosis's AI automation services
+- **Hero Section**: Introduction to Lumenosis AI's AI automation services
 - **Results Section**: Highlighting client success stories and metrics
 - **Industries Section**: Focus areas in real estate and healthcare
 - **Services Section**: Detailed breakdown of AI automation offerings
@@ -50,4 +50,4 @@ For questions about Lumenosis AI automation services, please use the contact for
 
 ## License
 
-© 2025 Lumenosis. All rights reserved.
+© 2025 Lumenosis AI. All rights reserved.
