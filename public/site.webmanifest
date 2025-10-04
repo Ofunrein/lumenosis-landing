@@ -1,0 +1,69 @@
+{
+  "name": "Lumenosis AI - AI Automation for Real Estate & Home Services",
+  "short_name": "Lumenosis AI",
+  "description": "Get 3X more leads with AI automation for real estate agents & home service pros. 60-second response time, 24/7 booking, automated follow-ups.",
+  "icons": [
+    {
+      "src": "/lumenosis-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/lumenosis-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#4f46e5",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "categories": ["business", "productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Lumenosis AI Dashboard"
+    },
+    {
+      "src": "/screenshot-narrow.png", 
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Lumenosis AI Mobile"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Lead Magnets",
+      "short_name": "Guides",
+      "description": "Access automation guides",
+      "url": "/lead-magnet",
+      "icons": [
+        {
+          "src": "/lumenosis-logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Get in touch",
+      "url": "/#contact",
+      "icons": [
+        {
+          "src": "/lumenosis-logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}

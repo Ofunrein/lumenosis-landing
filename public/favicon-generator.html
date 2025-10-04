@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Favicon Generator</title>
+    <style>
+        canvas { border: 1px solid #ccc; margin: 20px; }
+    </style>
+</head>
+<body>
+    <h3>Favicon Generator</h3>
+    <canvas id="favicon" width="32" height="32"></canvas>
+    <br>
+    <button onclick="downloadFavicon()">Download Favicon</button>
+    
+    <script>
+        const canvas = document.getElementById('favicon');
+        const ctx = canvas.getContext('2d');
+        
+        // Draw solid background
+        ctx.fillStyle = '#1e1b4b'; // Dark purple background
+        ctx.fillRect(0, 0, 32, 32);
+        
+        // Draw rounded rectangle
+        ctx.fillStyle = '#8b5cf6'; // Purple color
+        ctx.beginPath();
+        ctx.roundRect(4, 4, 24, 24, 6);
+        ctx.fill();
+        
+        // Draw center circle (simplified logo)
+        ctx.fillStyle = '#a855f7'; // Lighter purple
+        ctx.beginPath();
+        ctx.arc(16, 16, 8, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        function downloadFavicon() {
+            const link = document.createElement('a');
+            link.download = 'favicon-32x32.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+    </script>
+</body>
+</html>

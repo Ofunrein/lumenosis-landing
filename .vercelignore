@@ -1,0 +1,22 @@
+# Ignore legacy files and folder
+legacy/
+index.html
+
+# Ignore large original video files - use compressed versions
+public/videos/demos/Qualify Real Estate Leads via SMS with GPT-4o, Twilio, and Google Sheets + Retell short demo.mp4
+public/videos/demos/Real Esate Video Automation Demo.mp4
+public/videos/demos/ai voice demo veed to capcut.mp4
+
+# Ignore build output
+out/
+
+# Ignore development files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore large video formats (allow compressed mp4s)
+*.mov
+*.avi
+*.mkv

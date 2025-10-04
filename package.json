@@ -1,0 +1,55 @@
+{
+  "name": "lumenosis-landing",
+  "version": "1.0.0",
+  "description": "AI Lead Magnet Landing Page with Dynamic Authentication",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next build && next export",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "ai",
+    "lead-magnet",
+    "automation",
+    "real-estate",
+    "home-services"
+  ],
+  "author": "Lumenosis AI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ofunrein/lumenosis-landing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ofunrein/lumenosis-landing/issues"
+  },
+  "homepage": "https://github.com/ofunrein/lumenosis-landing#readme",
+  "dependencies": {
+    "@vercel/analytics": "^1.5.0",
+    "@vercel/speed-insights": "^1.2.0",
+    "aos": "^2.3.4",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.12",
+    "next": "14.0.0",
+    "ogl": "^1.0.11",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwind-merge": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/aos": "^3.0.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "18.3.24",
+    "@types/react-dom": "^18.0.0",
+    "autoprefixer": "^10.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "postcss": "^8.0.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "5.9.2"
+  }
+}

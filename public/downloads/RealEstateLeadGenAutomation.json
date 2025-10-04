@@ -1,0 +1,877 @@
+{
+  "name": "Automated Property Lead Generation with BatchData & CRM Integration + Real Estate Market Scanning",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "id": "1db07df1-7442-4f3c-80bf-b382255e48a8",
+      "name": "Schedule Market Scan",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        -320,
+        3008
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f44f6a90-6de5-4c02-909d-73cfce0c0c9a",
+              "name": "apiKey",
+              "type": "string",
+              "value": "YOUR_BATCHDATA_API_KEY"
+            },
+            {
+              "id": "9356ff74-9783-40cf-a8af-94e45f1ac83e",
+              "name": "searchParameters",
+              "type": "object",
+              "value": "={\n  \"city\": \"Austin\",\n  \"state\": \"TX\",\n  \"minimumMarketValue\": 250000,\n  \"maximumMarketValue\": 600000,\n  \"minimumEquity\": 30,\n  \"propertyType\": [\"SFR\"],\n  \"limit\": 100\n}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "55de642c-598a-4d65-9020-36951255a302",
+      "name": "BatchData API Configuration",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -96,
+        3008
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.batchdata.com/api/v1/properties/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "city",
+              "value": "={{ $json.searchParameters.city }}"
+            },
+            {
+              "name": "state",
+              "value": "={{ $json.searchParameters.state }}"
+            },
+            {
+              "name": "minimumMarketValue",
+              "value": "={{ $json.searchParameters.minimumMarketValue }}"
+            },
+            {
+              "name": "maximumMarketValue",
+              "value": "={{ $json.searchParameters.maximumMarketValue }}"
+            },
+            {
+              "name": "minimumEquity",
+              "value": "={{ $json.searchParameters.minimumEquity }}"
+            },
+            {
+              "name": "propertyType",
+              "value": "={{ $json.searchParameters.propertyType }}"
+            },
+            {
+              "name": "limit",
+              "value": "={{ $json.searchParameters.limit }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "be23e31d-c370-435c-8b6e-e0329127fcbd",
+      "name": "Query BatchData Properties",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        96,
+        3008
+      ],
+      "typeVersion": 4.1,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "sMl0NdJWwKxalskG",
+          "name": "Batch Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the stored data from previous runs\nconst workflowStaticData = getWorkflowStaticData('global');\n\n// If no previous data exists, initialize it\nif (!workflowStaticData.hasOwnProperty('previousProperties')) {\n  workflowStaticData.previousProperties = [];\n}\n\n// Add the previous properties data to the current item\nreturn [\n  {\n    json: {\n      ...items[0].json,\n      previousProperties: workflowStaticData.previousProperties,\n      currentProperties: items[0].json.data.properties || [],\n    }\n  }\n];"
+      },
+      "id": "cd9943a6-422c-4fa6-afd0-c401eb0879af",
+      "name": "Get Previous Results",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        304,
+        3008
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the current and previous property lists\nconst currentProperties = items[0].json.currentProperties;\nconst previousProperties = items[0].json.previousProperties;\n\n// Create a map of previous properties by their ID for easier comparison\nconst previousPropertiesMap = {};\nfor (const property of previousProperties) {\n  previousPropertiesMap[property.id] = property;\n}\n\n// Find new properties (those in current but not in previous)\nconst newProperties = currentProperties.filter(property => \n  !previousPropertiesMap[property.id]\n);\n\n// Find changed properties (those in both but with different values)\nconst changedProperties = currentProperties.filter(property => {\n  const previousProperty = previousPropertiesMap[property.id];\n  if (!previousProperty) return false;\n  \n  // Check if important values changed (price, status, etc.)\n  return (\n    property.marketValue !== previousProperty.marketValue ||\n    property.status !== previousProperty.status ||\n    property.ownerStatus !== previousProperty.ownerStatus ||\n    property.lastSaleDate !== previousProperty.lastSaleDate\n  );\n});\n\n// Update the static data for the next run\nconst workflowStaticData = getWorkflowStaticData('global');\nworkflowStaticData.previousProperties = currentProperties;\n\n// Return the combined results\nreturn [\n  {\n    json: {\n      ...items[0].json,\n      newProperties,\n      changedProperties,\n      allChanges: [...newProperties, ...changedProperties]\n    }\n  }\n];"
+      },
+      "id": "522c0b4e-fad1-44df-bb04-1c50265e199b",
+      "name": "Compare Results",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        496,
+        3008
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "allChanges",
+        "options": {}
+      },
+      "id": "e773d91d-0633-47e9-ab2f-179a72dddf30",
+      "name": "Split Properties",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        720,
+        3008
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "83c15f54-20d9-460c-a3f5-82f6c98d3d63",
+              "operator": {
+                "type": "number",
+                "operation": "larger"
+              },
+              "leftValue": "={{ $json.equityPercentage || 0 }}",
+              "rightValue": 40
+            },
+            {
+              "id": "53bf77b8-4c78-4f87-a518-0e9a56c77a70",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              },
+              "leftValue": "={{ $json.ownerStatus || '' }}",
+              "rightValue": "absentee"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2934c24d-2903-456a-bcd5-c6e653d81bbe",
+      "name": "Filter High Potential",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        896,
+        3008
+      ],
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "url": "=https://api.batchdata.com/api/v1/properties/{{ $json.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "f57f2571-fc01-4433-8440-db9c81215926",
+      "name": "Get Property Details",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1104,
+        3008
+      ],
+      "typeVersion": 4.1,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "sMl0NdJWwKxalskG",
+          "name": "Batch Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ad37cef8-0359-4fb8-8c54-e5a5a0aa1082",
+              "name": "emailSubject",
+              "type": "string",
+              "value": "=New Property Opportunity: {{ $json.address.street }}, {{ $json.address.city }}, {{ $json.address.state }}"
+            },
+            {
+              "id": "9c1b6e34-b31e-4e46-a6b3-ea7c34b4456a",
+              "name": "emailContent",
+              "type": "string",
+              "value": "=<h2>High Potential Property Opportunity</h2>\n\n<p><strong>Address:</strong> {{ $json.address.street }}, {{ $json.address.city }}, {{ $json.address.state }} {{ $json.address.zip }}</p>\n\n<p><strong>Property Details:</strong></p>\n<ul>\n  <li>Market Value: ${{ $json.marketValue }}</li>\n  <li>Equity: {{ $json.equityPercentage }}%</li>\n  <li>Owner Status: {{ $json.ownerStatus }}</li>\n  <li>Square Feet: {{ $json.squareFeet }}</li>\n  <li>Bedrooms: {{ $json.bedrooms }}</li>\n  <li>Bathrooms: {{ $json.bathrooms }}</li>\n  <li>Year Built: {{ $json.yearBuilt }}</li>\n  <li>Last Sale Date: {{ $json.lastSaleDate }}</li>\n  <li>Last Sale Price: ${{ $json.lastSalePrice }}</li>\n</ul>\n\n<p><strong>Owner Information:</strong></p>\n<ul>\n  <li>Owner Name: {{ $json.owner.name }}</li>\n  <li>Mailing Address: {{ $json.owner.mailingAddress }}</li>\n  <li>Phone Numbers: {{ $json.owner.phoneNumbers ? $json.owner.phoneNumbers.join(', ') : 'N/A' }}</li>\n  <li>Email: {{ $json.owner.email || 'N/A' }}</li>\n</ul>\n\n<p>This property appears to be a high-potential opportunity based on:</p>\n<ul>\n  <li>High equity percentage</li>\n  <li>Absentee owner</li>\n</ul>\n\n<p><a href=\"https://maps.google.com/?q={{ $json.address.street }}, {{ $json.address.city }}, {{ $json.address.state }} {{ $json.address.zip }}\">View on Google Maps</a></p>"
+            },
+            {
+              "id": "eac4a51e-edfe-457a-9b38-a6c6f9e17ffd",
+              "name": "slackMessage",
+              "type": "string",
+              "value": "=*New High Potential Property Lead*\n\n*Address:* {{ $json.address.street }}, {{ $json.address.city }}, {{ $json.address.state }} {{ $json.address.zip }}\n*Market Value:* ${{ $json.marketValue }}\n*Equity:* {{ $json.equityPercentage }}%\n*Owner Status:* {{ $json.ownerStatus }}\n\n<https://maps.google.com/?q={{ $json.address.street }}, {{ $json.address.city }}, {{ $json.address.state }} {{ $json.address.zip }}|View on Google Maps>"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "84d3a32a-0e94-4ebd-a6c9-a7c9d948ab1c",
+      "name": "Format Email Content",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1296,
+        3008
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "fromEmail": "alerts@yourcompany.com",
+        "toEmail": "salesteam@yourcompany.com",
+        "subject": "={{ $json.emailSubject }}",
+        "options": {}
+      },
+      "id": "90eba8d4-cc7d-4873-907e-5e08ca5263cb",
+      "name": "Send Email Alert",
+      "type": "n8n-nodes-base.emailSend",
+      "position": [
+        1680,
+        2928
+      ],
+      "webhookId": "efb002e7-21e3-483c-9a4f-f95f400ad203",
+      "typeVersion": 2,
+      "credentials": {
+        "smtp": {
+          "id": "YAJqcaeosveA9t22",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0984J0T7PB",
+          "mode": "list",
+          "cachedResultName": "all-lumenosis"
+        },
+        "text": "={{ $json.slackMessage }}",
+        "otherOptions": {}
+      },
+      "id": "27cdc2a7-b9dd-48fc-9e35-92d687a0a069",
+      "name": "Post to Slack",
+      "type": "n8n-nodes-base.slack",
+      "position": [
+        1568,
+        3072
+      ],
+      "webhookId": "b50cadef-1223-47fa-bf5f-1512b4c323f0",
+      "typeVersion": 2,
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "zUemtOzgvbXIHwZm",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Main Workflow Flow\nThis part of the workflow handles the regular scanning and processing of property data. It runs on a schedule to detect new properties or changes to existing ones, then passes the filtered results along for detailed analysis.",
+        "height": 340,
+        "width": 1040
+      },
+      "id": "e8738014-0907-4e88-b39d-43534ab9e4ff",
+      "name": "Sticky Note Main Flow",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -368,
+        2880
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Property Filtering & Analysis\nHere we filter the properties based on criteria for high-potential leads (high equity %, absentee owners, etc.) and fetch detailed information about each property to prepare comprehensive reports for the sales team.",
+        "height": 340,
+        "width": 760
+      },
+      "id": "c2d30ae2-58a6-438c-9ce9-c2de3c0b11cb",
+      "name": "Sticky Note Filter & Analyze",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        688,
+        2880
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Notifications\nThis section delivers the property leads to the sales team through multiple channels:\n\n1. Email alerts with detailed property and owner information\n2. Slack notifications for quick updates\n\nBoth include Google Maps links to quickly view the property location.",
+        "height": 500,
+        "width": 440
+      },
+      "id": "a7a05d36-c243-4791-ab5f-4c17a384c3e0",
+      "name": "Sticky Note Notifications",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1456,
+        2720
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "# 🏡 Real Estate Market Scanning Workflow\n\n## 📊 Overview\n\nAutomated property lead generation system that scans the Austin, TX real estate market daily to identify high-potential investment opportunities with equity-rich properties and absentee owners.\n\n---\n\n## 🎯 Target Audience\n\n### Primary Users\n- **Real Estate Agents**: Professionals seeking new property leads and market trends\n- **Investors**: Individuals or firms seeking high-potential investment opportunities  \n- **Property Managers**: Professionals managing multiple properties wanting market updates\n- **Data Analysts**: Individuals analyzing real estate data for trends and insights\n\n---\n\n## 💡 Problem Solved\n\n### Identifying High-Potential Properties\n\n#### **🔍 Automated Scanning**\n- The workflow regularly scans the market for properties that meet specific criteria\n- Ensures no opportunities are missed through consistent monitoring\n- Runs on a defined schedule for reliable lead generation\n\n#### **📈 Data Comparison**\n- Compares current listings with previous data\n- Identifies new and changed properties automatically\n- Helps in making informed investment decisions\n\n#### **🎯 Targeted Notifications**\n- Filters for properties with high equity and absentee owners\n- Highlights the most promising leads for the sales team\n- Delivers actionable intelligence directly to your team\n\n---\n\n## ⚙️ Workflow Process Overview\n\n### Step-by-Step Automation\n\n| Step | Process | Description |\n|------|---------|-------------|\n| **1** | 🕒 **Scheduled Trigger** | Workflow runs automatically on defined schedule, scanning market at regular intervals |\n| **2** | 🔧 **API Configuration** | Sets BatchData API parameters for Austin, TX properties ($250K-$600K market value) |\n| **3** | 📥 **Data Retrieval** | Sends request to BatchData API to fetch property listings based on specified criteria |\n| **4** | 📋 **Previous Results Handling** | Retrieves previous property data to enable comparison with newly fetched listings |\n| **5** | 🔄 **Comparison Logic** | Identifies new properties and those with significant changes (price, status) since last scan |\n| **6** | 🎯 **Property Filtering** | Filters results to focus on properties with >40% equity and absentee owners |\n| **7** | 📊 **Detailed Property Information** | Retrieves comprehensive property details for each filtered result |\n| **8** | 📧 **Email & Slack Notifications** | Formats property details and sends alerts to sales team via email and Slack |\n\n---\n\n## 🛠️ Customization Guide\n\n### Configuration Instructions\n\n#### **🔑 API Credentials Setup**\n```javascript\n// Replace with your actual BatchData API key\nconst API_KEY = 'YOUR_BATCHDATA_API_KEY';\n```\n\n#### **🏠 Search Parameters Configuration**\n```javascript\nconst searchParameters = {\n  city: 'Austin',        // Modify target city\n  state: 'TX',           // Modify target state  \n  minPrice: 250000,      // Adjust minimum price range\n  maxPrice: 600000,      // Adjust maximum price range\n  propertyType: 'all'    // Specify property types if needed\n};\n```\n\n#### **📊 Filtering Criteria Customization**\n```javascript\n// Modify filtering conditions in Filter High Potential node\nconst filterCriteria = {\n  equityPercentage: 40,     // Change minimum equity percentage\n  ownerStatus: 'absentee',  // Modify owner status requirements\n  // Add additional criteria as needed\n};\n```\n\n#### **📨 Notification Settings**\n```javascript\n// Email Configuration\nconst emailSettings = {\n  recipients: [\n    'sales@yourcompany.com',\n    'leads@yourcompany.com'\n  ],\n  subject: 'High-Potential Properties Alert'\n};\n\n// Slack Configuration  \nconst slackSettings = {\n  channel: '#real-estate-leads',\n  webhook: 'YOUR_SLACK_WEBHOOK_URL'\n};\n```\n\n---\n\n## 🎯 Key Features\n\n### **✅ Automated Daily Scans**\n- Consistent market monitoring without manual intervention\n- Scheduled execution ensures no opportunities are missed\n\n### **✅ Intelligent Filtering** \n- Focus on high-equity properties (>40%)\n- Target absentee owners for better conversion rates\n\n### **✅ Real-Time Notifications**\n- Immediate alerts via email and Slack\n- Formatted reports with actionable property details\n\n### **✅ Data Comparison**\n- Tracks property changes over time\n- Identifies new listings and price modifications\n\n### **✅ Scalable Configuration**\n- Easily modify search criteria and filtering rules\n- Adaptable to different markets and investment strategies\n\n---\n\n## 📈 Expected Results\n\n### **Lead Generation Metrics**\n- **Daily Property Scans**: 500-1000 properties analyzed\n- **Filtered High-Potential Leads**: 10-25 properties per day  \n- **Time Savings**: 15+ hours of manual research eliminated weekly\n- **Lead Quality**: 40%+ equity properties with absentee owners\n\n### **ROI Impact**\n- **Faster Deal Identification**: Immediate notification of new opportunities\n- **Improved Conversion**: Focus on high-probability properties\n- **Market Advantage**: Early identification before competition\n- **Team Efficiency**: Automated lead qualification and distribution\n\n---\n\n## 🔧 Technical Requirements\n\n### **APIs & Integrations**\n- **BatchData API**: Property data retrieval\n- **Email Service**: SMTP or service provider integration\n- **Slack API**: Team notification system\n\n### **System Dependencies**\n- **Scheduling System**: Cron job or workflow automation platform\n- **Database**: Previous results storage and comparison\n- **Data Processing**: Property filtering and analysis logic\n\n---\n\n## 📋 Implementation Checklist\n\n- [ ] **Obtain BatchData API credentials**\n- [ ] **Configure search parameters for target market**\n- [ ] **Set up email notification system**\n- [ ] **Configure Slack integration**\n- [ ] **Test workflow with sample data**\n- [ ] **Establish daily execution schedule**\n- [ ] **Train team on notification format**\n- [ ] **Monitor and optimize filtering criteria**\n\n---\n\n## 🚀 Getting Started\n\n1. **Setup API Access**: Obtain BatchData API key and configure credentials\n2. **Customize Parameters**: Modify search criteria for your target market\n3. **Configure Notifications**: Set up email and Slack alert systems\n4. **Test Workflow**: Run sample execution to verify functionality\n5. **Schedule Automation**: Enable daily execution schedule\n6. **Monitor Results**: Track lead quality and adjust filters as needed\n\n---\n\n## 📞 Support & Resources\n\n### **Documentation Links**\n- [BatchData API Documentation](https://batchdata.com/docs)\n- [Slack API Integration Guide](https://api.slack.com)\n- [Email Service Setup Instructions](mailto:support@yourcompany.com)\n\n### **Contact Information**\n- **Technical Support**: tech@lumenosis.com\n- **Sales Questions**: sales@lumenosis.com\n- **Implementation Help**: martin@lumenosis.com\n\n---\n\n*This workflow is part of the Lumenosis AI automation suite designed to streamline real estate lead generation and market analysis.*\n\n\n## Setup Instructions\n\n1. **API Keys & Credentials**:\n   - Add your BatchData API Key to the BatchData API Configuration node\n   - Set up SMTP credentials for email delivery\n   - Configure Slack API credentials for team notifications\n\n2. **Customize Search Parameters**:\n   - Adjust property search criteria in the BatchData API Configuration node\n   - Modify the filtering conditions in the Filter High Potential node\n\n3. **Notification Recipients**:\n   - Update email recipients in the Send Email Alert node\n   - Set appropriate Slack channel in the Post to Slack node",
+        "height": 5228,
+        "width": 624
+      },
+      "id": "dd69c7d6-c065-4434-9c42-a6bdffde2d71",
+      "name": "Sticky Note Instructions",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1024,
+        2896
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1136,
+        2448
+      ],
+      "id": "2df9554b-0523-49fb-ac52-241dc0b3b6e2",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "id": "fe785b46-566c-47b5-97fd-0f9d57023796",
+      "name": "Daily Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        -1152,
+        2240
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.batchdata.com/api/v1/properties/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "33c72a0e-ff7f-487b-95aa-1591e196d580",
+      "name": "Search Properties API",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -480,
+        2400
+      ],
+      "typeVersion": 4.1,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "sMl0NdJWwKxalskG",
+          "name": "Batch Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "search_parameters",
+              "value": "={ \"location\": { \"city\": \"Austin\", \"state\": \"TX\" }, \"propertyType\": \"single_family\", \"value\": { \"min\": 200000, \"max\": 500000 }, \"status\": \"distressed\", \"equity\": { \"min\": 30 }, \"limit\": 50 }"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4b01e61f-9e69-416c-b57b-3eb58aeaf4bf",
+      "name": "Configure Search Parameters",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -768,
+        2384
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process batch property results and filter according to criteria\nconst results = $input.all()[0].json.results || [];\n\n// Filter to find matching properties\nconst filteredProperties = results.filter(property => {\n  // Example filtering criteria - customize as needed\n  // Only include properties where:\n  // 1. Owner doesn't live at the property (absentee)\n  // 2. Property has been owned for 5+ years\n  // 3. No sales in the last 3 years\n  \n  const isAbsentee = property.owner_occupied === false;\n  \n  // Calculate years of ownership if purchase date exists\n  let yearsOwned = 0;\n  if (property.last_sale_date) {\n    const purchaseDate = new Date(property.last_sale_date);\n    const currentDate = new Date();\n    yearsOwned = currentDate.getFullYear() - purchaseDate.getFullYear();\n  }\n  \n  // Check if no recent sales (last 3 years)\n  let noRecentSales = true;\n  if (property.last_sale_date) {\n    const lastSale = new Date(property.last_sale_date);\n    const threeYearsAgo = new Date();\n    threeYearsAgo.setFullYear(threeYearsAgo.getFullYear() - 3);\n    noRecentSales = lastSale < threeYearsAgo;\n  }\n  \n  return isAbsentee && yearsOwned >= 5 && noRecentSales;\n});\n\n// Add relevant score to each property\nconst scoredProperties = filteredProperties.map(property => {\n  // Create a simple scoring system from 0-100\n  // This helps prioritize the best leads\n  let score = 50; // Base score\n  \n  // Increase score for properties with more equity\n  if (property.equity_percentage) {\n    score += Math.min(property.equity_percentage / 2, 25);\n  }\n  \n  // Increase score for longer ownership\n  if (property.last_sale_date) {\n    const purchaseDate = new Date(property.last_sale_date);\n    const currentDate = new Date();\n    const yearsOwned = currentDate.getFullYear() - purchaseDate.getFullYear();\n    score += Math.min(yearsOwned, 15);\n  }\n  \n  // Increase score for tax delinquency\n  if (property.tax_delinquent) {\n    score += 10;\n  }\n  \n  return { ...property, lead_score: Math.round(score) };\n});\n\n// Sort by score descending\nscoredProperties.sort((a, b) => b.lead_score - a.lead_score);\n\n// Return the filtered and scored properties\nreturn scoredProperties.map(property => {\n  return {\n    json: property\n  };\n});"
+      },
+      "id": "caed1ef9-b9de-490d-b2e2-afd9fcacf96d",
+      "name": "Filter Property Results",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        -272,
+        2400
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.batchdata.com/api/v1/property/skip-trace",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "9d9f80c5-5b68-4aba-844c-f93fde4767ee",
+      "name": "Get Owner Contact Info",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -48,
+        2400
+      ],
+      "typeVersion": 4.1,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "sMl0NdJWwKxalskG",
+          "name": "Batch Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process and format the property data with owner contact info\nreturn $input.all().map(item => {\n  const property = item.json;\n  const skipTraceData = property.skip_trace_data || {};\n  const ownerInfo = property.owner_info || {};\n  \n  return {\n    json: {\n      // Property Information\n      property_id: property.property_id,\n      address: property.address,\n      city: property.city,\n      state: property.state,\n      zip: property.zip,\n      property_type: property.property_type,\n      beds: property.beds,\n      baths: property.baths,\n      sqft: property.building_sqft,\n      lot_size: property.lot_size,\n      year_built: property.year_built,\n      last_sale_date: property.last_sale_date,\n      last_sale_price: property.last_sale_price,\n      estimated_value: property.estimated_value,\n      estimated_equity: property.estimated_equity,\n      equity_percentage: property.equity_percentage,\n      lead_score: property.lead_score,\n      \n      // Owner Information\n      owner_name: ownerInfo.full_name || `${ownerInfo.first_name || ''} ${ownerInfo.last_name || ''}`.trim(),\n      owner_mailing_address: ownerInfo.mailing_address,\n      owner_mailing_city: ownerInfo.mailing_city,\n      owner_mailing_state: ownerInfo.mailing_state,\n      owner_mailing_zip: ownerInfo.mailing_zip,\n      \n      // Contact Info from Skip Trace\n      email: skipTraceData.email,\n      phone: skipTraceData.phone_number,\n      mobile: skipTraceData.mobile_number,\n      alternate_phone: skipTraceData.alternate_phone,\n      \n      // Additional Details\n      absentee_owner: property.owner_occupied === false ? 'Yes' : 'No',\n      tax_delinquent: property.tax_delinquent ? 'Yes' : 'No',\n      years_owned: property.years_owned,\n      lead_source: 'BatchData Property Search',\n      date_added: new Date().toISOString().split('T')[0]\n    }\n  };\n});"
+      },
+      "id": "0aaaf6d7-beb3-43b6-b00c-36252e30b7f2",
+      "name": "Format Lead Data",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        160,
+        2400
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "operation": "toFile",
+        "fileFormat": "xlsx",
+        "options": {
+          "fileName": "Property_Leads_{{ $now.format('YYYY-MM-DD') }}.xlsx",
+          "headerRow": true
+        }
+      },
+      "id": "f04c9e06-8ab5-4968-aed4-30fc178f077f",
+      "name": "Create Excel Spreadsheet",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "position": [
+        480,
+        2304
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "email": "ofunrein123@gmail.com",
+        "additionalFields": {},
+        "options": {}
+      },
+      "id": "eeb10398-ade6-494d-bfce-b7c777ac055c",
+      "name": "Push to CRM",
+      "type": "n8n-nodes-base.hubspot",
+      "position": [
+        480,
+        2688
+      ],
+      "typeVersion": 2,
+      "credentials": {
+        "hubspotOAuth2Api": {
+          "id": "wqY7N4bfHKYYyzVR",
+          "name": "HubSpot account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "no-reply@yourdomain.com",
+        "toEmail": "your-email@yourdomain.com",
+        "subject": "Property Lead Report - {{ $now.format('YYYY-MM-DD') }}",
+        "options": {}
+      },
+      "id": "36d1e8c7-ec19-4cd6-9372-7e1a3fb90425",
+      "name": "Email Notification",
+      "type": "n8n-nodes-base.emailSend",
+      "position": [
+        720,
+        2448
+      ],
+      "webhookId": "e9459278-1cd9-47bb-bffd-88380d297217",
+      "typeVersion": 2.1,
+      "credentials": {
+        "smtp": {
+          "id": "YAJqcaeosveA9t22",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Summarize the results of the property lead search\nconst leads = $input.all();\nconst totalLeads = leads.length;\n\n// Calculate the highest lead score\nlet highestScore = 0;\nif (totalLeads > 0) {\n  highestScore = Math.max(...leads.map(item => item.json.lead_score || 0));\n}\n\n// Return a summary object\nreturn {\n  json: {\n    total_leads: totalLeads,\n    highest_score: highestScore,\n    execution_date: new Date().toISOString(),\n    success: true\n  }\n};"
+      },
+      "id": "6af0f47e-7538-46f7-948f-42848261fee6",
+      "name": "Summarize Results",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        480,
+        2496
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "content": "# Property Lead Automation Workflow\n\nThis workflow automatically searches for potential real estate leads based on configured criteria, obtains owner contact information through skip tracing, and pushes the leads to your CRM. It can be run manually or scheduled to run daily.\n\n## Steps: Property Search → Filter Results → Skip Trace → Format Data → Export (Excel & CRM)",
+        "height": 280,
+        "width": 800
+      },
+      "id": "b3280f77-6ec8-4ce0-b507-cd39904616e5",
+      "name": "Sticky Note - Workflow Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1216,
+        1648
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Workflow Triggers\n\nThis workflow can be triggered in two ways:\n\n1. **Scheduled Trigger** - Runs automatically every day at the specified time\n\n2. **Manual Trigger** - Run the workflow on-demand by clicking Execute",
+        "height": 620,
+        "width": 320,
+        "color": 2
+      },
+      "id": "fc6cb10c-38d9-4ee0-bf98-4ddc9eec13e2",
+      "name": "Sticky Note - Triggers",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1232,
+        1984
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Search Configuration\n\nConfigure your property search criteria including:\n\n- Location (city, state, zip)\n- Property type\n- Value range\n- Equity percentage\n- Owner status\n- And more\n\nEdit the 'search_parameters' in the Set node to customize your search criteria.",
+        "height": 650,
+        "width": 320,
+        "color": 4
+      },
+      "id": "891b5082-9ab3-4d1f-9b95-2df904d148aa",
+      "name": "Sticky Note - Property Search",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -880,
+        1968
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Property Data Processing\n\n1. **Search Properties API** - Connect to BatchData to search for properties\n\n2. **Filter Property Results** - Apply additional filtering logic and calculate lead scores based on factors like:\n   - Equity percentage\n   - Years of ownership\n   - Owner occupancy status\n   - Tax delinquency\n   - Recent sales activity\n\n3. **Get Owner Contact Info** - Skip trace each property to find owner contact details\n\n4. **Format Lead Data** - Structure the data for CRM and reporting",
+        "height": 660,
+        "width": 880,
+        "color": 5
+      },
+      "id": "8509c796-b03a-40e8-a8a9-7007e0d46c24",
+      "name": "Sticky Note - Data Processing",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -544,
+        1968
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Lead Output Options\n\n1. **Create Excel Spreadsheet** - Generates an Excel file with all property leads and details\n\n2. **Push to CRM** - Adds leads to your CRM system (HubSpot in this example, but can be changed to Salesforce, Zoho, etc.)\n\n3. **Email Notification** - Sends a summary email with the Excel file attached\n\n4. **Summarize Results** - Provides a summary of the execution results",
+        "height": 920,
+        "width": 560,
+        "color": 6
+      },
+      "id": "7d2a69aa-eabc-4463-bcc1-2253f71ec3f4",
+      "name": "Sticky Note - Output",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        352,
+        1920
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "# 🏡 Property Lead Automation Workflow\n### 🔍 Real Estate Lead Generation: BatchData Skip Tracing & CRM Integration\n\n---\n\n## 📋 Overview\n\nThis workflow automates the entire property lead generation process in a few simple steps, connecting to BatchData's comprehensive property database to find high-potential real estate leads with owner contact information.\n\n---\n\n## ⚙️ How It Works\n\n### Automated Lead Generation Process\n\nThe workflow automates the entire property lead generation process through these key stages:\n\n#### **1. 🎯 Property Search**\n- Connects to BatchData's Property Search API with customizable parameters\n- Configurable filters: location, property type, value range, equity percentage, etc.\n- Searches nationwide database of 150+ million properties\n\n#### **2. 📊 Lead Filtering & Scoring** \n- Processes results to identify the most promising leads\n- Filters based on criteria like:\n  - Absentee ownership status\n  - Years owned by current owner\n  - Equity percentage\n  - Tax delinquency status\n- Assigns lead scores (0-100) to prioritize follow-up\n\n#### **3. 🔍 Skip Tracing**\n- Automatically retrieves owner contact information\n- Obtains phone numbers, email addresses, and mailing addresses\n- Validates contact data for each qualified property\n\n#### **4. 📁 Data Formatting**\n- Structures all property and owner data into clean, organized format\n- Prepares data for CRM integration and Excel export\n- Standardizes field names and data types\n\n#### **5. 📤 Multi-Channel Output**\n- **Excel Spreadsheet**: Generates detailed lead report with all property and contact data\n- **CRM Integration**: Pushes leads directly to your CRM (HubSpot, Salesforce, etc.)\n- **Email Notifications**: Sends summary email with spreadsheet attached\n- **Automated Scheduling**: Runs daily or on-demand as needed\n\n---\n\n## 👥 Who's It For\n\n### Perfect for Real Estate Professionals:\n\n#### **🏠 Real Estate Investors**\n- Find off-market properties with motivated sellers\n- Identify distressed properties with high equity\n- Build consistent deal pipeline\n\n#### **🏘️ Real Estate Agents**\n- Generate listing leads from high-equity properties\n- Target absentee owners for potential listings\n- Expand lead generation beyond traditional methods\n\n#### **🏢 Investment Companies**\n- Scale acquisition operations with consistent lead flow\n- Automate due diligence and lead qualification\n- Track and score investment opportunities\n\n#### **📢 Real Estate Marketers**\n- Run targeted campaigns to specific property owner segments\n- Access verified contact information for direct outreach\n- Measure and optimize campaign performance\n\n#### **🔄 Wholesalers**\n- Build pipeline of potential wholesale deals\n- Identify motivated sellers through property indicators\n- Automate lead sourcing and initial qualification\n\n#### **🔧 Property Service Providers**\n- Target specific property types for roof repair, renovation, etc.\n- Reach property owners with relevant services\n- Generate leads for contracting businesses\n\n---\n\n## 🔧 Workflow Configuration\n\n### Workflow Triggers\n\n#### **📅 Scheduled Trigger**\n- Runs automatically daily at specified time\n- Ensures consistent lead generation\n- Configurable timing and frequency\n\n#### **⚡ Manual Trigger**\n- Execute workflow on-demand\n- Test configurations and parameters\n- Run additional searches as needed\n\n### Search Configuration Parameters\n\n```javascript\n{\n  \"location\": {\n    \"city\": \"Austin\",\n    \"state\": \"TX\"\n  },\n  \"propertyType\": \"single_family\",\n  \"value\": {\n    \"min\": 200000,\n    \"max\": 500000\n  },\n  \"status\": \"distressed\",\n  \"equity\": {\n    \"min\": 30\n  },\n  \"limit\": 50\n}\n```\n\n### Lead Scoring Algorithm\n\nThe workflow uses a sophisticated scoring system (0-100) based on:\n\n| Factor | Weight | Description |\n|--------|--------|-------------|\n| **Equity Percentage** | 25 points | Higher equity = higher motivation potential |\n| **Years Owned** | 15 points | Longer ownership may indicate readiness to sell |\n| **Tax Delinquency** | 10 points | Financial distress indicator |\n| **Absentee Owner** | Qualifier | Non-owner occupied properties |\n| **No Recent Sales** | Qualifier | Properties not sold in last 3 years |\n\n---\n\n## 📊 Data Processing Pipeline\n\n### 1. Property Search API\n- **Endpoint**: BatchData Property Search API\n- **Authentication**: HTTP Header Auth\n- **Parameters**: Configurable search criteria\n- **Output**: Raw property data matching criteria\n\n### 2. Filter Property Results\n- **Function**: Advanced filtering and scoring logic\n- **Criteria**: \n  - Owner occupancy status\n  - Years of ownership (5+ years)\n  - Recent sales activity (no sales in 3 years)\n- **Output**: Filtered and scored property list\n\n### 3. Skip Trace API\n- **Endpoint**: BatchData Skip Trace API\n- **Function**: Retrieve owner contact information\n- **Data**: Phone, email, mailing address\n- **Output**: Enhanced property records with contact data\n\n### 4. Data Formatting\n- **Function**: Structure data for export and CRM\n- **Fields**: 25+ standardized data points\n- **Output**: Clean, organized lead records\n\n---\n\n## 📁 Output Formats\n\n### Excel Spreadsheet Export\n- **Filename**: `Property_Leads_YYYY-MM-DD.xlsx`\n- **Format**: Structured spreadsheet with headers\n- **Data**: Complete property and owner information\n- **Fields**: 25+ data points including:\n  - Property details (address, value, equity)\n  - Owner information (name, contact details)\n  - Lead scoring and classification\n  - Date stamps and source tracking\n\n### Email Notification\n- **Subject**: Property Lead Report with date\n- **Attachment**: Excel spreadsheet\n- **Content**: Summary of results and lead count\n- **Recipients**: Configurable email addresses\n\n---\n\n## 🗂️ Complete Data Schema\n\n### Property Information\n- Property ID and address details\n- Property type, beds, baths, square footage\n- Year built, lot size, estimated value\n- Last sale date, sale price, equity calculations\n- Lead score and classification\n\n### Owner Information  \n- Owner name and mailing address\n- Contact information (phone, email, mobile)\n- Ownership details and occupancy status\n- Years owned and tax status\n\n### Lead Intelligence\n- Absentee owner status\n- Tax delinquency indicators\n- Lead source and date added\n- Calculated lead score (0-100)\n\n---\n\n## 📈 About BatchData\n\n### Comprehensive Property Data Provider\n\n#### **🗄️ Extensive Database**\n- **Coverage**: 150+ million properties across all 50 states\n- **Updates**: Continuously refreshed for accuracy\n- **Sources**: Tax records, MLS data, public records\n\n#### **📊 Rich Property Data**\n- Ownership information and history\n- Tax records and assessment data\n- Sales history and valuation estimates\n- Equity positions and mortgage data\n- Property characteristics and details\n\n#### **🔍 Skip Tracing Services**\n- Phone numbers (landline and mobile)\n- Email addresses and mailing addresses\n- Address validation and verification\n- Contact data quality scoring\n\n#### **🚨 Distressed Property Indicators**\n- Pre-foreclosure flags\n- Tax delinquency status\n- Vacancy indicators\n- Bankruptcy filings\n- Other motivation factors\n\n#### **🔌 RESTful API**\n- Professional API for programmatic access\n- Comprehensive documentation\n- Rate limiting and usage monitoring\n- Ideal for automation platforms like N8N\n\n---\n\n## 🚀 Getting Started\n\n### Prerequisites\n- BatchData API account and credentials\n- N8N workflow automation platform\n- Email service for notifications (SMTP)\n- Optional: CRM integration credentials\n\n### Setup Steps\n\n1. **Configure BatchData Credentials**\n   - Obtain API key from BatchData\n   - Set up HTTP Header Authentication in N8N\n   - Test API connectivity\n\n2. **Customize Search Parameters**\n   - Define target geographic areas\n   - Set property value ranges\n   - Configure filtering criteria\n\n3. **Set Up Notifications**\n   - Configure SMTP email settings\n   - Set recipient email addresses\n   - Test email delivery\n\n4. **Schedule Execution**\n   - Enable daily trigger schedule\n   - Set optimal execution time\n   - Monitor initial runs\n\n### Best Practices\n\n- **Start Small**: Begin with limited geographic area and property count\n- **Monitor Results**: Review lead quality and adjust filters\n- **Refine Scoring**: Optimize lead scoring based on conversion data\n- **Regular Updates**: Keep search parameters current with market conditions\n\n---\n\n## 🎯 Expected Results\n\n### Performance Metrics\n- **Daily Leads**: 10-50 qualified property leads\n- **Lead Quality**: High-equity, motivated seller indicators\n- **Contact Rate**: 60-80% valid contact information\n- **Time Savings**: 10+ hours of manual research eliminated daily\n\n### ROI Benefits\n- **Faster Lead Generation**: Automated daily prospecting\n- **Higher Quality Leads**: Advanced filtering and scoring\n- **Improved Conversion**: Targeted outreach to motivated sellers\n- **Scalable Operations**: Handle multiple markets simultaneously\n\n---\n\n## 📞 Support & Resources\n\n### Technical Support\n- **N8N Documentation**: [n8n.io/docs](https://n8n.io/docs)\n- **BatchData API Docs**: [api.batchdata.com](https://api.batchdata.com)\n- **Workflow Support**: tech@lumenosis.com\n\n### Implementation Services\n- **Custom Configuration**: martin@lumenosis.com\n- **Training & Onboarding**: support@lumenosis.com\n- **Advanced Integrations**: sales@lumenosis.com\n\n---\n\n## 🔒 JSON Workflow Import\n\n```json\n{\n  \"nodes\": [\n    {\n      \"parameters\": {},\n      \"type\": \"n8n-nodes-base.manualTrigger\",\n      \"typeVersion\": 1,\n      \"position\": [-320, 2336],\n      \"id\": \"2df9554b-0523-49fb-ac52-241dc0b3b6e2\",\n      \"name\": \"When clicking 'Execute workflow'\"\n    },\n    {\n      \"parameters\": {\n        \"rule\": {\n          \"interval\": [{}]\n        }\n      },\n      \"id\": \"fe785b46-566c-47b5-97fd-0f9d57023796\",\n      \"name\": \"Daily Schedule\",\n      \"type\": \"n8n-nodes-base.scheduleTrigger\",\n      \"position\": [-320, 2080],\n      \"typeVersion\": 1.1\n    }\n    // ... [Complete JSON workflow nodes and connections]\n  ],\n  \"connections\": {\n    // ... [Complete connection definitions]\n  }\n}\n```\n\n*Complete JSON workflow available for import into N8N platform*\n\n---\n\n## 📋 Implementation Checklist\n\n- [ ] **BatchData API Setup**: Obtain credentials and configure authentication\n- [ ] **N8N Platform**: Install and configure workflow automation platform  \n- [ ] **Search Parameters**: Customize property search criteria\n- [ ] **Email Configuration**: Set up SMTP and notification settings\n- [ ] **Test Execution**: Run manual test with sample data\n- [ ] **Schedule Setup**: Enable daily automated execution\n- [ ] **Lead Review**: Analyze initial results and optimize filters\n- [ ] **CRM Integration**: Connect to your existing CRM system\n- [ ] **Team Training**: Train staff on new lead processing workflow\n- [ ] **Performance Monitoring**: Track metrics and ROI\n\n---\n\n*This workflow is part of the Lumenosis AI automation suite designed to streamline real estate lead generation and market analysis.*",
+        "height": 8312,
+        "width": 800
+      },
+      "id": "8cd6251d-4e98-444a-9945-343c6269dc71",
+      "name": "Sticky Note - Workflow Overview1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2048,
+        1664
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Compare Results": {
+      "main": [
+        [
+          {
+            "node": "Split Properties",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Properties": {
+      "main": [
+        [
+          {
+            "node": "Filter High Potential",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Email Content": {
+      "main": [
+        [
+          {
+            "node": "Send Email Alert",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Post to Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Previous Results": {
+      "main": [
+        [
+          {
+            "node": "Compare Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Property Details": {
+      "main": [
+        [
+          {
+            "node": "Format Email Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Market Scan": {
+      "main": [
+        [
+          {
+            "node": "BatchData API Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter High Potential": {
+      "main": [
+        [
+          {
+            "node": "Get Property Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query BatchData Properties": {
+      "main": [
+        [
+          {
+            "node": "Get Previous Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BatchData API Configuration": {
+      "main": [
+        [
+          {
+            "node": "Query BatchData Properties",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Configure Search Parameters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily Schedule": {
+      "main": [
+        [
+          {
+            "node": "Configure Search Parameters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Lead Data": {
+      "main": [
+        [
+          {
+            "node": "Create Excel Spreadsheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Push to CRM",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Summarize Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize Results": {
+      "main": [
+        [
+          {
+            "node": "Email Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Properties API": {
+      "main": [
+        [
+          {
+            "node": "Filter Property Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Owner Contact Info": {
+      "main": [
+        [
+          {
+            "node": "Format Lead Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Property Results": {
+      "main": [
+        [
+          {
+            "node": "Get Owner Contact Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Excel Spreadsheet": {
+      "main": [
+        [
+          {
+            "node": "Email Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configure Search Parameters": {
+      "main": [
+        [
+          {
+            "node": "Search Properties API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "83f9d799-afcd-48b8-9ccb-f2874dd87501",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5cbfbf325760032b1ac607c5e1c58d51bc8eb58eec575274707c1d6818b2bc85"
+  },
+  "id": "UlQOsCHNujihAzU9",
+  "tags": []
+}
