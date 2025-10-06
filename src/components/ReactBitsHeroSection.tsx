@@ -154,6 +154,8 @@ export default function ReactBitsHeroSection({ className = '' }: ReactBitsHeroSe
           blend={0.8}
           amplitude={2.0}
           speed={0.5}
+          fps={30}
+          pixelRatio={0.65}
           className="w-full h-full"
         />
       </div>

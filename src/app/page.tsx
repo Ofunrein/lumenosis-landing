@@ -542,6 +542,8 @@ export default function HomePage() {
               blend={0.6}
               amplitude={1.2}
               speed={0.3}
+              fps={30}
+              pixelRatio={0.6}
               className="w-full h-full opacity-70"
             />
           </div>
@@ -552,6 +554,8 @@ export default function HomePage() {
               blend={0.6}
               amplitude={1.5}
               speed={0.3}
+              fps={30}
+              pixelRatio={0.7}
               className="w-full h-full opacity-70"
             />
           </div>

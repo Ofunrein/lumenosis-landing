@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
 
 const VERT = `#version 300 es
@@ -114,14 +114,31 @@ interface AuroraProps {
   time?: number;
   speed?: number;
   className?: string;
+  fps?: number; // Target FPS (default 30 for better performance)
+  pixelRatio?: number; // Render scale (0.5 = half resolution, default 0.75)
 }
 
 export default function Aurora(props: AuroraProps) {
-  const { colorStops = ['#5227FF', '#7cff67', '#5227FF'], amplitude = 1.0, blend = 0.5, className = '' } = props;
+  const { 
+    colorStops = ['#5227FF', '#7cff67', '#5227FF'], 
+    amplitude = 1.0, 
+    blend = 0.5, 
+    className = '',
+    fps = 30, // Default to 30fps for better performance
+    pixelRatio = 0.75 // Render at 75% resolution
+  } = props;
   const propsRef = useRef<AuroraProps>(props);
   propsRef.current = props;
 
   const ctnDom = useRef<HTMLDivElement>(null);
+
+  // Memoize color conversion - only recalculate when colorStops change
+  const colorStopsArray = useMemo(() => {
+    return colorStops.map(hex => {
+      const c = new Color(hex);
+      return [c.r, c.g, c.b];
+    });
+  }, [colorStops]);
 
   useEffect(() => {
     const ctn = ctnDom.current;
@@ -130,13 +147,18 @@ export default function Aurora(props: AuroraProps) {
     const renderer = new Renderer({
       alpha: true,
       premultipliedAlpha: true,
-      antialias: true
+      antialias: false,
+      dpr: pixelRatio // Use custom pixel ratio for performance
     });
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     gl.canvas.style.backgroundColor = 'transparent';
+    
+    // Scale canvas to fill container while rendering at lower resolution
+    gl.canvas.style.width = '100%';
+    gl.canvas.style.height = '100%';
 
     let program: Program | undefined;
 
@@ -144,9 +166,10 @@ export default function Aurora(props: AuroraProps) {
       if (!ctn) return;
       const width = ctn.offsetWidth;
       const height = ctn.offsetHeight;
-      renderer.setSize(width, height);
+      // Use pixel ratio for rendering resolution
+      renderer.setSize(width * pixelRatio, height * pixelRatio);
       if (program) {
-        program.uniforms.uResolution.value = [width, height];
+        program.uniforms.uResolution.value = [width * pixelRatio, height * pixelRatio];
       }
     }
     window.addEventListener('resize', resize);
@@ -156,11 +179,6 @@ export default function Aurora(props: AuroraProps) {
       delete geometry.attributes.uv;
     }
 
-    const colorStopsArray = colorStops.map(hex => {
-      const c = new Color(hex);
-      return [c.r, c.g, c.b];
-    });
-
     program = new Program(gl, {
       vertex: VERT,
       fragment: FRAG,
@@ -168,7 +186,7 @@ export default function Aurora(props: AuroraProps) {
         uTime: { value: 0 },
         uAmplitude: { value: amplitude },
         uColorStops: { value: colorStopsArray },
-        uResolution: { value: [ctn.offsetWidth, ctn.offsetHeight] },
+        uResolution: { value: [ctn.offsetWidth * pixelRatio, ctn.offsetHeight * pixelRatio] },
         uBlend: { value: blend }
       }
     });
@@ -176,19 +194,59 @@ export default function Aurora(props: AuroraProps) {
     const mesh = new Mesh(gl, { geometry, program });
     ctn.appendChild(gl.canvas);
 
+    // FPS throttling
+    const frameInterval = 1000 / fps;
+    let lastFrameTime = 0;
+    
+    // Cache previous values to avoid unnecessary uniform updates
+    let prevAmplitude = amplitude;
+    let prevBlend = blend;
+    let prevColorStops = colorStops;
+
     let animateId = 0;
     const update = (t: number) => {
       animateId = requestAnimationFrame(update);
-      const { time = t * 0.01, speed = 1.0 } = propsRef.current;
+      
+      // Throttle to target FPS
+      if (t - lastFrameTime < frameInterval) {
+        return;
+      }
+      lastFrameTime = t - ((t - lastFrameTime) % frameInterval);
+      
+      const { 
+        time = t * 0.01, 
+        speed = 1.0, 
+        amplitude: currAmp, 
+        blend: currBlend, 
+        colorStops: currStops 
+      } = propsRef.current;
+      
       if (program) {
+        // Always update time
         program.uniforms.uTime.value = time * speed * 0.1;
-        program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0;
-        program.uniforms.uBlend.value = propsRef.current.blend ?? blend;
-        const stops = propsRef.current.colorStops ?? colorStops;
-        program.uniforms.uColorStops.value = stops.map((hex: string) => {
-          const c = new Color(hex);
-          return [c.r, c.g, c.b];
-        });
+        
+        // Only update other uniforms if they've changed
+        const newAmp = currAmp ?? amplitude;
+        if (newAmp !== prevAmplitude) {
+          program.uniforms.uAmplitude.value = newAmp;
+          prevAmplitude = newAmp;
+        }
+        
+        const newBlend = currBlend ?? blend;
+        if (newBlend !== prevBlend) {
+          program.uniforms.uBlend.value = newBlend;
+          prevBlend = newBlend;
+        }
+        
+        const newStops = currStops ?? colorStops;
+        if (newStops !== prevColorStops) {
+          program.uniforms.uColorStops.value = newStops.map((hex: string) => {
+            const c = new Color(hex);
+            return [c.r, c.g, c.b];
+          });
+          prevColorStops = newStops;
+        }
+        
         renderer.render({ scene: mesh });
       }
     };
@@ -204,7 +262,7 @@ export default function Aurora(props: AuroraProps) {
       }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, [amplitude]);
+  }, [amplitude, blend, colorStops, colorStopsArray, fps, pixelRatio]);
 
   return <div ref={ctnDom} className={`w-full h-full ${className}`} />;
 }
