@@ -114,19 +114,10 @@ interface AuroraProps {
   time?: number;
   speed?: number;
   className?: string;
-  fps?: number; // Target FPS (default 30 for better performance)
-  pixelRatio?: number; // Render scale (0.5 = half resolution, default 0.75)
 }
 
 export default function Aurora(props: AuroraProps) {
-  const { 
-    colorStops = ['#5227FF', '#7cff67', '#5227FF'], 
-    amplitude = 1.0, 
-    blend = 0.5, 
-    className = '',
-    fps = 30, // Default to 30fps for better performance
-    pixelRatio = 0.75 // Render at 75% resolution
-  } = props;
+  const { colorStops = ['#5227FF', '#7cff67', '#5227FF'], amplitude = 1.0, blend = 0.5, className = '' } = props;
   const propsRef = useRef<AuroraProps>(props);
   propsRef.current = props;
 
@@ -147,18 +138,13 @@ export default function Aurora(props: AuroraProps) {
     const renderer = new Renderer({
       alpha: true,
       premultipliedAlpha: true,
-      antialias: false,
-      dpr: pixelRatio // Use custom pixel ratio for performance
+      antialias: false
     });
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     gl.canvas.style.backgroundColor = 'transparent';
-    
-    // Scale canvas to fill container while rendering at lower resolution
-    gl.canvas.style.width = '100%';
-    gl.canvas.style.height = '100%';
 
     let program: Program | undefined;
 
@@ -166,10 +152,9 @@ export default function Aurora(props: AuroraProps) {
       if (!ctn) return;
       const width = ctn.offsetWidth;
       const height = ctn.offsetHeight;
-      // Use pixel ratio for rendering resolution
-      renderer.setSize(width * pixelRatio, height * pixelRatio);
+      renderer.setSize(width, height);
       if (program) {
-        program.uniforms.uResolution.value = [width * pixelRatio, height * pixelRatio];
+        program.uniforms.uResolution.value = [width, height];
       }
     }
     window.addEventListener('resize', resize);
@@ -186,7 +171,7 @@ export default function Aurora(props: AuroraProps) {
         uTime: { value: 0 },
         uAmplitude: { value: amplitude },
         uColorStops: { value: colorStopsArray },
-        uResolution: { value: [ctn.offsetWidth * pixelRatio, ctn.offsetHeight * pixelRatio] },
+        uResolution: { value: [ctn.offsetWidth, ctn.offsetHeight] },
         uBlend: { value: blend }
       }
     });
@@ -194,10 +179,6 @@ export default function Aurora(props: AuroraProps) {
     const mesh = new Mesh(gl, { geometry, program });
     ctn.appendChild(gl.canvas);
 
-    // FPS throttling
-    const frameInterval = 1000 / fps;
-    let lastFrameTime = 0;
-    
     // Cache previous values to avoid unnecessary uniform updates
     let prevAmplitude = amplitude;
     let prevBlend = blend;
@@ -206,20 +187,7 @@ export default function Aurora(props: AuroraProps) {
     let animateId = 0;
     const update = (t: number) => {
       animateId = requestAnimationFrame(update);
-      
-      // Throttle to target FPS
-      if (t - lastFrameTime < frameInterval) {
-        return;
-      }
-      lastFrameTime = t - ((t - lastFrameTime) % frameInterval);
-      
-      const { 
-        time = t * 0.01, 
-        speed = 1.0, 
-        amplitude: currAmp, 
-        blend: currBlend, 
-        colorStops: currStops 
-      } = propsRef.current;
+      const { time = t * 0.01, speed = 1.0, amplitude: currAmp, blend: currBlend, colorStops: currStops } = propsRef.current;
       
       if (program) {
         // Always update time
@@ -262,7 +230,7 @@ export default function Aurora(props: AuroraProps) {
       }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, [amplitude, blend, colorStops, colorStopsArray, fps, pixelRatio]);
+  }, [amplitude, blend, colorStops, colorStopsArray]);
 
   return <div ref={ctnDom} className={`w-full h-full ${className}`} />;
 }
