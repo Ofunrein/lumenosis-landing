@@ -99,81 +99,40 @@ const AnimatedProcessTimeline: React.FC<AnimatedProcessTimelineProps> = ({
 
   return (
     <div ref={timelineRef} className={`relative ${className}`}>
-      {/* Animated connecting line - synced with active step */}
-      <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-indigo-500/30 via-purple-500/30 to-pink-500/30 rounded-full overflow-hidden z-0">
-        <div 
-          className="w-full bg-gradient-to-b from-indigo-400 via-purple-400 to-pink-400 rounded-full transition-all duration-1000 ease-out"
-          style={{
-            height: `${activeStep === -1 ? 0 : ((activeStep + 1) / steps.length) * 100}%`,
-            filter: 'drop-shadow(0 0 10px currentColor)'
-          }}
-        />
-      </div>
+      {/* Horizontal layout wrapper */}
+      <div className="relative">
+        {/* Animated connecting line - horizontal, synced with active step */}
+        <div className="absolute top-10 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500/30 via-purple-500/30 to-pink-500/30 rounded-full overflow-hidden z-0">
+          <div 
+            className="h-full bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 rounded-full transition-all duration-1000 ease-out"
+            style={{
+              width: `${activeStep === -1 ? 0 : ((activeStep + 1) / steps.length) * 100}%`,
+              filter: 'drop-shadow(0 0 10px currentColor)'
+            }}
+          />
+        </div>
 
-      <div className="grid gap-12 md:gap-16">
-        {steps.map((step, index) => {
-          const isVisible = visibleSteps.includes(index);
-          const isActive = activeStep === index;
-          const isEven = index % 2 === 0;
+        {/* Horizontal grid of steps */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          {steps.map((step, index) => {
+            const isVisible = visibleSteps.includes(index);
+            const isActive = activeStep === index;
 
-          return (
-            <div
-              key={index}
-              data-step={index}
-              className={`relative transition-all duration-700 ease-out z-10 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-              style={{ transitionDelay: `${index * 200}ms` }}
-            >
-              <div className={`flex items-center gap-8 ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                {/* Content */}
-                <div className={`flex-1 ${isEven ? 'md:text-right' : 'md:text-left'}`}>
+            return (
+              <div
+                key={index}
+                data-step={index}
+                className={`relative transition-all duration-700 ease-out z-10 ${
+                  isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+                }`}
+                style={{ transitionDelay: `${index * 200}ms` }}
+              >
+                {/* Step number with animated circle - positioned at top */}
+                <div className="relative flex justify-center mb-6 z-20">
                   <div 
                     onClick={() => handleStepClick(index)}
                     className={`
-                      relative p-6 rounded-2xl backdrop-blur-lg transition-all duration-500 cursor-pointer z-20
-                      ${isActive 
-                        ? 'bg-gradient-to-br from-indigo-900/40 to-purple-900/40 border-indigo-400/50 shadow-xl shadow-indigo-500/20 scale-105' 
-                        : 'bg-gray-800/40 border-gray-600/30 hover:bg-gray-700/50'
-                      }
-                      border transform-gpu will-change-transform
-                      hover:scale-102 hover:shadow-lg
-                    `}
-                  >
-                    {/* Animated background glow */}
-                    <div 
-                      className={`
-                        absolute inset-0 rounded-2xl transition-opacity duration-500
-                        bg-gradient-to-br from-indigo-500/10 to-purple-500/10
-                        ${isActive ? 'opacity-100' : 'opacity-0'}
-                      `}
-                    />
-                    
-                    <div className="relative z-10">
-                      <h3 className={`text-xl font-bold mb-3 transition-colors duration-300 ${
-                        step.color === 'indigo' ? 'text-indigo-400' : 
-                        step.color === 'green' ? 'text-green-400' :
-                        step.color === 'purple' ? 'text-purple-400' :
-                        step.color === 'blue' ? 'text-blue-400' : 'text-white'
-                      }`}>
-                        {step.title}
-                      </h3>
-                      <p className="text-white leading-relaxed">
-                        {step.description}
-                      </p>
-                    </div>
-
-                    {/* Hover effect overlay */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </div>
-
-                {/* Step number with animated circle */}
-                <div className="relative flex-shrink-0 z-20">
-                  <div 
-                    onClick={() => handleStepClick(index)}
-                    className={`
-                      relative w-16 h-16 rounded-full flex items-center justify-center cursor-pointer z-30
+                      relative w-20 h-20 rounded-full flex items-center justify-center cursor-pointer z-30
                       transition-all duration-500 transform-gpu will-change-transform
                       ${isActive 
                         ? 'bg-gradient-to-br from-indigo-500 to-purple-500 scale-110 shadow-xl shadow-indigo-500/40' 
@@ -188,7 +147,7 @@ const AnimatedProcessTimeline: React.FC<AnimatedProcessTimelineProps> = ({
                     )}
                     
                     {/* Step number */}
-                    <span className={`text-xl font-bold transition-colors duration-300 ${
+                    <span className={`text-3xl font-bold transition-colors duration-300 ${
                       isActive ? 'text-white' : 'text-white'
                     }`}>
                       {step.number}
@@ -217,7 +176,7 @@ const AnimatedProcessTimeline: React.FC<AnimatedProcessTimelineProps> = ({
                           style={{
                             top: '50%',
                             left: '50%',
-                            transform: `translate(-50%, -50%) rotate(${i * 60}deg) translateY(-40px)`,
+                            transform: `translate(-50%, -50%) rotate(${i * 60}deg) translateY(-50px)`,
                             animation: `orbit-${i} 3s linear infinite`
                           }}
                         />
@@ -225,19 +184,62 @@ const AnimatedProcessTimeline: React.FC<AnimatedProcessTimelineProps> = ({
                     </div>
                   )}
                 </div>
+
+                {/* Content - positioned below the circle */}
+                <div 
+                  onClick={() => handleStepClick(index)}
+                  className={`
+                    relative p-6 rounded-2xl backdrop-blur-lg transition-all duration-500 cursor-pointer z-20
+                    min-h-[280px] flex flex-col
+                    ${isActive 
+                      ? 'bg-gradient-to-br from-indigo-900/40 to-purple-900/40 border-indigo-400/50 shadow-xl shadow-indigo-500/20 scale-105' 
+                      : 'bg-gray-800/40 border-gray-600/30 hover:bg-gray-700/50'
+                    }
+                    border transform-gpu will-change-transform
+                    hover:scale-102 hover:shadow-lg
+                  `}
+                >
+                  {/* Animated background glow */}
+                  <div 
+                    className={`
+                      absolute inset-0 rounded-2xl transition-opacity duration-500
+                      bg-gradient-to-br from-indigo-500/10 to-purple-500/10
+                      ${isActive ? 'opacity-100' : 'opacity-0'}
+                    `}
+                  />
+                  
+                  <div className="relative z-10 text-center flex flex-col flex-1">
+                    <h3 className={`text-xl md:text-2xl mb-4 transition-all duration-300 ${
+                      isActive ? 'font-bold' : 'font-semibold'
+                    } ${
+                      step.color === 'indigo' ? 'text-indigo-400' : 
+                      step.color === 'green' ? 'text-green-400' :
+                      step.color === 'purple' ? 'text-purple-400' :
+                      step.color === 'blue' ? 'text-blue-400' : 'text-white'
+                    }`}>
+                      {step.title}
+                    </h3>
+                    <p className="text-white leading-relaxed font-light text-sm md:text-base">
+                      {step.description}
+                    </p>
+                  </div>
+
+                  {/* Hover effect overlay */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
       <style jsx>{`
-        @keyframes orbit-0 { from { transform: translate(-50%, -50%) rotate(0deg) translateY(-40px); } to { transform: translate(-50%, -50%) rotate(360deg) translateY(-40px); } }
-        @keyframes orbit-1 { from { transform: translate(-50%, -50%) rotate(60deg) translateY(-40px); } to { transform: translate(-50%, -50%) rotate(420deg) translateY(-40px); } }
-        @keyframes orbit-2 { from { transform: translate(-50%, -50%) rotate(120deg) translateY(-40px); } to { transform: translate(-50%, -50%) rotate(480deg) translateY(-40px); } }
-        @keyframes orbit-3 { from { transform: translate(-50%, -50%) rotate(180deg) translateY(-40px); } to { transform: translate(-50%, -50%) rotate(540deg) translateY(-40px); } }
-        @keyframes orbit-4 { from { transform: translate(-50%, -50%) rotate(240deg) translateY(-40px); } to { transform: translate(-50%, -50%) rotate(600deg) translateY(-40px); } }
-        @keyframes orbit-5 { from { transform: translate(-50%, -50%) rotate(300deg) translateY(-40px); } to { transform: translate(-50%, -50%) rotate(660deg) translateY(-40px); } }
+        @keyframes orbit-0 { from { transform: translate(-50%, -50%) rotate(0deg) translateY(-50px); } to { transform: translate(-50%, -50%) rotate(360deg) translateY(-50px); } }
+        @keyframes orbit-1 { from { transform: translate(-50%, -50%) rotate(60deg) translateY(-50px); } to { transform: translate(-50%, -50%) rotate(420deg) translateY(-50px); } }
+        @keyframes orbit-2 { from { transform: translate(-50%, -50%) rotate(120deg) translateY(-50px); } to { transform: translate(-50%, -50%) rotate(480deg) translateY(-50px); } }
+        @keyframes orbit-3 { from { transform: translate(-50%, -50%) rotate(180deg) translateY(-50px); } to { transform: translate(-50%, -50%) rotate(540deg) translateY(-50px); } }
+        @keyframes orbit-4 { from { transform: translate(-50%, -50%) rotate(240deg) translateY(-50px); } to { transform: translate(-50%, -50%) rotate(600deg) translateY(-50px); } }
+        @keyframes orbit-5 { from { transform: translate(-50%, -50%) rotate(300deg) translateY(-50px); } to { transform: translate(-50%, -50%) rotate(660deg) translateY(-50px); } }
       `}</style>
     </div>
   );

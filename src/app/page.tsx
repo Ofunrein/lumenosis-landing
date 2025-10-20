@@ -9,7 +9,6 @@ import HomepageWidget from '../components/HomepageWidget'
 import RealEstateAIDemo from '../components/RealEstateAIDemo'
 import ReactBitsHeroSection from '../components/ReactBitsHeroSection'
 import ReactBitsServiceCards from '../components/ReactBitsServiceCards'
-import ReactBitsBenefitsSection from '../components/ReactBitsBenefitsSection'
 import ParticleBackground from '../components/ParticleBackground'
 import MagneticButton from '../components/MagneticButton'
 import FloatingElements from '../components/FloatingElements'
@@ -51,7 +50,7 @@ export default function HomePage() {
     {
       id: 1,
       question: "How does your AI respond to leads in 60 seconds when I'm showing homes?",
-      answer: "While you're showing homes, our AI instantly responds to every lead inquiry with personalized messages that qualify prospects and book showings directly into your calendar. It works 24/7, so weekend inquiries don't wait until Monday. Real estate agents using our system report booking 3x more showings without hiring extra staff. The AI learns your market, property types, and showing preferences to deliver qualified leads ready to buy."
+      answer: "While you're showing homes, our AI responds to every lead inquiry within 60 seconds with personalized messages that qualify prospects and book showings directly into your calendar. It works 24/7, so weekend inquiries don't wait until Monday. Real estate agents using our system report booking 300% more showings without hiring extra staff. The AI learns your market, property types, and showing preferences to deliver qualified leads ready to buy."
     },
     {
       id: 2,
@@ -61,7 +60,7 @@ export default function HomePage() {
     {
       id: 3,
       question: "Will this work with my MLS, CRM, and showing software?",
-      answer: "Absolutely. We integrate with all major MLS systems (MLS, RMLS, CRMLS), CRMs (Follow Up Boss, Real Geeks, BoomTown), showing software (ShowingTime, Centralized Showing Service), and property management tools. Your AI automatically syncs property data, showing schedules, and lead information across all platforms. No more double-entry or missed follow-ups. We follow a \"no disruption\" philosophy - your existing workflow stays intact while we make it 10x faster."
+      answer: "Absolutely. We integrate with all major MLS systems (MLS, RMLS, CRMLS), CRMs (Follow Up Boss, Real Geeks, BoomTown), showing software (ShowingTime, Centralized Showing Service), and property management tools. Your AI automatically syncs property data, showing schedules, and lead information across all platforms. No more double-entry or missed follow-ups. We follow a \"no disruption\" philosophy - your existing workflow stays intact while becoming significantly faster."
     },
     {
       id: 4,
@@ -76,12 +75,12 @@ export default function HomePage() {
     {
       id: 6,
       question: "How does your AI qualify leads better than my team?",
-      answer: "Our AI never gets tired, never forgets to follow up, and never misses a lead. It asks the right questions in the right order: property type, budget range, timeline, financing status, and motivation. The AI scores leads based on 15+ qualification factors and automatically nurtures prospects with personalized content. Real estate agents report 40% higher lead quality and 60% less time wasted on unqualified buyers. Your team focuses on closing deals while AI handles the qualification grunt work."
+      answer: "Our AI works 24/7 without breaks and consistently follows up on every lead. It asks the right questions in the right order: property type, budget range, timeline, financing status, and motivation. The AI scores leads based on 15+ qualification factors and automatically nurtures prospects with personalized content. Real estate agents report 40% higher lead quality and 60% less time wasted on unqualified buyers. Your team focuses on closing deals while AI handles the qualification grunt work."
     },
     {
       id: 7,
       question: "How does AI help my HVAC/plumbing/roofing business book more service calls?",
-      answer: "Our AI instantly responds to service requests with personalized messages, schedules estimates, and qualifies urgent vs. routine jobs. It handles after-hours emergency calls, weekend inquiries, and seasonal demand spikes without missing opportunities. Home service businesses report 45% more booked estimates and 30% higher conversion rates. The AI learns your service areas, pricing tiers, and availability to deliver qualified leads ready to book appointments."
+      answer: "Our AI responds to service requests within 60 seconds with personalized messages, schedules estimates, and qualifies urgent vs. routine jobs. It handles after-hours emergency calls, weekend inquiries, and seasonal demand spikes without missing opportunities. Home service businesses report 45% more booked estimates and 30% higher conversion rates. The AI learns your service areas, pricing tiers, and availability to deliver qualified leads ready to book appointments."
     },
     {
       id: 8,
@@ -91,7 +90,7 @@ export default function HomePage() {
     {
       id: 9,
       question: "Does your system integrate with ServiceTitan, Jobber, and other home service software?",
-      answer: "Yes, we integrate with all major home service platforms including ServiceTitan, Jobber, Housecall Pro, FieldEdge, and SimPro. Your AI automatically syncs customer data, job scheduling, estimate requests, and follow-ups across all systems. No more double-entry between your CRM and scheduling software. We follow a 'no disruption' philosophy - your existing workflow stays intact while becoming 10x more efficient."
+      answer: "Yes, we integrate with all major home service platforms including ServiceTitan, Jobber, Housecall Pro, FieldEdge, and SimPro. Your AI automatically syncs customer data, job scheduling, estimate requests, and follow-ups across all systems. No more double-entry between your CRM and scheduling software. We follow a 'no disruption' philosophy - your existing workflow stays intact while becoming significantly more efficient."
     },
     {
       id: 10,
@@ -335,7 +334,7 @@ export default function HomePage() {
       if (submitContainer) {
         submitContainer.innerHTML = `
           <button type="submit" disabled class="
-            inline-flex items-center justify-center font-bold rounded-full
+            inline-flex items-center justify-center font-semibold rounded-full
             relative overflow-hidden cursor-pointer select-none
             transition-all duration-200 transform-gpu text-shadow-sm 
             px-8 py-4 text-lg
@@ -343,7 +342,7 @@ export default function HomePage() {
             border-t border-indigo-400/50 border-b-2 border-indigo-900
             shadow-lg shadow-indigo-900/50 w-full
           " aria-label="Sending...">
-            <span class="relative z-10 flex items-center gap-2 font-bold text-white drop-shadow-lg">
+            <span class="relative z-10 flex items-center gap-2 font-semibold text-white drop-shadow-lg">
               <span class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2 inline-block"></span>
               Sending...
             </span>
@@ -385,7 +384,7 @@ export default function HomePage() {
         if (submitContainer) {
           submitContainer.innerHTML = `
             <button type="button" disabled class="
-              inline-flex items-center justify-center font-bold rounded-full
+              inline-flex items-center justify-center font-semibold rounded-full
               relative overflow-hidden cursor-pointer select-none
               transition-all duration-200 transform-gpu text-shadow-sm 
               px-8 py-4 text-lg
@@ -393,7 +392,7 @@ export default function HomePage() {
               border-t border-green-400/50 border-b-2 border-green-900
               shadow-lg shadow-green-900/50 w-full
             " aria-label="Sent">
-              <span class="relative z-10 flex items-center gap-2 font-bold text-white drop-shadow-lg">
+              <span class="relative z-10 flex items-center gap-2 font-semibold text-white drop-shadow-lg">
                 <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
@@ -433,7 +432,7 @@ export default function HomePage() {
                 <div class="relative z-10">
                   <button type="submit" class="w-full block" style="all: unset; width: 100%; display: block;">
                     <div class="
-                      inline-flex items-center justify-center font-bold rounded-full
+                      inline-flex items-center justify-center font-semibold rounded-full
                       relative overflow-hidden cursor-pointer select-none
                       transition-all duration-200 transform-gpu text-shadow-sm 
                       px-8 py-4 text-lg w-full
@@ -442,7 +441,7 @@ export default function HomePage() {
                       shadow-lg shadow-indigo-900/50 hover:brightness-110 hover:translate-y-[-2px]
                       active:brightness-95 active:translate-y-[1px] active:shadow-md
                     " aria-label="Send message">
-                      <span class="relative z-10 font-bold text-white drop-shadow-lg">
+                      <span class="relative z-10 font-semibold text-white drop-shadow-lg">
                         Send Message
                       </span>
                       <div class="absolute inset-1 rounded-full bg-gradient-to-b from-white/10 to-transparent pointer-events-none"></div>
@@ -485,7 +484,7 @@ export default function HomePage() {
               <div class="relative z-10">
                 <button type="submit" class="w-full block" style="all: unset; width: 100%; display: block;">
                   <div class="
-                    inline-flex items-center justify-center font-bold rounded-full
+                    inline-flex items-center justify-center font-semibold rounded-full
                     relative overflow-hidden cursor-pointer select-none
                     transition-all duration-200 transform-gpu text-shadow-sm 
                     px-8 py-4 text-lg w-full
@@ -494,7 +493,7 @@ export default function HomePage() {
                     shadow-lg shadow-red-900/50 hover:brightness-110 hover:translate-y-[-2px]
                     active:brightness-95 active:translate-y-[1px] active:shadow-md
                   " aria-label="Try again">
-                    <span class="relative z-10 font-bold text-white drop-shadow-lg">
+                    <span class="relative z-10 font-semibold text-white drop-shadow-lg">
                       Try Again
                     </span>
                     <div class="absolute inset-1 rounded-full bg-gradient-to-b from-white/10 to-transparent pointer-events-none"></div>
@@ -624,11 +623,11 @@ export default function HomePage() {
           {/* Desktop Navigation */}
           <div className="hidden lg:block">
             <div className="flex space-x-6">
-              <a href="#services" className="text-white hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">Services</a>
+              <a href="#services" className="text-white hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">Solutions</a>
               <a href="#results" className="text-white hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">Results</a>
               <a href="#about" className="text-white hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">About</a>
               <a href="#contact" className="text-white hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">Contact</a>
-              <Link href="/lead-magnet" className="text-indigo-400 hover:text-indigo-300 px-2 py-1 rounded-md text-sm font-medium transition-colors">Free Resources</Link>
+              <Link href="/lead-magnet" className="text-indigo-400 hover:text-indigo-300 px-2 py-1 rounded-md text-sm font-medium transition-colors">Blog</Link>
             </div>
           </div>
           
@@ -673,11 +672,11 @@ export default function HomePage() {
               {/* 3D gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none rounded-3xl" />
               <div className="flex flex-col space-y-2 relative z-10">
-                <a href="#services" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Services</a>
+                <a href="#services" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Solutions</a>
                 <a href="#results" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Results</a>
                 <a href="#about" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>About</a>
                 <a href="#contact" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Contact</a>
-                <Link href="/lead-magnet" className="text-indigo-400 hover:text-indigo-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Free Resources</Link>
+                <Link href="/lead-magnet" className="text-indigo-400 hover:text-indigo-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Blog</Link>
                 <div className="w-full mt-4">
                   <StarBorderOutline color="#8b5cf6" speed="3s" className="w-full block p-0">
                     <ReactBits3DButton 
@@ -709,7 +708,7 @@ export default function HomePage() {
       <section id="services" className="pt-16 py-12 px-2 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+            <h2 className="text-3xl font-semibold text-white sm:text-4xl">
               While Your Competition Sleeps, <span className="gradient-text">We're Closing Your Deals</span>
             </h2>
             <p className="mt-2 max-w-3xl mx-auto text-white opacity-100">
@@ -725,11 +724,11 @@ export default function HomePage() {
           <section id="industries" className="pt-16 py-12 px-4 sm:px-6 lg:px-8" data-aos="fade-up">
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+            <h2 className="text-3xl font-semibold text-white sm:text-4xl">
               Stop Losing Deals to <span className="gradient-text">Faster Competition</span>
             </h2>
             <p className="mt-3 max-w-2xl mx-auto text-lg text-white">
-              Businesses who respond instantly, book more appointments, and close more deals
+              Businesses who respond within 60 seconds, book more appointments, and close more deals
             </p>
           </div>
           
@@ -763,7 +762,7 @@ export default function HomePage() {
                     {/* Original Content */}
                     <div className="mt-6 space-y-4 relative z-10 flex-grow">
                       <p className="text-white">
-                Every minute you wait, your competition gets closer to taking the deal. Missed calls, slow follow-ups, and admin tasks cost thousands in lost commissions.
+                Every minute you wait costs you $500-2,000 in commissions. While you're sleeping or with clients, competitors with AI are booking YOUR leads in 60 seconds.
               </p>
                       <p className="text-white">
                         <strong className="text-white">We turn your lead handling into a 24/7 sales engine that responds, qualifies, and books showings automatically.</strong>
@@ -784,7 +783,7 @@ export default function HomePage() {
                       <i className="fas fa-check text-indigo-400 text-xs"></i>
                     </div>
                   </div>
-                  <p className="ml-3 text-sm text-white">Book 3x more showings without hiring extra staff</p>
+                  <p className="ml-3 text-sm text-white">Book 300% more showings without hiring extra staff</p>
                 </div>
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1">
@@ -901,47 +900,41 @@ export default function HomePage() {
               </div>
           </section>
 
-      {/* Enhanced React Bits Benefits Section */}
-      <ReactBitsBenefitsSection />
-
       {/* Enhanced Process Timeline Section */}
       <section className="relative pt-24 py-16 px-4 sm:px-6 lg:px-8 overflow-hidden" data-aos="fade-up">
         
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6">
-              How It Works: <span className="gradient-text">4 Simple Steps</span>
+            <div className="inline-block px-5 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 mb-6">
+              <span className="text-purple-300 text-sm font-medium">How it works</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-semibold text-white mb-4">
+              Getting started is simple
             </h2>
-            <p className="text-xl text-white max-w-3xl mx-auto">
-              Transform your entire business from losing deals to automated lead capture, instant responses, 24/7 booking, and 3x more conversions in just 4 steps. No technical knowledge required.
+            <p className="text-lg text-white max-w-2xl mx-auto font-normal">
+              A simple, three step process to make your life easier.
             </p>
           </div>
           
           <AnimatedProcessTimeline 
             steps={[
               {
-                number: "01",
-                title: "Book Free Strategy Call",
-                description: "We analyze your current lead response time and show you exactly how much money you're losing to other real estate and home service pros. Get your custom ROI analysis in 15 minutes.",
+                number: "1",
+                title: "Discovery & Strategy",
+                description: "We'll identify your business goals, analyze communication challenges, and find inefficiencies to wireframe a tailored solution for your needs",
                 color: "indigo"
               },
               {
-                number: "02", 
-                title: "We Build Your AI",
-                description: "Our team builds your 60-second response AI that integrates with your CRM, MLS, and showing software. No disruption to your current workflow - we make it 10x faster.",
+                number: "2", 
+                title: "Creation & Launch",
+                description: "We'll develop, test and integrate a custom AI Agent that seamlessly integrates with your existing systems and workflows",
                 color: "green"
               },
               {
-                number: "03",
-                title: "Go Live & Start Winning", 
-                description: "Your AI goes live and starts responding to leads in 60 seconds. Watch your bookings increase while your competitors wait hours to reply.",
+                number: "3",
+                title: "Optimize", 
+                description: "We'll monitor, adjust and optimize your AI Agent based on real-world data, ensuring consistent performance and outstanding results for your business",
                 color: "purple"
-              },
-              {
-                number: "04",
-                title: "24/7 Monitoring & Results",
-                description: "We monitor your AI performance and optimize for even better results. Track your increased showings, faster response times, and ROI growth with detailed analytics.",
-                color: "blue"
               }
             ]}
             className="mt-12"
@@ -953,14 +946,14 @@ export default function HomePage() {
       <section id="about" className="pt-24 py-16 px-4 sm:px-6 lg:px-8" data-aos="zoom-in">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl mb-4">
+            <h2 className="text-3xl font-semibold text-white sm:text-4xl mb-4">
               Who We <span className="gradient-text">Are</span>
             </h2>
-            <p className="mt-3 text-xl font-semibold text-gray-200">
-              Your Automation Partner
+            <p className="mt-3 text-xl font-semibold text-white">
+              Your 24/7 Closing Partner
             </p>
             <p className="text-xl text-white max-w-3xl mx-auto mt-4">
-              We don't just connect software, we <span className="text-indigo-400 font-semibold">engineer systems</span> that give you the <span className="text-green-400 font-semibold">speed-to-lead advantage</span>. Lumenosis bridges cutting-edge technology with real estate and home service workflows, automating tasks to save time and reduce costs.
+              While your competition sleeps, you're <span className="text-indigo-400 font-semibold">capturing leads</span>, <span className="text-green-400 font-semibold">booking appointments</span>, and closing deals. Real estate and home service professionals trust us to turn every lead into revenue automatically.
             </p>
           </div>
           
@@ -988,7 +981,7 @@ export default function HomePage() {
                   >
                     <i className="fas fa-link text-indigo-400 text-3xl"></i>
                   </motion.div>
-                  <h3 className="text-2xl font-bold text-white mb-4">MLS/CRM Integrations</h3>
+                  <h3 className="text-2xl font-semibold text-white mb-4">MLS/CRM Integrations</h3>
                   <p className="text-white flex-grow text-base"><span className="text-indigo-400 font-semibold">Seamless integration</span> with all major platforms including <span className="text-white font-medium">MLS, RMLS, CRMLS, Follow Up Boss, Real Geeks, BoomTown, HubSpot, Pipedrive, LionDesk, Wise Agent, Salesforce, Freshsales, Realvolve, GHL, ServiceTitan, Jobber, Housecall Pro, and more</span>.</p>
               </div>
               </div>
@@ -1017,7 +1010,7 @@ export default function HomePage() {
                   >
                     <i className="fas fa-comments text-green-400 text-3xl"></i>
                   </motion.div>
-                  <h3 className="text-2xl font-bold text-white mb-4">AI That Speaks Your Market</h3>
+                  <h3 className="text-2xl font-semibold text-white mb-4">AI That Speaks Your Market</h3>
                   <p className="text-white flex-grow text-base">Our AI understands <span className="text-green-400 font-semibold">real estate terminology</span>, <span className="text-green-400 font-semibold">market conditions</span>, and speaks the language your <span className="text-white font-medium">clients expect from professionals</span>.</p>
               </div>
               </div>
@@ -1046,8 +1039,8 @@ export default function HomePage() {
                   >
                     <i className="fas fa-chart-bar text-purple-400 text-3xl"></i>
                   </motion.div>
-                  <h3 className="text-2xl font-bold text-white mb-4">Proven Increase in Results</h3>
-                  <p className="text-white flex-grow text-base"><span className="text-white font-medium">Real estate agents</span> using our system report <span className="animated-number text-purple-400 font-bold" data-target="3">3</span><span className="text-purple-400 font-bold">x more bookings</span> and <span className="animated-number text-purple-400 font-bold" data-target="35">35</span><span className="text-purple-400 font-bold">% increase in deals closed</span> within the <span className="text-white font-medium">first month</span>.</p>
+                  <h3 className="text-2xl font-semibold text-white mb-4">Proven Increase in Results</h3>
+                  <p className="text-white flex-grow text-base"><span className="text-white font-medium">Real estate agents</span> using our system report <span className="animated-number text-purple-400 font-semibold" data-target="3">3</span><span className="text-purple-400 font-semibold">x more bookings</span> and <span className="animated-number text-purple-400 font-semibold" data-target="35">35</span><span className="text-purple-400 font-semibold">% increase in deals closed</span> within the <span className="text-white font-medium">first month</span>.</p>
               </div>
               </div>
             </motion.div>
@@ -1071,7 +1064,7 @@ export default function HomePage() {
       <section id="testimonials" className="pt-16 py-12 px-4 sm:px-6 lg:px-8" data-aos="fade-up">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+            <h2 className="text-3xl font-semibold text-white sm:text-4xl">
               Real Results from <span className="gradient-text">Real Estate Professionals</span>
             </h2>
             <p className="mt-2 text-white">Case studies with exact metrics - not just testimonials</p>
@@ -1109,13 +1102,13 @@ export default function HomePage() {
                     <i className="fas fa-home text-indigo-400 text-3xl"></i>
                   </motion.div>
                   <motion.div 
-                    className="text-5xl font-bold text-blue-400 mb-4 animated-number" 
+                    className="text-5xl font-semibold text-blue-400 mb-4 animated-number" 
                     data-target="9"
                     whileHover={{ scale: 1.03 }}
                   >
                     +9
                   </motion.div>
-                  <h3 className="text-xl font-bold text-white mb-3">Transactions in 90 Days</h3>
+                  <h3 className="text-xl font-semibold text-white mb-3">Transactions in 90 Days</h3>
                   <p className="text-white text-sm mb-2">Solo agent case study</p>
                   <p className="text-white text-xs italic">"Went from 3 to 12 deals in one quarter using Lumenosis AI"</p>
               </div>
@@ -1151,13 +1144,13 @@ export default function HomePage() {
                     <i className="fas fa-building text-green-400 text-3xl"></i>
                   </motion.div>
                   <motion.div 
-                    className="text-5xl font-bold text-green-400 mb-4 animated-number" 
+                    className="text-5xl font-semibold text-green-400 mb-4 animated-number" 
                     data-target="48"
                     whileHover={{ scale: 1.03 }}
                   >
                     48%
                   </motion.div>
-                  <h3 className="text-xl font-bold text-white mb-3">Increase in Brokerage Conversions</h3>
+                  <h3 className="text-xl font-semibold text-white mb-3">Increase in Brokerage Conversions</h3>
                   <p className="text-white text-sm mb-2">Brokerage case study</p>
                   <p className="text-white text-xs italic">"40-agent office saw conversion rates jump from 12% to 18%"</p>
                 </div>
@@ -1193,13 +1186,13 @@ export default function HomePage() {
                     <i className="fas fa-users text-purple-400 text-3xl"></i>
                   </motion.div>
                   <motion.div 
-                    className="text-5xl font-bold text-orange-400 mb-4 animated-number" 
+                    className="text-5xl font-semibold text-orange-400 mb-4 animated-number" 
                     data-target="212"
                     whileHover={{ scale: 1.03 }}
                   >
                     212%
                   </motion.div>
-                  <h3 className="text-xl font-bold text-white mb-3">More Weekend Showings</h3>
+                  <h3 className="text-xl font-semibold text-white mb-3">More Weekend Showings</h3>
                   <p className="text-white text-sm mb-2">Team case study</p>
                   <p className="text-white text-xs italic">"6-agent team went from 8 to 25 weekend showings monthly"</p>
                 </div>
@@ -1214,8 +1207,8 @@ export default function HomePage() {
         
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
-              What Our <span className="gradient-text">Clients Say</span>
+            <h2 className="text-4xl md:text-5xl font-semibold text-white mb-4">
+              Join 50+ Real Estate & Home Service Pros Who <span className="gradient-text">300% Their Bookings</span>
             </h2>
             <p className="text-xl text-white">Real feedback from real estate professionals who transformed their business</p>
           </div>
@@ -1227,7 +1220,7 @@ export default function HomePage() {
                 name: "Real Estate Professional",
                 role: "Senior Agent",
                 company: "Leading Brokerage",
-                content: "Lumenosis AI completely transformed my business. I went from losing weekend leads to booking 3x more showings. The 60-second response time gives me a massive competitive advantage.",
+                content: "Lumenosis AI completely transformed my business. I went from losing weekend leads to booking <strong>300% more showings</strong>. The <strong>60-second response time</strong> gives me a massive competitive advantage.",
                 rating: 5
               },
               {
@@ -1235,7 +1228,7 @@ export default function HomePage() {
                 name: "Brokerage Owner", 
                 role: "Managing Broker",
                 company: "Multi-Agent Office",
-                content: "Our 40-agent office saw conversion rates jump from 12% to 18% in just 90 days. The ROI was immediate and the system integrates perfectly with our existing workflow.",
+                content: "Our 40-agent office saw conversion rates jump from <strong>12% to 18% in just 90 days</strong>. The <strong>ROI was immediate</strong> and the system integrates perfectly with our existing workflow.",
                 rating: 5
               },
               {
@@ -1243,7 +1236,7 @@ export default function HomePage() {
                 name: "Home Services Manager",
                 role: "Operations Director",
                 company: "HVAC Company", 
-                content: "We're booking 212% more weekend appointments since implementing Lumenosis. Our competitors are still manually responding hours later while our AI books qualified leads instantly.",
+                content: "We're booking <strong>212% more weekend appointments</strong> since implementing Lumenosis. Our competitors are still manually responding hours later while our AI books qualified leads <strong>in under 60 seconds</strong>.",
                 rating: 5
               },
               {
@@ -1251,7 +1244,7 @@ export default function HomePage() {
                 name: "Team Leader",
                 role: "Real Estate Team Lead", 
                 company: "Top Production Team",
-                content: "From 3 to 12 deals in one quarter - that's the Lumenosis difference. The AI doesn't just respond fast, it qualifies leads better than most humans and books appointments 24/7.",
+                content: "From <strong>3 to 12 deals in one quarter</strong> - that's the Lumenosis difference. The AI doesn't just respond fast, it qualifies leads better than most humans and books appointments <strong>24/7</strong>.",
                 rating: 5
               }
             ]}
@@ -1266,7 +1259,7 @@ export default function HomePage() {
       <section id="faq" className="pt-16 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+            <h2 className="text-3xl font-semibold text-white sm:text-4xl">
               Your <span className="gradient-text">Questions Answered</span>
             </h2>
             <p className="mt-2 max-w-2xl mx-auto text-white">
@@ -1318,11 +1311,11 @@ export default function HomePage() {
       <section id="contact" className="pt-16 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8" id="calendly-section">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+            <h2 className="text-3xl font-semibold text-white sm:text-4xl">
               Ready to Stop Losing Deals to <span className="gradient-text">Faster Competitors?</span>
             </h2>
             <p className="mt-2 max-w-2xl mx-auto text-white">
-              Book a free strategy session and discover exactly how many more deals you could be closing.
+              Schedule your discovery call and see exactly how many more deals you could be closing.
             </p>
           </div>
 
@@ -1365,7 +1358,7 @@ export default function HomePage() {
           {/* Calendly inline widget end */}
           
           <div className="mt-12 max-w-2xl mx-auto" id="question-section">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl text-center mb-8">
+            <h2 className="text-3xl font-semibold text-white sm:text-4xl text-center mb-8">
               Still Have a <span className="gradient-text">Question</span>
             </h2>
             <p className="mt-2 max-w-2xl mx-auto text-white text-center mb-8">
@@ -1481,7 +1474,7 @@ export default function HomePage() {
                       </ReactBits3DButton>
                     </StarBorderOutline>
                 <div className="ml-4">
-                  <h3 className="text-lg font-medium text-white">Email</h3>
+                  <h3 className="text-lg font-semibold text-white">Email</h3>
                   <a href="mailto:martin@lumenosis.com" className="mt-1 block text-white hover:text-indigo-400 transition-colors">martin@lumenosis.com</a>
                 </div>
               </div>
@@ -1497,7 +1490,7 @@ export default function HomePage() {
                       </ReactBits3DButton>
                     </StarBorderOutline>
                 <div className="ml-4">
-                  <h3 className="text-lg font-medium text-white">Phone</h3>
+                  <h3 className="text-lg font-semibold text-white">Phone</h3>
                   <a href="tel:+15125712595" className="mt-1 block text-white hover:text-purple-400 transition-colors">(512) 571-2595</a>
                 </div>
               </div>
@@ -1510,7 +1503,7 @@ export default function HomePage() {
       <section id="demos" className="py-12 px-4 sm:px-6 lg:px-8" data-aos="fade-up">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+            <h2 className="text-3xl font-semibold text-white sm:text-4xl">
               See Our <span className="gradient-text">AI Automation</span> In Action
             </h2>
             <p className="mt-3 max-w-2xl mx-auto text-white">
@@ -1540,7 +1533,7 @@ export default function HomePage() {
                 </div>
                 
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-white mb-3">
+                  <h3 className="text-xl font-semibold text-white mb-3">
                     <i className="fas fa-home text-indigo-400 mr-2"></i>
                     Cinematic Real Estate Videos in 3 Minutes
                   </h3>
@@ -1600,7 +1593,7 @@ export default function HomePage() {
                 </div>
                 
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-white mb-3">
+                  <h3 className="text-xl font-semibold text-white mb-3">
                     <i className="fas fa-envelope text-emerald-400 mr-2"></i>
                     24/7 AI Email Assistant for Real Estate
                   </h3>
@@ -1660,7 +1653,7 @@ export default function HomePage() {
                 </div>
                 
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-white mb-3">
+                  <h3 className="text-xl font-semibold text-white mb-3">
                     <i className="fas fa-headset text-purple-400 mr-2"></i>
                     24/7 AI Appointment Booking
                   </h3>
@@ -1688,7 +1681,7 @@ export default function HomePage() {
                   <div className="flex items-center justify-between">
                     <div className="text-xs text-white/90">
                       <i className="fas fa-clock mr-1"></i>
-                      Always available
+                      Available 24/7
                     </div>
                     <a href="#contact" className="inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors">
                       Get Voice AI
@@ -1720,7 +1713,7 @@ export default function HomePage() {
                 </div>
                 
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-white mb-3">
+                  <h3 className="text-xl font-semibold text-white mb-3">
                     <i className="fas fa-sync-alt text-orange-400 mr-2"></i>
                     Complete Lead Lifecycle Automation
                   </h3>
@@ -1772,7 +1765,7 @@ export default function HomePage() {
                   size="md"
                   className=""
                 >
-                Book a Demo Call
+                Book a Demo
                 </ReactBits3DButton>
               </StarBorderOutline>
             </div>
@@ -1791,7 +1784,7 @@ export default function HomePage() {
             
             {/* Horizontal Nav */}
             <nav className="flex flex-wrap justify-center space-x-4 sm:space-x-8 mb-6">
-              <a href="#services" className="text-white hover:text-white px-2 py-1 text-sm font-medium transition-colors">Services</a>
+              <a href="#services" className="text-white hover:text-white px-2 py-1 text-sm font-medium transition-colors">Solutions</a>
               <a href="#results" className="text-white hover:text-white px-2 py-1 text-sm font-medium transition-colors">Results</a>
               <a href="#about" className="text-white hover:text-white px-2 py-1 text-sm font-medium transition-colors">About</a>
               <a href="#contact" className="text-white hover:text-white px-2 py-1 text-sm font-medium transition-colors">Contact</a>

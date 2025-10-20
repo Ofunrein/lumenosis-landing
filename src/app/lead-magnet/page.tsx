@@ -199,11 +199,20 @@ export default function LeadMagnetIndex() {
       <header className="border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-1 sm:space-x-2">
-              <Image src="/logo.png" alt="Lumenosis AI" width={32} height={32} className="h-8 w-8 sm:h-10 sm:w-10" />
-              <span className="text-lg sm:text-xl font-bold text-gray-900">Lumenosis AI</span>
+            <Link href="/" className="flex items-center">
+              <span className="text-lg sm:text-xl font-semibold text-gray-900">Lumenosis AI</span>
             </Link>
             <div className="flex items-center space-x-2 sm:space-x-4">
+              <Link
+                href="/lead-magnet"
+                className="relative px-4 py-2 rounded-full text-gray-700 font-medium text-xs sm:text-sm
+                         bg-white hover:bg-gray-50
+                         transition-all duration-300 ease-out
+                         shadow-sm hover:shadow-md
+                         border border-gray-200 overflow-hidden"
+              >
+                <span className="relative z-10">📝 Blog</span>
+              </Link>
               <button
                 onClick={() => {
                   const section = document.getElementById('revenue-calculator');
@@ -211,19 +220,31 @@ export default function LeadMagnetIndex() {
                     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
                   }
                 }}
-                className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-2 sm:px-4 rounded-lg transition-colors text-xs sm:text-sm shadow-lg"
+                className="relative px-4 py-2 rounded-full text-white font-medium text-xs sm:text-sm
+                         bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700
+                         hover:from-purple-500 hover:via-indigo-500 hover:to-purple-600
+                         transition-all duration-300 ease-out
+                         shadow-[inset_0_2px_4px_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.1),0_4px_8px_rgba(0,0,0,0.3)]
+                         border border-white/10 overflow-hidden"
               >
-                <span className="hidden sm:inline">💰 Revenue Calculator</span>
-                <span className="sm:hidden">💰 Calculator</span>
+                <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none rounded-full" />
+                <span className="hidden sm:inline relative z-10">💰 ROI Calculator</span>
+                <span className="sm:hidden relative z-10">💰 ROI</span>
               </button>
               <Link 
                 href="https://calendly.com/lumenosis/30min" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-2 sm:px-4 rounded-lg transition-colors text-xs sm:text-sm"
+                className="relative px-4 py-2 rounded-full text-white font-medium text-xs sm:text-sm
+                         bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700
+                         hover:from-purple-500 hover:via-indigo-500 hover:to-purple-600
+                         transition-all duration-300 ease-out
+                         shadow-[inset_0_2px_4px_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.1),0_4px_8px_rgba(0,0,0,0.3)]
+                         border border-white/10 overflow-hidden"
               >
-                <span className="hidden sm:inline">Schedule Free Setup Call</span>
-                <span className="sm:hidden">Free Call</span>
+                <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none rounded-full" />
+                <span className="hidden sm:inline relative z-10">Schedule a Demo</span>
+                <span className="sm:hidden relative z-10">Demo</span>
               </Link>
             </div>
           </div>
@@ -233,9 +254,19 @@ export default function LeadMagnetIndex() {
       {/* Floating Navigation Bar */}
       <div className={`fixed w-full z-50 flex justify-center px-4 sm:px-6 lg:px-8 pt-1 top-0 transition-all duration-300 ${isScrolled ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`} suppressHydrationWarning>
         <div className="bg-white/5 backdrop-blur-sm rounded-full px-6 py-3 inline-flex items-center space-x-4 sm:space-x-6 shadow-lg border border-white/10">
-          <Link href="/" className="flex items-center space-x-2">
-            <Image src="/logo.png" alt="Lumenosis AI" width={24} height={24} className="h-6 w-6" />
-            <span className="text-lg font-bold text-gray-900 hidden sm:inline">Lumenosis AI</span>
+          <Link href="/" className="flex items-center">
+            <span className="text-lg font-semibold text-gray-900 hidden sm:inline">Lumenosis AI</span>
+          </Link>
+          <Link
+            href="/lead-magnet"
+            className="relative px-3 sm:px-4 py-2 rounded-full text-gray-700 font-medium text-xs sm:text-sm
+                     bg-white/90 hover:bg-white
+                     transition-all duration-300 ease-out
+                     shadow-sm hover:shadow-md
+                     border border-gray-200 overflow-hidden"
+          >
+            <span className="relative z-10 hidden sm:inline">📝 Blog</span>
+            <span className="relative z-10 sm:hidden">📝</span>
           </Link>
           <button
             onClick={() => {
@@ -244,19 +275,31 @@ export default function LeadMagnetIndex() {
                 section.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }
             }}
-            className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-3 sm:px-4 rounded-full transition-colors text-xs sm:text-sm shadow-lg"
+            className="relative px-3 sm:px-4 py-2 rounded-full text-white font-medium text-xs sm:text-sm
+                     bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700
+                     hover:from-purple-500 hover:via-indigo-500 hover:to-purple-600
+                     transition-all duration-300 ease-out
+                     shadow-[inset_0_2px_4px_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.1),0_4px_8px_rgba(0,0,0,0.3)]
+                     border border-white/10 overflow-hidden"
           >
-            <span className="hidden sm:inline">💰 Revenue Calculator</span>
-            <span className="sm:hidden">💰 Calc</span>
+            <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none rounded-full" />
+            <span className="hidden sm:inline relative z-10">💰 ROI Calculator</span>
+            <span className="sm:hidden relative z-10">💰 ROI</span>
           </button>
           <Link 
             href="https://calendly.com/lumenosis/30min" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-3 sm:px-4 rounded-full transition-colors text-xs sm:text-sm"
+            className="relative px-3 sm:px-4 py-2 rounded-full text-white font-medium text-xs sm:text-sm
+                     bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700
+                     hover:from-purple-500 hover:via-indigo-500 hover:to-purple-600
+                     transition-all duration-300 ease-out
+                     shadow-[inset_0_2px_4px_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.1),0_4px_8px_rgba(0,0,0,0.3)]
+                     border border-white/10 overflow-hidden"
           >
-            <span className="hidden sm:inline">Schedule Free Setup Call</span>
-            <span className="sm:hidden">Free Call</span>
+            <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none rounded-full" />
+            <span className="hidden sm:inline relative z-10">Schedule a Demo</span>
+            <span className="sm:hidden relative z-10">Demo</span>
           </Link>
         </div>
       </div>
@@ -265,11 +308,11 @@ export default function LeadMagnetIndex() {
       <section className="py-16 sm:py-24 bg-gradient-to-br from-indigo-50 via-white to-purple-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
-              Free Automation Guides
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-gray-900 leading-tight mb-6">
+              Learn AI for Business
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Complete step-by-step automation guides and workflows. Just click, read, and implement.
+              Straight from the Lumenosis AI experts.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500 mb-8">
               <span className="flex items-center">
@@ -283,12 +326,6 @@ export default function LeadMagnetIndex() {
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Step-by-Step Instructions
-              </span>
-              <span className="flex items-center">
-                <svg className="w-4 h-4 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Free Setup Support
               </span>
             </div>
             
@@ -320,179 +357,119 @@ export default function LeadMagnetIndex() {
         </div>
       </section>
 
-      {/* Workflows Grid */}
-      <section className="py-16">
+      {/* ROI Calculator Section */}
+      <section className="py-16 bg-gradient-to-br from-purple-50 via-white to-indigo-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-8">
+          <div id="revenue-calculator" className="scroll-mt-20">
+            <RevenueCalculator />
+          </div>
+        </div>
+      </section>
+
+      {/* Workflows Grid */}
+      <section className="py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {automationWorkflows.map((workflow) => (
-              <div key={workflow.id} className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-                <div className="p-8">
-                  <div className="grid lg:grid-cols-3 gap-8 items-start">
-                    
-                    {/* Main Content */}
-                    <div className="lg:col-span-2">
-                      <Link href={workflow.href} className="flex items-center space-x-3 mb-4 group cursor-pointer">
-                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform ${
-                          workflow.id === 'real-estate-automation' ? 'bg-gradient-to-r from-indigo-500 to-purple-500' :
-                          workflow.id === 'n8n-workflow-collection' ? 'bg-gradient-to-r from-green-500 to-blue-500' :
-                          workflow.id === 'n8n-ai-agent-builder' ? 'bg-gradient-to-r from-orange-500 to-purple-500' :
-                          workflow.id === 'ai-real-estate-video-automation' ? 'bg-gradient-to-r from-purple-500 to-pink-500' :
-                          workflow.id === 'apollo-cold-email-automation' ? 'bg-gradient-to-r from-orange-500 to-red-500' :
-                          workflow.id === 'ai-hidden-real-estate-listings' ? 'bg-gradient-to-r from-teal-500 to-cyan-500' :
-                          'bg-gradient-to-r from-indigo-500 to-purple-500'
-                        }`}>
-                          <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            {workflow.id === 'real-estate-automation' && (
-                              <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-                            )}
-                            {workflow.id === 'n8n-workflow-collection' && (
-                              <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
-                            )}
-                            {workflow.id === 'ai-real-estate-video-automation' && (
-                              <path d="M2 6a2 2 0 012-2h6l2 2h6a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V9a1 1 0 00-1.447-.894l-2 1z" />
-                            )}
-                            {workflow.id === 'n8n-ai-agent-builder' && (
-                              <path fillRule="evenodd" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" clipRule="evenodd" />
-                            )}
-                            {workflow.id === 'apollo-cold-email-automation' && (
-                              <>
-                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                              </>
-                            )}
-                            {workflow.id === 'ai-hidden-real-estate-listings' && (
-                              <path fillRule="evenodd" d="M8 16a4 4 0 100-8 4 4 0 000 8zm0-2a2 2 0 100-4 2 2 0 000 4zm2-8.243V1a1 1 0 10-2 0v4.757A6 6 0 114.243 10H1a1 1 0 100 2h3.243A6 6 0 0110 5.757z" clipRule="evenodd" />
-                            )}
-                          </svg>
-                        </div>
-                        <div>
-                          <h2 className={`text-2xl font-bold text-gray-900 group-hover:transition-colors ${
-                            workflow.id === 'real-estate-automation' ? 'group-hover:text-indigo-600' :
-                            workflow.id === 'n8n-workflow-collection' ? 'group-hover:text-green-600' :
-                            workflow.id === 'n8n-ai-agent-builder' ? 'group-hover:text-orange-600' :
-                            workflow.id === 'ai-real-estate-video-automation' ? 'group-hover:text-purple-600' :
-                            workflow.id === 'apollo-cold-email-automation' ? 'group-hover:text-orange-600' :
-                            workflow.id === 'ai-hidden-real-estate-listings' ? 'group-hover:text-teal-600' :
-                            'group-hover:text-indigo-600'
-                          }`}>{workflow.title}</h2>
-                          <p className={`font-medium ${
-                            workflow.id === 'real-estate-automation' ? 'text-indigo-600' :
-                            workflow.id === 'n8n-workflow-collection' ? 'text-green-600' :
-                            workflow.id === 'n8n-ai-agent-builder' ? 'text-orange-600' :
-                            workflow.id === 'ai-real-estate-video-automation' ? 'text-purple-600' :
-                            workflow.id === 'apollo-cold-email-automation' ? 'text-orange-600' :
-                            workflow.id === 'ai-hidden-real-estate-listings' ? 'text-teal-600' :
-                            'text-indigo-600'
-                          }`}>{workflow.subtitle}</p>
-                        </div>
-                      </Link>
-                      
-                      <p className="text-gray-600 mb-6 leading-relaxed">
-                        {workflow.description}
-                      </p>
-
-                      {/* Features */}
-                      <div className="mb-6">
-                        <h3 className="font-semibold text-gray-900 mb-3">What's Included:</h3>
-                        <div className="grid sm:grid-cols-2 gap-2">
-                          {workflow.features.map((feature, index) => (
-                            <div key={index} className="flex items-center text-sm text-gray-600">
-                              <svg className="w-4 h-4 mr-2 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                              </svg>
-                              {feature}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Tools */}
-                      <div className="mb-6">
-                        <h3 className="font-semibold text-gray-900 mb-3">Tools & Integrations:</h3>
-                        <div className="flex flex-wrap gap-2">
-                          {workflow.tools.map((tool, index) => (
-                            <span key={index} className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
-                              {tool}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Action Button */}
-                      <Link 
-                        href={workflow.href}
-                        className={`inline-flex items-center text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] ${
-                          workflow.id === 'real-estate-automation' ? 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700' :
-                          workflow.id === 'n8n-workflow-collection' ? 'bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700' :
-                          workflow.id === 'n8n-ai-agent-builder' ? 'bg-gradient-to-r from-orange-600 to-purple-600 hover:from-orange-700 hover:to-purple-700' :
-                          workflow.id === 'ai-real-estate-video-automation' ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700' :
-                          workflow.id === 'apollo-cold-email-automation' ? 'bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700' :
-                          workflow.id === 'ai-hidden-real-estate-listings' ? 'bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700' :
-                          'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700'
-                        }`}
-                      >
-                        View Complete Guide
-                        <svg className="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                      </Link>
+              <Link 
+                key={workflow.id} 
+                href={workflow.href}
+                className="group bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
+              >
+                <div className="p-6">
+                  {/* Icon & Title */}
+                  <div className="flex items-start space-x-3 mb-4">
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform ${
+                      workflow.id === 'real-estate-automation' ? 'bg-gradient-to-r from-indigo-500 to-purple-500' :
+                      workflow.id === 'n8n-workflow-collection' ? 'bg-gradient-to-r from-green-500 to-blue-500' :
+                      workflow.id === 'n8n-ai-agent-builder' ? 'bg-gradient-to-r from-orange-500 to-purple-500' :
+                      workflow.id === 'ai-real-estate-video-automation' ? 'bg-gradient-to-r from-purple-500 to-pink-500' :
+                      workflow.id === 'apollo-cold-email-automation' ? 'bg-gradient-to-r from-orange-500 to-red-500' :
+                      workflow.id === 'ai-hidden-real-estate-listings' ? 'bg-gradient-to-r from-teal-500 to-cyan-500' :
+                      'bg-gradient-to-r from-indigo-500 to-purple-500'
+                    }`}>
+                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        {workflow.id === 'real-estate-automation' && (
+                          <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+                        )}
+                        {workflow.id === 'n8n-workflow-collection' && (
+                          <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
+                        )}
+                        {workflow.id === 'ai-real-estate-video-automation' && (
+                          <path d="M2 6a2 2 0 012-2h6l2 2h6a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V9a1 1 0 00-1.447-.894l-2 1z" />
+                        )}
+                        {workflow.id === 'n8n-ai-agent-builder' && (
+                          <path fillRule="evenodd" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" clipRule="evenodd" />
+                        )}
+                        {workflow.id === 'apollo-cold-email-automation' && (
+                          <>
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                          </>
+                        )}
+                        {workflow.id === 'ai-hidden-real-estate-listings' && (
+                          <path fillRule="evenodd" d="M8 16a4 4 0 100-8 4 4 0 000 8zm0-2a2 2 0 100-4 2 2 0 000 4zm2-8.243V1a1 1 0 10-2 0v4.757A6 6 0 114.243 10H1a1 1 0 100 2h3.243A6 6 0 0110 5.757z" clipRule="evenodd" />
+                        )}
+                      </svg>
                     </div>
-
-                    {/* Sidebar Stats */}
-                    <div className="lg:col-span-1">
-                      <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6">
-                        <h3 className="font-semibold text-gray-900 mb-4">Workflow Stats</h3>
-                        
-                        <div className="space-y-4">
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600">Complexity</span>
-                            <span className={`font-medium ${
-                              workflow.id === 'real-estate-automation' ? 'text-indigo-600' :
-                              workflow.id === 'n8n-workflow-collection' ? 'text-green-600' :
-                              workflow.id === 'n8n-ai-agent-builder' ? 'text-orange-600' :
-                              workflow.id === 'ai-real-estate-video-automation' ? 'text-purple-600' :
-                              workflow.id === 'apollo-cold-email-automation' ? 'text-orange-600' :
-                              workflow.id === 'ai-hidden-real-estate-listings' ? 'text-teal-600' :
-                              'text-indigo-600'
-                            }`}>{workflow.complexity}</span>
-                          </div>
-                          
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600">Setup Time</span>
-                            <span className="font-medium text-gray-900">{workflow.setupTime}</span>
-                          </div>
-                          
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600">N8N Nodes</span>
-                            <span className="font-medium text-gray-900">{workflow.preview.nodes}</span>
-                          </div>
-                          
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600">Triggers</span>
-                            <span className="font-medium text-gray-900">{workflow.preview.triggers}</span>
-                          </div>
-                          
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600">Integrations</span>
-                            <span className="font-medium text-gray-900">{workflow.preview.integrations}</span>
-                          </div>
-                        </div>
-
-                        <div className="mt-6 pt-4 border-t border-gray-200">
-                          <Link 
-                            href="https://calendly.com/lumenosis/30min"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full text-center block text-indigo-600 hover:text-indigo-700 text-sm font-medium transition-colors"
-                          >
-                            Need Help? Schedule Free Call →
-                          </Link>
-                        </div>
-                      </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className={`text-lg font-semibold text-gray-900 mb-1 group-hover:transition-colors line-clamp-2 ${
+                        workflow.id === 'real-estate-automation' ? 'group-hover:text-indigo-600' :
+                        workflow.id === 'n8n-workflow-collection' ? 'group-hover:text-green-600' :
+                        workflow.id === 'n8n-ai-agent-builder' ? 'group-hover:text-orange-600' :
+                        workflow.id === 'ai-real-estate-video-automation' ? 'group-hover:text-purple-600' :
+                        workflow.id === 'apollo-cold-email-automation' ? 'group-hover:text-orange-600' :
+                        workflow.id === 'ai-hidden-real-estate-listings' ? 'group-hover:text-teal-600' :
+                        'group-hover:text-indigo-600'
+                      }`}>{workflow.title}</h3>
+                      <p className={`text-xs font-medium ${
+                        workflow.id === 'real-estate-automation' ? 'text-indigo-600' :
+                        workflow.id === 'n8n-workflow-collection' ? 'text-green-600' :
+                        workflow.id === 'n8n-ai-agent-builder' ? 'text-orange-600' :
+                        workflow.id === 'ai-real-estate-video-automation' ? 'text-purple-600' :
+                        workflow.id === 'apollo-cold-email-automation' ? 'text-orange-600' :
+                        workflow.id === 'ai-hidden-real-estate-listings' ? 'text-teal-600' :
+                        'text-indigo-600'
+                      }`}>{workflow.subtitle}</p>
                     </div>
                   </div>
+                  
+                  {/* Description */}
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+                    {workflow.description}
+                  </p>
+
+                  {/* Features */}
+                  <div className="space-y-2 mb-4">
+                    {workflow.features.slice(0, 3).map((feature, index) => (
+                      <div key={index} className="flex items-start text-xs text-gray-600">
+                        <svg className="w-3.5 h-3.5 mr-1.5 mt-0.5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        <span className="line-clamp-1">{feature}</span>
+                      </div>
+                    ))}
+                    {workflow.features.length > 3 && (
+                      <p className="text-xs text-gray-500 italic">+ {workflow.features.length - 3} more</p>
+                    )}
+                  </div>
+
+                  {/* Bottom Meta */}
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div className="flex items-center space-x-3 text-xs text-gray-500">
+                      <span className={`px-2 py-1 rounded-full ${
+                        workflow.complexity === 'Beginner' ? 'bg-green-100 text-green-700' :
+                        workflow.complexity === 'Intermediate' ? 'bg-yellow-100 text-yellow-700' :
+                        'bg-red-100 text-red-700'
+                      }`}>{workflow.complexity}</span>
+                      <span>⏱️ {workflow.setupTime}</span>
+                    </div>
+                    <svg className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
@@ -508,11 +485,6 @@ export default function LeadMagnetIndex() {
             </div>
           </div>
 
-          {/* Revenue Calculator Section */}
-          <div id="revenue-calculator" className="mt-20 scroll-mt-20">
-            <RevenueCalculator />
-          </div>
-
           {/* Done-For-You Automation Services Section */}
           <div id="done-for-you-section" className="mt-20">
             <div className="bg-gradient-to-br from-indigo-50 via-white to-purple-50 rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
@@ -524,7 +496,7 @@ export default function LeadMagnetIndex() {
                         <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
                       </svg>
                     </div>
-                    <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
+                    <h2 className="text-3xl lg:text-4xl font-semibold text-gray-900">
                       Need It Done-For-You?
                     </h2>
                   </div>
@@ -549,7 +521,7 @@ export default function LeadMagnetIndex() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <h3 className="text-xl lg:text-2xl font-bold text-gray-900 leading-tight">
+                        <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 leading-tight">
                           Martin | Lumenosis AI Co-founder
                         </h3>
                         <p className="text-lg font-semibold text-indigo-600">Custom AI Automation Systems</p>
@@ -558,9 +530,9 @@ export default function LeadMagnetIndex() {
                       
                       <div className="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
                         <div className="text-center">
-                          <div className="text-2xl font-bold text-green-600 mb-1">300-500%</div>
+                          <div className="text-2xl font-semibold text-green-600 mb-1">300-500%</div>
                           <div className="text-sm text-gray-600 mb-3">Average Client ROI</div>
-                          <div className="text-xl font-bold text-indigo-600 mb-1">$10K-50K+</div>
+                          <div className="text-xl font-semibold text-indigo-600 mb-1">$10K-50K+</div>
                           <div className="text-sm text-gray-600">Yearly Revenue Increase & Saved</div>
                         </div>
                       </div>
@@ -685,7 +657,7 @@ export default function LeadMagnetIndex() {
                           href="https://calendly.com/lumenosis/30min"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-6 rounded-xl text-center hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-[1.02] shadow-lg"
+                          className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold py-4 px-6 rounded-xl text-center hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-[1.02] shadow-lg"
                         >
                           💡 Book Free Revenue Strategy Call
                         </Link>
@@ -719,7 +691,7 @@ export default function LeadMagnetIndex() {
           <div className="text-center">
             <Link href="/" className="flex items-center justify-center space-x-2 mb-4">
               <Image src="/logo.png" alt="Lumenosis AI" width={32} height={32} className="h-8 w-auto" />
-              <span className="text-xl font-bold">Lumenosis AI</span>
+              <span className="text-xl font-semibold">Lumenosis AI</span>
             </Link>
             <p className="text-gray-400 mb-4">
               Automating success, one workflow at a time.

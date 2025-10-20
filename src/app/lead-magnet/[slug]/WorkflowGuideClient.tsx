@@ -44,7 +44,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Workflow Not Found</h1>
           <Link href="/lead-magnet" className="text-indigo-600 hover:text-indigo-700">
-            ← Back to Workflows
+            ← Back to Blog
           </Link>
         </div>
       </div>
@@ -228,7 +228,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-sm hidden xs:inline">Back to Workflows</span>
+                  <span className="text-sm hidden xs:inline">Back to Blog</span>
                   <span className="text-sm xs:hidden">Back</span>
                 </Link>
                 <div className="hidden sm:block w-px h-6 bg-gray-300"></div>
@@ -650,7 +650,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
               {/* Navigation Bar */}
               <div className="mt-12 border-t border-gray-200 pt-8">
                 <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-                  {/* Back to Workflows */}
+                  {/* Back to Blog */}
                   <Link 
                     href="/lead-magnet"
                     className="flex items-center space-x-2 text-gray-600 hover:text-indigo-600 transition-colors group"
@@ -658,7 +658,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
                     <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-sm font-medium">Back to All Workflows</span>
+                    <span className="text-sm font-medium">Back to Blog</span>
                   </Link>
 
                   {/* Lumenosis AI Link */}
@@ -802,7 +802,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-sm hidden xs:inline">Back to Workflows</span>
+                  <span className="text-sm hidden xs:inline">Back to Blog</span>
                   <span className="text-sm xs:hidden">Back</span>
                 </Link>
                 <div className="hidden sm:block w-px h-6 bg-gray-300"></div>
@@ -1378,7 +1378,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
                 {/* Navigation Bar */}
                 <div className="mt-12 border-t border-gray-200 pt-8">
                   <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-                    {/* Back to Workflows */}
+                    {/* Back to Blog */}
                     <Link 
                       href="/lead-magnet"
                       className="flex items-center space-x-2 text-gray-600 hover:text-indigo-600 transition-colors group"
@@ -1386,7 +1386,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
                       <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
                       </svg>
-                      <span className="text-sm font-medium">Back to All Workflows</span>
+                      <span className="text-sm font-medium">Back to Blog</span>
                     </Link>
 
                     {/* Lumenosis AI Link */}
@@ -1513,7 +1513,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
                       </svg>
-                      <span className="text-sm hidden xs:inline">Back to Workflows</span>
+                      <span className="text-sm hidden xs:inline">Back to Blog</span>
                       <span className="text-sm xs:hidden">Back</span>
                     </Link>
                     <div className="hidden sm:block w-px h-6 bg-gray-300"></div>
@@ -2123,7 +2123,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
               {/* Navigation Bar */}
               <div className="mt-12 border-t border-gray-200 pt-8">
                 <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-                  {/* Back to Workflows */}
+                  {/* Back to Blog */}
                   <Link 
                     href="/lead-magnet"
                     className="flex items-center space-x-2 text-gray-600 hover:text-indigo-600 transition-colors group"
@@ -2131,7 +2131,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
                     <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-sm font-medium">Back to All Workflows</span>
+                    <span className="text-sm font-medium">Back to Blog</span>
                   </Link>
 
                   {/* Lumenosis AI Link */}
@@ -2259,7 +2259,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
                       </svg>
-                      <span className="text-sm hidden xs:inline">Back to Workflows</span>
+                      <span className="text-sm hidden xs:inline">Back to Blog</span>
                       <span className="text-sm xs:hidden">Back</span>
                     </Link>
                     <div className="hidden sm:block w-px h-6 bg-gray-300"></div>
@@ -2857,7 +2857,7 @@ Make sure the length of the text matches 47-50 seconds. Make sure not to overspe
                       {/* Navigation Bar */}
                       <div className="mt-12 border-t border-gray-200 pt-8">
                         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-                          {/* Back to Workflows */}
+                          {/* Back to Blog */}
                           <Link 
                             href="/lead-magnet"
                             className="flex items-center space-x-2 text-gray-600 hover:text-indigo-600 transition-colors group"
@@ -2865,7 +2865,7 @@ Make sure the length of the text matches 47-50 seconds. Make sure not to overspe
                             <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
                             </svg>
-                            <span className="text-sm font-medium">Back to All Workflows</span>
+                            <span className="text-sm font-medium">Back to Blog</span>
                           </Link>
 
                           {/* Lumenosis AI Link */}
@@ -3022,7 +3022,7 @@ Make sure the length of the text matches 47-50 seconds. Make sure not to overspe
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
                       </svg>
-                      <span className="text-sm hidden xs:inline">Back to Workflows</span>
+                      <span className="text-sm hidden xs:inline">Back to Blog</span>
                       <span className="text-sm xs:hidden">Back</span>
                     </Link>
                     <div className="hidden sm:block w-px h-6 bg-gray-300"></div>
@@ -3478,7 +3478,7 @@ Make sure the length of the text matches 47-50 seconds. Make sure not to overspe
             {/* Navigation Bar */}
             <div className="mt-12 border-t border-gray-200 pt-8">
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-                {/* Back to Workflows */}
+                {/* Back to Blog */}
                 <Link 
                   href="/lead-magnet"
                   className="flex items-center space-x-2 text-gray-600 hover:text-indigo-600 transition-colors group"
@@ -3486,7 +3486,7 @@ Make sure the length of the text matches 47-50 seconds. Make sure not to overspe
                   <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-sm font-medium">Back to All Workflows</span>
+                  <span className="text-sm font-medium">Back to Blog</span>
                 </Link>
 
                 {/* Lumenosis AI Link */}
@@ -3644,7 +3644,7 @@ Make sure the length of the text matches 47-50 seconds. Make sure not to overspe
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-sm hidden xs:inline">Back to Workflows</span>
+                  <span className="text-sm hidden xs:inline">Back to Blog</span>
                   <span className="text-sm xs:hidden">Back</span>
                 </Link>
                 <div className="hidden sm:block w-px h-6 bg-gray-300"></div>

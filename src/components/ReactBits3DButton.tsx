@@ -61,7 +61,7 @@ const ReactBits3DButton: React.FC<ReactBits3DButtonProps> = ({
   };
 
   const baseClasses = `
-    ${className.includes('!block') ? 'flex w-full' : 'inline-flex'} items-center justify-center font-bold rounded-full
+    ${className.includes('!block') ? 'flex w-full' : 'inline-flex'} items-center justify-center font-semibold rounded-full
     relative overflow-hidden select-none
     transition-all duration-200 transform-gpu
     text-shadow-sm 
@@ -113,7 +113,7 @@ const ReactBits3DButton: React.FC<ReactBits3DButtonProps> = ({
       style={{ transformStyle: 'preserve-3d' }}
     >
       {/* Text content with better contrast */}
-      <span className="relative z-10 flex items-center justify-center gap-2 font-bold text-white drop-shadow-lg w-full">
+      <span className="relative z-10 flex items-center justify-center gap-2 font-medium text-white drop-shadow-lg w-full">
         {children}
       </span>
       

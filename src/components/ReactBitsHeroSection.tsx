@@ -7,6 +7,7 @@ import ReactBits3DButton from './ReactBits3DButton'
 import StarBorderOutline from './StarBorderOutline'
 import Aurora from './Aurora'
 import TiltedCard from './TiltedCard'
+import { PartnerLogosScroller } from './PartnerLogosScroller'
 
 // React Bits components - these would be imported from the react-bits package
 // For now, we'll create simplified versions that match the React Bits API
@@ -172,7 +173,7 @@ export default function ReactBitsHeroSection({ className = '' }: ReactBitsHeroSe
             <span className="text-indigo-300 text-sm font-medium">Trusted by 50+ Real Estate Professionals</span>
           </div>
           
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-center max-w-4xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-semibold tracking-tight text-center max-w-4xl mx-auto">
             <span className="block text-white text-4xl sm:text-5xl md:text-6xl">Get </span>
             <span className="block mt-2 typewriter-glow text-4xl sm:text-5xl md:text-6xl">
               <TypewriterEffect 
@@ -184,12 +185,12 @@ export default function ReactBitsHeroSection({ className = '' }: ReactBitsHeroSe
             </span>
             <span className="block mt-2 text-white">While You Sleep</span>
           </h1>
-          <p className="mt-4 sm:mt-5 text-lg sm:text-xl text-white max-w-3xl mx-auto font-semibold">
-            Lead qualification, appointment booking, follow-ups, pipeline management, and all your busywork handled intelligently 24/7.
+          <p className="mt-4 sm:mt-5 text-lg sm:text-xl text-white max-w-3xl mx-auto font-normal">
+            Never lose another lead to slow follow-up. AI qualifies leads, books appointments, and handles follow-ups 24/7 while you focus on closing.
           </p>
           <p className="mt-3 text-base sm:text-lg text-white/90 max-w-2xl mx-auto">
-            <span className="text-green-400 font-semibold">78% faster response</span> than competitors. 
-            <span className="text-indigo-400 font-semibold"> Save 15+ hours weekly.</span>
+            <span className="text-green-400 font-medium">Capture every lead in 60 seconds.</span>
+            <span className="text-indigo-400 font-medium"> Win back 15+ hours weekly.</span>
           </p>
           
           {/* CTA Buttons with Magnetic Effects */}
@@ -202,8 +203,8 @@ export default function ReactBitsHeroSection({ className = '' }: ReactBitsHeroSe
                 variant="gradient"
                 size="lg"
               >
-                <i className="fas fa-phone mr-2"></i>
-                Book Free Strategy Call
+                <i className="fas fa-comments mr-2"></i>
+                Let's Chat
               </ReactBits3DButton>
             </StarBorderOutline>
             <StarBorderOutline color="#6366f1" speed="4s">
@@ -213,7 +214,7 @@ export default function ReactBitsHeroSection({ className = '' }: ReactBitsHeroSe
                 size="lg"
               >
                 <i className="fas fa-play mr-2"></i>
-                See Live Demo
+                Play Demo
               </ReactBits3DButton>
             </StarBorderOutline>
           </div>
@@ -231,10 +232,10 @@ export default function ReactBitsHeroSection({ className = '' }: ReactBitsHeroSe
                 showTooltip={false}
               >
                 <div className="glass-effect bg-indigo-500/10 border-2 border-indigo-500/30 rounded-xl px-3 py-4 sm:px-6 sm:py-4 text-center w-[140px] h-[80px] sm:w-[160px] sm:h-[90px] flex flex-col justify-center transition-all duration-500 hover:shadow-2xl hover:shadow-indigo-500/50 cursor-pointer hover:bg-indigo-500/20 hover:border-indigo-400/60">
-                  <div className="text-2xl sm:text-3xl font-bold text-indigo-400 transition-all duration-300 ease-out">
+                  <div className="text-2xl sm:text-3xl font-medium text-indigo-400 transition-all duration-300 ease-out">
                     <CountingNumber end={60} suffix="s" />
                   </div>
-                  <div className="text-xs sm:text-sm text-white font-medium">Response Time</div>
+                  <div className="text-xs sm:text-sm text-white font-normal">Response Time</div>
                 </div>
               </TiltedCard>
               
@@ -247,10 +248,10 @@ export default function ReactBitsHeroSection({ className = '' }: ReactBitsHeroSe
                 showTooltip={false}
               >
                 <div className="glass-effect bg-green-500/10 border-2 border-green-500/30 rounded-xl px-3 py-4 sm:px-6 sm:py-4 text-center w-[140px] h-[80px] sm:w-[160px] sm:h-[90px] flex flex-col justify-center transition-all duration-500 hover:shadow-2xl hover:shadow-green-500/50 cursor-pointer hover:bg-green-500/20 hover:border-green-400/60">
-                  <div className="text-2xl sm:text-3xl font-bold text-green-400 transition-all duration-300 ease-out">
-                    <CountingNumber end={3} suffix="X" />
+                  <div className="text-2xl sm:text-3xl font-medium text-green-400 transition-all duration-300 ease-out">
+                    <CountingNumber end={300} suffix="%" />
                   </div>
-                  <div className="text-xs sm:text-sm text-white font-medium">More Bookings</div>
+                  <div className="text-xs sm:text-sm text-white font-normal">More Bookings</div>
                 </div>
               </TiltedCard>
               
@@ -265,8 +266,8 @@ export default function ReactBitsHeroSection({ className = '' }: ReactBitsHeroSe
                   showTooltip={false}
                 >
                   <div className="glass-effect bg-purple-500/10 border-2 border-purple-500/30 rounded-xl px-6 py-4 text-center w-[160px] h-[90px] flex flex-col justify-center transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/50 cursor-pointer hover:bg-purple-500/20 hover:border-purple-400/60">
-                    <div className="text-3xl font-bold text-purple-400">24/7</div>
-                    <div className="text-sm text-white font-medium">AI Working</div>
+                    <div className="text-3xl font-medium text-purple-400">24/7</div>
+                    <div className="text-sm text-white font-normal">AI Working</div>
                   </div>
                 </TiltedCard>
               </div>
@@ -284,12 +285,17 @@ export default function ReactBitsHeroSection({ className = '' }: ReactBitsHeroSe
                   showTooltip={false}
                 >
                   <div className="glass-effect bg-purple-500/10 border-2 border-purple-500/30 rounded-xl px-3 py-4 sm:px-6 sm:py-4 text-center w-[140px] h-[80px] sm:w-[160px] sm:h-[90px] flex flex-col justify-center transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/50 cursor-pointer hover:bg-purple-500/20 hover:border-purple-400/60">
-                    <div className="text-2xl sm:text-3xl font-bold text-purple-400">24/7</div>
-                    <div className="text-xs sm:text-sm text-white font-medium">AI Working</div>
+                    <div className="text-2xl sm:text-3xl font-medium text-purple-400">24/7</div>
+                    <div className="text-xs sm:text-sm text-white font-normal">AI Working</div>
                   </div>
                 </TiltedCard>
               </div>
             </div>
+          </div>
+
+          {/* Partner Logos Section - Professional Scroller from 21st.dev */}
+          <div className="mt-12 sm:mt-16">
+            <PartnerLogosScroller />
           </div>
         </div>
       </div>

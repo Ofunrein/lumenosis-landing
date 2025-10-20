@@ -2,25 +2,106 @@
 
 import { useState, useEffect } from 'react';
 
+type CallType = 'inbound' | 'outbound' | null;
+type Industry = 'property' | 'finance' | 'health' | 'saas' | 'construction' | 'insurance' | 'agency' | 'other' | null;
+
 export default function RevenueCalculator() {
-  const [missedCalls, setMissedCalls] = useState<number>(50);
-  const [conversionRate, setConversionRate] = useState<number>(20);
-  const [avgTicket, setAvgTicket] = useState<number>(500);
-  
-  const [monthlyLost, setMonthlyLost] = useState<number>(0);
-  const [yearlyLost, setYearlyLost] = useState<number>(0);
-  const [recoveryPotential, setRecoveryPotential] = useState<number>(0);
+  const [step, setStep] = useState<'callType' | 'industry' | 'calculator'>('callType');
+  const [callType, setCallType] = useState<CallType>(null);
+  const [industry, setIndustry] = useState<Industry>(null);
+
+  // Inbound specific states
+  const [monthlyRevenue, setMonthlyRevenue] = useState<number>(120000);
+  const [avgTicketSize, setAvgTicketSize] = useState<number>(600);
+  const [avgInboundCalls, setAvgInboundCalls] = useState<number>(900);
+  const [missedCallsPercent, setMissedCallsPercent] = useState<number>(30);
+  const [conversionRate, setConversionRate] = useState<number>(35);
+  const [bookingPercent, setBookingPercent] = useState<number>(60);
+  const [avgCallTime, setAvgCallTime] = useState<number>(6);
+  const [hasReception, setHasReception] = useState<boolean>(true);
+  const [numStaff, setNumStaff] = useState<number>(2);
+  const [hourlyRate, setHourlyRate] = useState<number>(30);
+  const [coverageHours, setCoverageHours] = useState<number>(40);
+  const [responseTime, setResponseTime] = useState<number>(24);
+
+  // Outbound specific states
+  const [outboundRevenue, setOutboundRevenue] = useState<number>(250000);
+  const [avgDealValue, setAvgDealValue] = useState<number>(4300);
+  const [leadsGenerated, setLeadsGenerated] = useState<number>(1200);
+  const [qualifyingCalls, setQualifyingCalls] = useState<number>(900);
+  const [avgTimePerCall, setAvgTimePerCall] = useState<number>(7);
+  const [bookingRate, setBookingRate] = useState<number>(25);
+  const [closeRate, setCloseRate] = useState<number>(20);
+  const [followUpFrequency, setFollowUpFrequency] = useState<number>(3);
+  const [numSDRs, setNumSDRs] = useState<number>(3);
+  const [sdrHourlyRate, setSdrHourlyRate] = useState<number>(35);
+  const [callsPerDay, setCallsPerDay] = useState<number>(60);
+
+  // Results
+  const [currentCost, setCurrentCost] = useState<number>(0);
+  const [lostOpportunity, setLostOpportunity] = useState<number>(0);
+  const [aiSubscription] = useState<number>(5000);
+  const [savedCost, setSavedCost] = useState<number>(0);
+  const [recapturedRevenue, setRecapturedRevenue] = useState<number>(0);
+  const [monthlyGain, setMonthlyGain] = useState<number>(0);
+  const [roi, setRoi] = useState<number>(0);
+  const [paybackDays, setPaybackDays] = useState<number>(0);
 
   useEffect(() => {
-    // Calculate missed revenue
-    const monthly = missedCalls * (conversionRate / 100) * avgTicket;
-    const yearly = monthly * 12;
-    const recovery = yearly * 0.8; // 80% recovery with AI
+    if (callType === 'inbound') {
+      calculateInbound();
+    } else if (callType === 'outbound') {
+      calculateOutbound();
+    }
+  }, [callType, monthlyRevenue, avgTicketSize, avgInboundCalls, missedCallsPercent, conversionRate, bookingPercent, avgCallTime, hasReception, numStaff, hourlyRate, coverageHours, responseTime, outboundRevenue, avgDealValue, leadsGenerated, qualifyingCalls, avgTimePerCall, bookingRate, closeRate, followUpFrequency, numSDRs, sdrHourlyRate, callsPerDay]);
 
-    setMonthlyLost(monthly);
-    setYearlyLost(yearly);
-    setRecoveryPotential(recovery);
-  }, [missedCalls, conversionRate, avgTicket]);
+  const calculateInbound = () => {
+    const laborCost = hasReception ? (numStaff * hourlyRate * coverageHours * 4.33) : 0;
+    const missed = Math.floor(avgInboundCalls * (missedCallsPercent / 100));
+    const lostValue = missed * (conversionRate / 100) * avgTicketSize;
+    
+    const savedLabor = laborCost * 0.70;
+    const recaptured = lostValue * 0.80;
+    const gain = savedLabor + recaptured - aiSubscription;
+    const roiPercent = ((gain / aiSubscription) * 100);
+    const payback = aiSubscription / (gain || 1);
+
+    setCurrentCost(laborCost);
+    setLostOpportunity(lostValue);
+    setSavedCost(savedLabor);
+    setRecapturedRevenue(recaptured);
+    setMonthlyGain(gain);
+    setRoi(roiPercent);
+    setPaybackDays(payback * 30);
+  };
+
+  const calculateOutbound = () => {
+    const laborCost = numSDRs * sdrHourlyRate * 8 * 21.67; // 8 hours/day, 21.67 working days/month
+    const contactedLeads = qualifyingCalls;
+    const bookings = contactedLeads * (bookingRate / 100);
+    const deals = bookings * (closeRate / 100);
+    const currentRevenue = deals * avgDealValue;
+    
+    // With AI
+    const moreContacts = leadsGenerated * 0.20; // 20% more contacts with AI
+    const aiBookings = (contactedLeads + moreContacts) * ((bookingRate + 5) / 100); // 5% better booking rate
+    const aiDeals = aiBookings * ((closeRate + 5) / 100); // 5% better close rate
+    const aiRevenue = aiDeals * avgDealValue;
+    const revenueIncrease = aiRevenue - currentRevenue;
+    
+    const savedLabor = laborCost * 0.40; // Save 40% on labor with AI assist
+    const gain = savedLabor + revenueIncrease - aiSubscription;
+    const roiPercent = ((gain / aiSubscription) * 100);
+    const payback = aiSubscription / (gain || 1);
+
+    setCurrentCost(laborCost);
+    setLostOpportunity(0);
+    setSavedCost(savedLabor);
+    setRecapturedRevenue(revenueIncrease);
+    setMonthlyGain(gain);
+    setRoi(roiPercent);
+    setPaybackDays(payback * 30);
+  };
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -31,163 +112,981 @@ export default function RevenueCalculator() {
     }).format(value);
   };
 
+  const handleCallTypeSelect = (type: CallType) => {
+    setCallType(type);
+    setStep('industry');
+  };
+
+  const handleIndustrySelect = (ind: Industry) => {
+    setIndustry(ind);
+    setStep('calculator');
+  };
+
+  const handleStartOver = () => {
+    setStep('callType');
+    setCallType(null);
+    setIndustry(null);
+  };
+
+  // Call Type Selection Screen
+  if (step === 'callType') {
   return (
     <div className="bg-gradient-to-br from-indigo-50 via-white to-purple-50 rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
-      <div className="p-8 lg:p-12">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center space-x-2 mb-4">
-            <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+        <div className="p-6 sm:p-8 lg:p-12">
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-2xl mb-4">
+              <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clipRule="evenodd" />
               </svg>
             </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
+              AI Voice Agent ROI Calculator
+            </h2>
+            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
+              Discover your potential ROI with AI-powered phone automation
+            </p>
           </div>
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
-            How Much Revenue Are You Losing?
-          </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Every missed call is a missed opportunity. Calculate exactly how much revenue you're losing and see how an AI phone assistant can recover it.
-          </p>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 mb-8">
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-3">
+                What would you like to augment?
+              </h3>
+              <p className="text-center text-gray-600 mb-8">
+                Choose the phone activity you want to enhance with AI
+              </p>
+
+              <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+                {/* Inbound Calls */}
+                <button
+                  onClick={() => handleCallTypeSelect('inbound')}
+                  className="group bg-gray-50 hover:bg-purple-50 border-2 border-gray-200 hover:border-purple-500 rounded-2xl p-6 sm:p-8 text-left transition-all duration-300 transform hover:scale-[1.02]"
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <h4 className="text-xl sm:text-2xl font-bold text-gray-900">Inbound Calls</h4>
+                    <div className="w-12 h-12 bg-purple-100 group-hover:bg-purple-500 rounded-xl flex items-center justify-center transition-colors">
+                      <svg className="w-6 h-6 text-purple-600 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <p className="text-gray-600 mb-4">
+                    Improve how you handle incoming customer calls, reduce missed opportunities, and optimise reception resources
+                  </p>
+                  <ul className="space-y-2">
+                    <li className="flex items-center text-sm text-gray-700">
+                      <svg className="w-5 h-5 text-purple-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      Capture missed calls
+                    </li>
+                    <li className="flex items-center text-sm text-gray-700">
+                      <svg className="w-5 h-5 text-purple-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      24/7 coverage
+                    </li>
+                    <li className="flex items-center text-sm text-gray-700">
+                      <svg className="w-5 h-5 text-purple-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      Reduce labour costs
+                    </li>
+                  </ul>
+                  <div className="mt-6 flex items-center text-purple-600 group-hover:text-purple-700 font-semibold">
+                    Calculate ROI
+                    <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                </button>
+
+                {/* Outbound Calls */}
+                <button
+                  onClick={() => handleCallTypeSelect('outbound')}
+                  className="group bg-gray-50 hover:bg-indigo-50 border-2 border-gray-200 hover:border-indigo-500 rounded-2xl p-6 sm:p-8 text-left transition-all duration-300 transform hover:scale-[1.02]"
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <h4 className="text-xl sm:text-2xl font-bold text-gray-900">Outbound Calls</h4>
+                    <div className="w-12 h-12 bg-indigo-100 group-hover:bg-indigo-500 rounded-xl flex items-center justify-center transition-colors">
+                      <svg className="w-6 h-6 text-indigo-600 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <p className="text-gray-600 mb-4">
+                    Scale your outreach, qualify more leads, and increase conversion rates with AI-powered outbound calling
+                  </p>
+                  <ul className="space-y-2">
+                    <li className="flex items-center text-sm text-gray-700">
+                      <svg className="w-5 h-5 text-indigo-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      Contact 100% of leads
+                    </li>
+                    <li className="flex items-center text-sm text-gray-700">
+                      <svg className="w-5 h-5 text-indigo-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      Scale without hiring
+                    </li>
+                    <li className="flex items-center text-sm text-gray-700">
+                      <svg className="w-5 h-5 text-indigo-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      Boost conversion rates
+                    </li>
+                  </ul>
+                  <div className="mt-6 flex items-center text-indigo-600 group-hover:text-indigo-700 font-semibold">
+                    Calculate ROI
+                    <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Industry Selection Screen
+  if (step === 'industry') {
+    const industries = [
+      { id: 'property', label: 'Property', icon: '🏢' },
+      { id: 'finance', label: 'Finance', icon: '💲' },
+      { id: 'health', label: 'Health', icon: '❤️' },
+      { id: 'saas', label: 'SaaS', icon: '💻' },
+      { id: 'construction', label: 'Construction', icon: '🏗️' },
+      { id: 'insurance', label: 'Insurance', icon: '🛡️' },
+      { id: 'agency', label: 'Agency', icon: '👥' },
+      { id: 'other', label: 'Other', icon: '📋' },
+    ];
+
+    return (
+      <div className="bg-gradient-to-br from-indigo-50 via-white to-purple-50 rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
+        <div className="p-6 sm:p-8 lg:p-12">
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100">
+              <div className="mb-6">
+                <div className="inline-block px-4 py-1.5 bg-purple-100 text-purple-700 text-sm font-semibold rounded-full mb-4">
+                  BUSINESS CONTEXT
+                </div>
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wide">Question 1 of {callType === 'inbound' ? '13' : '12'}</h3>
+                    <div className="w-20 h-1 bg-purple-600 rounded-full mt-1"></div>
+                  </div>
+                  <span className="text-sm text-gray-500">8%</span>
+                </div>
+              </div>
+
+              <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 text-center mb-2">
+                Industry
+              </h3>
+              <p className="text-center text-gray-500 text-sm mb-8">* Required</p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                {industries.map((ind) => (
+                  <button
+                    key={ind.id}
+                    onClick={() => handleIndustrySelect(ind.id as Industry)}
+                    className="group bg-gray-50 hover:bg-purple-50 border-2 border-gray-200 hover:border-purple-500 rounded-xl p-4 sm:p-6 text-center transition-all duration-300 transform hover:scale-[1.05]"
+                  >
+                    <div className="text-3xl sm:text-4xl mb-2">{ind.icon}</div>
+                    <div className="text-sm sm:text-base font-semibold text-gray-900">{ind.label}</div>
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-8 flex items-center justify-center">
+                <button
+                  onClick={handleStartOver}
+                  className="text-purple-600 hover:text-purple-700 text-sm font-medium"
+                >
+                  ← Back
+                </button>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Calculator */}
-          <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-100">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
-                <svg className="w-6 h-6 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 7a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-3 3a1 1 0 100 2h.01a1 1 0 100-2H10zm-4 1a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1zm1-4a1 1 0 100 2h.01a1 1 0 100-2H7zm2 1a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm4-4a1 1 0 100 2h.01a1 1 0 100-2H13zM9 9a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zM7 8a1 1 0 000 2h.01a1 1 0 000-2H7z" clipRule="evenodd" />
+              <div className="mt-8 flex items-center justify-center text-gray-400">
+                <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
+                <span className="text-sm">Scroll or press ↓</span>
               </div>
-              <h3 className="text-xl font-bold text-gray-900">Revenue Calculator</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Calculator Screen (existing calculator with modifications)
+  return (
+    <div className="bg-gradient-to-br from-indigo-50 via-white to-purple-50 rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
+      <div className="p-6 sm:p-8 lg:p-12">
+        {/* Header with Back Button */}
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={handleStartOver}
+            className="flex items-center text-purple-600 hover:text-purple-700 font-medium"
+          >
+            <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+            </svg>
+            Start Over with New Calculation
+          </button>
+        </div>
+
+        {/* Title */}
+        <div className="text-center mb-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+            {callType === 'inbound' ? 'Inbound' : 'Outbound'} ROI Calculator
+          </h2>
+          <p className="text-gray-600">
+            {industry && `${industry.charAt(0).toUpperCase() + industry.slice(1)} Industry`}
+          </p>
             </div>
 
-            <div className="space-y-6">
-              {/* Missed Calls */}
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8">
+          {/* Input Form */}
+          <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg border border-gray-100 space-y-6">
+            {callType === 'inbound' ? (
+              <>
+                {/* Inbound Fields */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  How many calls do you miss per month? *
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <span className="w-2 h-8 bg-purple-600 rounded-full mr-3"></span>
+                    Business Context
+                  </h3>
+
+                  {/* Monthly Revenue */}
+                  <div className="mb-5">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Monthly revenue
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-purple-600">{formatCurrency(monthlyRevenue)}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="10000"
+                      max="1000000"
+                      step="1000"
+                      value={monthlyRevenue}
+                      onChange={(e) => setMonthlyRevenue(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                      style={{
+                        background: `linear-gradient(to right, #9333ea 0%, #9333ea ${((monthlyRevenue - 10000) / (1000000 - 10000)) * 100}%, #e5e7eb ${((monthlyRevenue - 10000) / (1000000 - 10000)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>$10,000</span>
+                      <span>$1,000,000</span>
+                    </div>
+                  </div>
+
+                  {/* Average Ticket Size */}
+                  <div className="mb-5">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Average ticket size
                 </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                    </svg>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-purple-600">{formatCurrency(avgTicketSize)}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="500"
+                      max="5000"
+                      step="50"
+                      value={avgTicketSize}
+                      onChange={(e) => setAvgTicketSize(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                      style={{
+                        background: `linear-gradient(to right, #9333ea 0%, #9333ea ${((avgTicketSize - 500) / (5000 - 500)) * 100}%, #e5e7eb ${((avgTicketSize - 500) / (5000 - 500)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>$500</span>
+                      <span>$5,000</span>
+                    </div>
+                  </div>
+
+                  {/* Avg Inbound Calls */}
+                  <div className="mb-5">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Avg inbound calls / month
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-purple-600">{avgInboundCalls}</span>
                   </div>
                   <input
-                    type="number"
-                    value={missedCalls}
-                    onChange={(e) => setMissedCalls(Number(e.target.value))}
-                    placeholder="e.g., 50"
-                    className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                  />
+                      type="range"
+                      min="200"
+                      max="2000"
+                      step="10"
+                      value={avgInboundCalls}
+                      onChange={(e) => setAvgInboundCalls(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                      style={{
+                        background: `linear-gradient(to right, #9333ea 0%, #9333ea ${((avgInboundCalls - 200) / (2000 - 200)) * 100}%, #e5e7eb ${((avgInboundCalls - 200) / (2000 - 200)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>200</span>
+                      <span>2,000</span>
                 </div>
               </div>
 
-              {/* Conversion Rate */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  What % of those calls become paying customers? *
+                  {/* % of calls missed */}
+                  <div className="mb-5">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      % of calls missed
                 </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
-                    </svg>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-purple-600">{missedCallsPercent}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="0"
+                      max="80"
+                      step="5"
+                      value={missedCallsPercent}
+                      onChange={(e) => setMissedCallsPercent(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                      style={{
+                        background: `linear-gradient(to right, #9333ea 0%, #9333ea ${(missedCallsPercent / 80) * 100}%, #e5e7eb ${(missedCallsPercent / 80) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>0%</span>
+                      <span>80%</span>
+                    </div>
+                  </div>
+
+                  {/* Conversion rate */}
+                  <div className="mb-5">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Conversion rate (lead → customer)
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-purple-600">{conversionRate}%</span>
                   </div>
                   <input
-                    type="number"
+                      type="range"
+                      min="5"
+                      max="80"
+                      step="5"
                     value={conversionRate}
                     onChange={(e) => setConversionRate(Number(e.target.value))}
-                    placeholder="e.g., 20"
-                    className="w-full pl-12 pr-14 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                  />
-                  <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                    <span className="text-gray-500 font-medium">%</span>
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                      style={{
+                        background: `linear-gradient(to right, #9333ea 0%, #9333ea ${((conversionRate - 5) / (80 - 5)) * 100}%, #e5e7eb ${((conversionRate - 5) / (80 - 5)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>5%</span>
+                      <span>80%</span>
+                    </div>
                   </div>
+
+                  {/* Booking % */}
+                  <div className="mb-5">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Booking % from inbound calls
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-purple-600">{bookingPercent}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="10"
+                      max="100"
+                      step="5"
+                      value={bookingPercent}
+                      onChange={(e) => setBookingPercent(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                      style={{
+                        background: `linear-gradient(to right, #9333ea 0%, #9333ea ${((bookingPercent - 10) / (100 - 10)) * 100}%, #e5e7eb ${((bookingPercent - 10) / (100 - 10)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>10%</span>
+                      <span>100%</span>
+                    </div>
+                  </div>
+
+                  {/* Avg call time */}
+                  <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Avg call handling time (mins)
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-purple-600">{avgCallTime}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="1"
+                      max="15"
+                      step="1"
+                      value={avgCallTime}
+                      onChange={(e) => setAvgCallTime(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                      style={{
+                        background: `linear-gradient(to right, #9333ea 0%, #9333ea ${((avgCallTime - 1) / (15 - 1)) * 100}%, #e5e7eb ${((avgCallTime - 1) / (15 - 1)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>1</span>
+                      <span>15</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <span className="w-2 h-8 bg-indigo-600 rounded-full mr-3"></span>
+                    Labour & Cost
+                  </h3>
+
+                  {/* Reception staff */}
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Reception/admin staff present
+                    </label>
+                    <button
+                      onClick={() => setHasReception(!hasReception)}
+                      className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors ${hasReception ? 'bg-purple-600' : 'bg-gray-200'}`}
+                    >
+                      <span className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${hasReception ? 'translate-x-9' : 'translate-x-1'}`} />
+                    </button>
+                    <span className="ml-3 text-sm font-medium text-gray-700">{hasReception ? 'Yes' : 'No'}</span>
+                  </div>
+
+                  {hasReception && (
+                    <>
+                      {/* # of staff */}
+                      <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          # of reception/admin staff
+                        </label>
+                        <div className="flex items-center space-x-4">
+                          <button
+                            onClick={() => setNumStaff(Math.max(1, numStaff - 1))}
+                            className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center font-bold text-gray-700 transition-colors"
+                          >
+                            −
+                          </button>
+                          <span className="text-2xl font-bold text-purple-600 min-w-[3rem] text-center">{numStaff}</span>
+                          <button
+                            onClick={() => setNumStaff(numStaff + 1)}
+                            className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center font-bold text-gray-700 transition-colors"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Hourly rate */}
+                      <div className="mb-5">
+                        <label className="block text-sm font-medium text-gray-700 mb-3">
+                          Avg hourly rate
+                        </label>
+                        <div className="text-center mb-3">
+                          <span className="text-3xl font-bold text-purple-600">${hourlyRate}/hr</span>
+                        </div>
+                        <input
+                          type="range"
+                          min="15"
+                          max="80"
+                          step="5"
+                          value={hourlyRate}
+                          onChange={(e) => setHourlyRate(Number(e.target.value))}
+                          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                          style={{
+                            background: `linear-gradient(to right, #9333ea 0%, #9333ea ${((hourlyRate - 15) / (80 - 15)) * 100}%, #e5e7eb ${((hourlyRate - 15) / (80 - 15)) * 100}%, #e5e7eb 100%)`
+                          }}
+                        />
+                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                          <span>15$/hr</span>
+                          <span>80$/hr</span>
                 </div>
               </div>
 
-              {/* Average Ticket */}
+                      {/* Coverage hours */}
+                      <div className="mb-5">
+                        <label className="block text-sm font-medium text-gray-700 mb-3">
+                          Hours of phone coverage / week
+                        </label>
+                        <div className="text-center mb-3">
+                          <span className="text-3xl font-bold text-purple-600">{coverageHours}</span>
+                        </div>
+                        <input
+                          type="range"
+                          min="20"
+                          max="70"
+                          step="5"
+                          value={coverageHours}
+                          onChange={(e) => setCoverageHours(Number(e.target.value))}
+                          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                          style={{
+                            background: `linear-gradient(to right, #9333ea 0%, #9333ea ${((coverageHours - 20) / (70 - 20)) * 100}%, #e5e7eb ${((coverageHours - 20) / (70 - 20)) * 100}%, #e5e7eb 100%)`
+                          }}
+                        />
+                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                          <span>20</span>
+                          <span>70</span>
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Response time */}
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Response time to missed calls
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-purple-600">{responseTime} hrs</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="1"
+                      max="72"
+                      step="1"
+                      value={responseTime}
+                      onChange={(e) => setResponseTime(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                      style={{
+                        background: `linear-gradient(to right, #9333ea 0%, #9333ea ${((responseTime - 1) / (72 - 1)) * 100}%, #e5e7eb ${((responseTime - 1) / (72 - 1)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>&lt;1 hr</span>
+                      <span>&gt;72 hrs</span>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Outbound Fields */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  What is your average ticket price per customer? *
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <span className="w-2 h-8 bg-indigo-600 rounded-full mr-3"></span>
+                    Business Context
+                  </h3>
+
+                  {/* Monthly Revenue */}
+                  <div className="mb-5">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Monthly revenue
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-indigo-600">{formatCurrency(outboundRevenue)}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="10000"
+                      max="1000000"
+                      step="1000"
+                      value={outboundRevenue}
+                      onChange={(e) => setOutboundRevenue(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                      style={{
+                        background: `linear-gradient(to right, #4f46e5 0%, #4f46e5 ${((outboundRevenue - 10000) / (1000000 - 10000)) * 100}%, #e5e7eb ${((outboundRevenue - 10000) / (1000000 - 10000)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>$10,000</span>
+                      <span>$1,000,000</span>
+                    </div>
+                  </div>
+
+                  {/* Average Deal Value */}
+                  <div className="mb-5">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Average deal value
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-indigo-600">{formatCurrency(avgDealValue)}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="1000"
+                      max="10000"
+                      step="50"
+                      value={avgDealValue}
+                      onChange={(e) => setAvgDealValue(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                      style={{
+                        background: `linear-gradient(to right, #4f46e5 0%, #4f46e5 ${((avgDealValue - 1000) / (10000 - 1000)) * 100}%, #e5e7eb ${((avgDealValue - 1000) / (10000 - 1000)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>$1,000</span>
+                      <span>$10,000</span>
+                    </div>
+                  </div>
+
+                  {/* Leads Generated */}
+                  <div className="mb-5">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Leads generated / month
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-indigo-600">{leadsGenerated}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="200"
+                      max="5000"
+                      step="10"
+                      value={leadsGenerated}
+                      onChange={(e) => setLeadsGenerated(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                      style={{
+                        background: `linear-gradient(to right, #4f46e5 0%, #4f46e5 ${((leadsGenerated - 200) / (5000 - 200)) * 100}%, #e5e7eb ${((leadsGenerated - 200) / (5000 - 200)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>200</span>
+                      <span>5,000</span>
+                    </div>
+                  </div>
+
+                  {/* Outbound Qualifying Calls */}
+                  <div className="mb-5">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Outbound qualifying calls / month
                 </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <span className="text-gray-500 font-medium">$</span>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-indigo-600">{qualifyingCalls}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="100"
+                      max="4000"
+                      step="10"
+                      value={qualifyingCalls}
+                      onChange={(e) => setQualifyingCalls(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                      style={{
+                        background: `linear-gradient(to right, #4f46e5 0%, #4f46e5 ${((qualifyingCalls - 100) / (4000 - 100)) * 100}%, #e5e7eb ${((qualifyingCalls - 100) / (4000 - 100)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>100</span>
+                      <span>4,000</span>
+                    </div>
+                  </div>
+
+                  {/* Avg Time Per Call */}
+                  <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Avg time per call (mins)
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-indigo-600">{avgTimePerCall}</span>
                   </div>
                   <input
-                    type="number"
-                    value={avgTicket}
-                    onChange={(e) => setAvgTicket(Number(e.target.value))}
-                    placeholder="e.g., 500"
-                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                  />
+                      type="range"
+                      min="1"
+                      max="15"
+                      step="1"
+                      value={avgTimePerCall}
+                      onChange={(e) => setAvgTimePerCall(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                      style={{
+                        background: `linear-gradient(to right, #4f46e5 0%, #4f46e5 ${((avgTimePerCall - 1) / (15 - 1)) * 100}%, #e5e7eb ${((avgTimePerCall - 1) / (15 - 1)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>1</span>
+                      <span>15</span>
+                    </div>
+                  </div>
                 </div>
+
+                <div>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <span className="w-2 h-8 bg-purple-600 rounded-full mr-3"></span>
+                    Performance Metrics
+                  </h3>
+
+                  {/* Booking Rate */}
+                  <div className="mb-5">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Booking rate
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-indigo-600">{bookingRate}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="5"
+                      max="60"
+                      step="5"
+                      value={bookingRate}
+                      onChange={(e) => setBookingRate(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                      style={{
+                        background: `linear-gradient(to right, #4f46e5 0%, #4f46e5 ${((bookingRate - 5) / (60 - 5)) * 100}%, #e5e7eb ${((bookingRate - 5) / (60 - 5)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>5%</span>
+                      <span>60%</span>
+                    </div>
+                  </div>
+
+                  {/* Close Rate */}
+                  <div className="mb-5">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Close rate after booking
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-indigo-600">{closeRate}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="5"
+                      max="60"
+                      step="5"
+                      value={closeRate}
+                      onChange={(e) => setCloseRate(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                      style={{
+                        background: `linear-gradient(to right, #4f46e5 0%, #4f46e5 ${((closeRate - 5) / (60 - 5)) * 100}%, #e5e7eb ${((closeRate - 5) / (60 - 5)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>5%</span>
+                      <span>60%</span>
+                    </div>
+                  </div>
+
+                  {/* Follow-up Frequency */}
+                  <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Follow-up frequency (attempts/lead)
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-indigo-600">{followUpFrequency}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="1"
+                      max="10"
+                      step="1"
+                      value={followUpFrequency}
+                      onChange={(e) => setFollowUpFrequency(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                      style={{
+                        background: `linear-gradient(to right, #4f46e5 0%, #4f46e5 ${((followUpFrequency - 1) / (10 - 1)) * 100}%, #e5e7eb ${((followUpFrequency - 1) / (10 - 1)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>1</span>
+                      <span>10</span>
               </div>
             </div>
+                </div>
+
+                <div>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <span className="w-2 h-8 bg-green-600 rounded-full mr-3"></span>
+                    Labour & Cost
+                  </h3>
+
+                  {/* # of SDRs */}
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      # of SDRs / sales staff
+                    </label>
+                    <div className="flex items-center space-x-4">
+                      <button
+                        onClick={() => setNumSDRs(Math.max(1, numSDRs - 1))}
+                        className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center font-bold text-gray-700 transition-colors"
+                      >
+                        −
+                      </button>
+                      <span className="text-2xl font-bold text-indigo-600 min-w-[3rem] text-center">{numSDRs}</span>
+                      <button
+                        onClick={() => setNumSDRs(numSDRs + 1)}
+                        className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center font-bold text-gray-700 transition-colors"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Avg Hourly Rate */}
+                  <div className="mb-5">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Avg hourly rate
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-indigo-600">${sdrHourlyRate}/hr</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="20"
+                      max="100"
+                      step="5"
+                      value={sdrHourlyRate}
+                      onChange={(e) => setSdrHourlyRate(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                      style={{
+                        background: `linear-gradient(to right, #4f46e5 0%, #4f46e5 ${((sdrHourlyRate - 20) / (100 - 20)) * 100}%, #e5e7eb ${((sdrHourlyRate - 20) / (100 - 20)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>20$/hr</span>
+                      <span>100$/hr</span>
+                    </div>
+                  </div>
+
+                  {/* Calls Per Day */}
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Calls per person per day
+                    </label>
+                    <div className="text-center mb-3">
+                      <span className="text-3xl font-bold text-indigo-600">{callsPerDay}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="10"
+                      max="400"
+                      step="10"
+                      value={callsPerDay}
+                      onChange={(e) => setCallsPerDay(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                      style={{
+                        background: `linear-gradient(to right, #4f46e5 0%, #4f46e5 ${((callsPerDay - 10) / (400 - 10)) * 100}%, #e5e7eb ${((callsPerDay - 10) / (400 - 10)) * 100}%, #e5e7eb 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <span>10</span>
+                      <span>400</span>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Results */}
-          <div className="space-y-4">
-            <div className="text-center lg:text-left mb-6">
-              <h3 className="text-xl font-bold text-gray-900">Your Missed Revenue</h3>
-              <p className="text-gray-600 text-sm mt-1">
-                {monthlyLost > 0 ? 'Enter your numbers above to see your missed revenue calculation' : 'Based on your inputs'}
-              </p>
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Current System */}
+              <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-2 border-gray-200">
+                <div className="text-center mb-4">
+                  <div className="inline-flex items-center justify-center w-10 h-10 bg-gray-100 rounded-xl mb-2">
+                    <svg className="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+            </div>
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Before AI</h3>
+                  <p className="text-xs text-gray-500 mt-1">Your existing operation costs</p>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="bg-gray-50 rounded-xl p-3">
+                    <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">Monthly Labour Cost</div>
+                    <div className="text-xl sm:text-2xl font-bold text-gray-900">{formatCurrency(currentCost)}</div>
+                  </div>
+
+                  {callType === 'inbound' && lostOpportunity > 0 && (
+                    <>
+                      <div className="bg-red-50 rounded-xl p-3 border border-red-100">
+                        <div className="text-xs text-red-600 uppercase tracking-wide mb-1">Missed Calls</div>
+                        <div className="text-xl sm:text-2xl font-bold text-red-600">{Math.floor(avgInboundCalls * (missedCallsPercent / 100))}</div>
+                        <div className="text-xs text-gray-600 mt-1">calls going unanswered</div>
+                      </div>
+
+                      <div className="bg-red-100 rounded-xl p-3 border border-red-200">
+                        <div className="text-xs text-red-700 uppercase tracking-wide mb-1">Lost Opportunity Value</div>
+                        <div className="text-xl sm:text-2xl font-bold text-red-700">{formatCurrency(lostOpportunity)}</div>
+                        <div className="text-xs text-gray-700 mt-1">potential revenue lost monthly</div>
+                      </div>
+                    </>
+                  )}
+
+                  <div className="bg-gray-100 rounded-xl p-3 border-2 border-gray-300">
+                    <div className="text-xs text-gray-700 uppercase tracking-wide mb-1">Total Monthly Cost</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-gray-900">{formatCurrency(currentCost)}</div>
+                  </div>
+              </div>
             </div>
 
-            {/* Monthly Lost Revenue */}
-            <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-6 border border-red-100 shadow-lg">
-              <div className="text-center">
-                <div className="text-sm font-medium text-red-600 mb-2">Monthly Lost Revenue</div>
-                <div className="text-4xl lg:text-5xl font-bold text-red-600 mb-3">
-                  {formatCurrency(monthlyLost)}
+              {/* What You Could Achieve */}
+              <div className={`bg-gradient-to-br ${callType === 'inbound' ? 'from-purple-50 to-indigo-50 border-purple-200' : 'from-indigo-50 to-blue-50 border-indigo-200'} rounded-2xl p-4 sm:p-6 shadow-lg border-2`}>
+                <div className="text-center mb-4">
+                  <div className={`inline-flex items-center justify-center w-10 h-10 bg-gradient-to-r ${callType === 'inbound' ? 'from-purple-600 to-indigo-600' : 'from-indigo-600 to-blue-600'} rounded-xl mb-2`}>
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <h3 className={`text-sm font-semibold ${callType === 'inbound' ? 'text-purple-700' : 'text-indigo-700'} uppercase tracking-wide`}>What You Could Achieve</h3>
+                  <p className={`text-xs ${callType === 'inbound' ? 'text-purple-600' : 'text-indigo-600'} mt-1`}>With AI automation</p>
                 </div>
-                <div className="text-sm text-gray-600">
-                  Based on {missedCalls} missed calls × {conversionRate}% conversion × {formatCurrency(avgTicket)}
+
+                <div className="space-y-3">
+                  <div className="bg-white/80 rounded-xl p-3">
+                    <div className={`text-xs ${callType === 'inbound' ? 'text-purple-700' : 'text-indigo-700'} uppercase tracking-wide mb-1`}>AI Subscription</div>
+                    <div className={`text-xl sm:text-2xl font-bold ${callType === 'inbound' ? 'text-purple-900' : 'text-indigo-900'}`}>{formatCurrency(aiSubscription)}</div>
+                  </div>
+
+                  <div className="bg-green-50 rounded-xl p-3 border border-green-200">
+                    <div className="text-xs text-green-700 uppercase tracking-wide mb-1">Reduced Labour Cost</div>
+                    <div className="text-xl sm:text-2xl font-bold text-green-600">{formatCurrency(currentCost - savedCost)}</div>
+                    <div className="text-xs text-green-700 mt-1">↓ {formatCurrency(savedCost)} saved</div>
+                  </div>
+
+                  <div className="bg-green-100 rounded-xl p-3 border border-green-300">
+                    <div className="text-xs text-green-800 uppercase tracking-wide mb-1">{callType === 'inbound' ? 'Recaptured Revenue' : 'New Revenue'}</div>
+                    <div className="text-xl sm:text-2xl font-bold text-green-600">{formatCurrency(recapturedRevenue)}</div>
+                    <div className="text-xs text-green-800 mt-1">{callType === 'inbound' ? 'from previously missed calls' : 'from increased efficiency'}</div>
+                  </div>
+
+                  <div className="bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl p-3 border-2 border-green-500 shadow-lg">
+                    <div className="text-xs text-white uppercase tracking-wide mb-1 font-semibold">You Could Gain Monthly</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-white">{formatCurrency(monthlyGain)}</div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Yearly Lost Revenue */}
-            <div className="bg-gradient-to-br from-red-100 to-orange-100 rounded-2xl p-6 border border-red-200 shadow-lg">
-              <div className="text-center">
-                <div className="text-sm font-medium text-red-700 mb-2">Yearly Lost Revenue</div>
-                <div className="text-4xl lg:text-5xl font-bold text-red-700 mb-3">
-                  {formatCurrency(yearlyLost)}
+            {/* ROI Metrics */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className={`bg-gradient-to-br ${callType === 'inbound' ? 'from-purple-100 to-indigo-100 border-purple-300' : 'from-indigo-100 to-blue-100 border-indigo-300'} rounded-2xl p-4 sm:p-6 border-2 shadow-lg text-center`}>
+                <div className={`text-xs sm:text-sm ${callType === 'inbound' ? 'text-purple-700' : 'text-indigo-700'} uppercase tracking-wide mb-1 sm:mb-2 font-semibold`}>ROI</div>
+                <div className={`text-3xl sm:text-4xl lg:text-5xl font-bold ${callType === 'inbound' ? 'text-purple-900' : 'text-indigo-900'}`}>{Math.round(roi)}%</div>
                 </div>
-                <div className="text-sm text-gray-700">
-                  That's {formatCurrency(monthlyLost)} × 12 months
-                </div>
-              </div>
-            </div>
 
-            {/* Recovery Potential */}
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-200 shadow-lg">
-              <div className="text-center">
-                <div className="text-sm font-medium text-green-700 mb-2">Recovery Potential with AI</div>
-                <div className="text-4xl lg:text-5xl font-bold text-green-600 mb-3">
-                  {formatCurrency(recoveryPotential)}
-                </div>
-                <div className="text-sm text-gray-700">
-                  Recover up to 80% of missed revenue with 24/7 AI phone coverage
-                </div>
+              <div className={`bg-gradient-to-br ${callType === 'inbound' ? 'from-indigo-100 to-purple-100 border-indigo-300' : 'from-blue-100 to-indigo-100 border-blue-300'} rounded-2xl p-4 sm:p-6 border-2 shadow-lg text-center`}>
+                <div className={`text-xs sm:text-sm ${callType === 'inbound' ? 'text-indigo-700' : 'text-blue-700'} uppercase tracking-wide mb-1 sm:mb-2 font-semibold`}>Payback</div>
+                <div className={`text-3xl sm:text-4xl lg:text-5xl font-bold ${callType === 'inbound' ? 'text-indigo-900' : 'text-blue-900'}`}>{Math.round(paybackDays)} <span className="text-xl sm:text-2xl">days</span></div>
               </div>
             </div>
 
             {/* CTA */}
-            <div className="pt-4">
+            <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-100">
+              <div className="text-center mb-4">
+                <p className="text-sm text-gray-600">Limited time offer - Get started today</p>
+              </div>
               <a
                 href="https://calendly.com/lumenosis/30min"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-6 rounded-xl text-center hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-[1.02] shadow-lg"
+                className={`block w-full bg-gradient-to-r ${callType === 'inbound' ? 'from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700' : 'from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700'} text-white font-bold py-3 sm:py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-[1.02] shadow-lg text-sm sm:text-base`}
               >
-                💡 Stop Losing Money - Book Free Call
+                📅 Book Free Consultation
               </a>
             </div>
           </div>
@@ -196,5 +1095,3 @@ export default function RevenueCalculator() {
     </div>
   );
 }
-
-

@@ -97,7 +97,7 @@ const EnhancedTestimonialsCarousel: React.FC<EnhancedTestimonialsCarouselProps> 
                 {/* Testimonial content */}
                 <blockquote className="text-xl md:text-2xl text-white leading-relaxed mb-8 italic relative">
                   <span className="text-6xl text-indigo-400/30 absolute -top-4 -left-4 font-serif">"</span>
-                  {testimonial.content}
+                  <span dangerouslySetInnerHTML={{ __html: testimonial.content }} />
                   <span className="text-6xl text-indigo-400/30 absolute -bottom-8 -right-4 font-serif">"</span>
                 </blockquote>
 
@@ -105,7 +105,7 @@ const EnhancedTestimonialsCarousel: React.FC<EnhancedTestimonialsCarouselProps> 
                 <div className="flex items-center justify-center gap-4">
                   {/* Avatar */}
                   <div className="relative">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-semibold text-xl shadow-lg">
                       {testimonial.avatar ? (
                         <img 
                           src={testimonial.avatar} 
@@ -121,7 +121,7 @@ const EnhancedTestimonialsCarousel: React.FC<EnhancedTestimonialsCarouselProps> 
 
                   {/* Name and role */}
                   <div className="text-left">
-                    <div className="text-lg font-bold text-white">{testimonial.name}</div>
+                    <div className="text-lg font-semibold text-white">{testimonial.name}</div>
                     <div className="text-indigo-400 font-medium">{testimonial.role}</div>
                     <div className="text-white/80 text-sm">{testimonial.company}</div>
                   </div>

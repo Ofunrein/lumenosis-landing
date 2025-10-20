@@ -18,11 +18,13 @@ export default function RealEstateAIDemo() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isTyping, setIsTyping] = useState(false)
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null)
 
   const scenarios = [
     {
       title: "Real Estate Lead Qualification",
-      subtitle: "AI instantly qualifies property inquiries",
+      subtitle: "AI qualifies property inquiries in seconds",
       initialMessage: "Hi, I'm interested in the 3-bedroom house on Oak Street. Is it still available?",
       responses: [
         "Great! Yes, that property is still available. To help you better, may I ask what's prompting your move at this time?",
@@ -52,7 +54,7 @@ export default function RealEstateAIDemo() {
     },
     {
       title: "Investor Lead Qualification",
-      subtitle: "AI identifies serious cash buyers instantly",
+      subtitle: "AI identifies serious cash buyers quickly",
       initialMessage: "I'm looking for investment properties under $200k. Do you have any off-market deals?",
       responses: [
         "I do work with several investors! Are you looking for fix-and-flip opportunities, or buy-and-hold rental properties?",
@@ -62,7 +64,7 @@ export default function RealEstateAIDemo() {
     },
     {
       title: "HVAC Emergency Service",
-      subtitle: "AI handles urgent service requests instantly",
+      subtitle: "AI handles urgent service requests in seconds",
       initialMessage: "My AC just stopped working and it's 95 degrees outside! Can someone come today?",
       responses: [
         "I understand how urgent this is! Let me check our emergency service availability. What's your address and when did the AC stop working?",
@@ -146,17 +148,55 @@ export default function RealEstateAIDemo() {
     <section className="py-8 sm:py-16 px-4 sm:px-6 lg:px-8" data-aos="fade-up">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-6 sm:mb-12">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-6">
-            <span className="w-2 h-2 bg-indigo-400 rounded-full mr-2"></span>
-            <span className="text-indigo-300 text-sm font-medium">Live AI Demo</span>
+          <div className="inline-flex items-center px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-indigo-500/10 border border-indigo-500/30 mb-6 shadow-lg shadow-indigo-500/20 hover:shadow-xl hover:shadow-indigo-500/30 transition-all duration-300 hover:scale-105">
+            <button
+              onClick={() => {
+                if (audioRef.current) {
+                  if (isAudioPlaying) {
+                    audioRef.current.pause()
+                    audioRef.current.currentTime = 0
+                    setIsAudioPlaying(false)
+                  } else {
+                    audioRef.current.play()
+                    setIsAudioPlaying(true)
+                  }
+                }
+              }}
+              className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-indigo-500 hover:bg-indigo-400 rounded-full mr-2.5 sm:mr-3 transition-all duration-200 hover:scale-110"
+              aria-label={isAudioPlaying ? "Pause audio" : "Play audio"}
+            >
+              {isAudioPlaying ? (
+                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                </svg>
+              ) : (
+                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              )}
+            </button>
+            <span className="text-indigo-300 text-base sm:text-lg font-semibold">Play Demo</span>
           </div>
           
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white md:text-4xl mb-4">
-            See Your AI <span className="gradient-text">Respond in 60 Seconds</span>
+          {/* Hidden Audio Element */}
+          <audio
+            ref={audioRef}
+            src="/audios/recording.WAV"
+            preload="auto"
+            onEnded={() => setIsAudioPlaying(false)}
+            onPause={() => setIsAudioPlaying(false)}
+            onError={(e) => {
+              console.error('Audio file error:', e);
+              setIsAudioPlaying(false);
+            }}
+          />
+          
+          <h2 className="text-2xl sm:text-3xl font-semibold text-white md:text-4xl mb-4">
+            Watch Leads <span className="gradient-text">Convert in 60 Seconds</span>
           </h2>
           
           <p className="text-lg sm:text-xl text-white max-w-3xl mx-auto">
-            Watch how our AI instantly qualifies leads, schedules appointments, and nurtures prospects across real estate and home services while you focus on growing your business
+            See how you never lose another deal to slow follow-up. Watch real conversations that close deals while you focus on growing your business
           </p>
         </div>
 
@@ -168,7 +208,7 @@ export default function RealEstateAIDemo() {
               
               <div className="flex items-center justify-between mb-6 relative z-10">
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-1">
+                  <h3 className="text-xl font-semibold text-white mb-1">
                     {scenarios[currentScenario].title}
                   </h3>
                   <p className="text-white/90 text-sm">
@@ -180,7 +220,7 @@ export default function RealEstateAIDemo() {
               {/* Chat Interface */}
               <div className="bg-gray-900/60 rounded-xl p-3 sm:p-4 border border-gray-700/30">
                 <div className="flex items-center mb-4 pb-3 border-b border-gray-700/50">
-                  <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold mr-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-semibold mr-3">
                     <i className="fas fa-robot"></i>
                   </div>
                   <div>
@@ -296,7 +336,7 @@ export default function RealEstateAIDemo() {
                       <i className="fas fa-clock text-green-400 text-lg md:text-2xl"></i>
                     </div>
                     <div 
-                      className="text-2xl md:text-4xl font-bold text-green-400 mb-1 md:mb-2 response-time-counter"
+                      className="text-2xl md:text-4xl font-semibold text-green-400 mb-1 md:mb-2 response-time-counter"
                     >
                       60s
                     </div>
@@ -330,7 +370,7 @@ export default function RealEstateAIDemo() {
                       <i className="fas fa-user-check text-blue-400 text-lg md:text-2xl"></i>
                     </div>
                     <div 
-                      className="text-2xl md:text-4xl font-bold text-blue-400 mb-1 md:mb-2 animated-number"
+                      className="text-2xl md:text-4xl font-semibold text-blue-400 mb-1 md:mb-2 animated-number"
                       data-target="96"
                     >
                       96%
@@ -365,7 +405,7 @@ export default function RealEstateAIDemo() {
                       <i className="fas fa-calendar-check text-purple-400 text-lg md:text-2xl"></i>
                     </div>
                     <div 
-                      className="text-2xl md:text-4xl font-bold text-purple-400 mb-1 md:mb-2"
+                      className="text-2xl md:text-4xl font-semibold text-purple-400 mb-1 md:mb-2"
                     >
                       24/7
                     </div>
@@ -399,11 +439,11 @@ export default function RealEstateAIDemo() {
                       <i className="fas fa-chart-line text-orange-400 text-lg md:text-2xl"></i>
                     </div>
                     <div 
-                      className="text-2xl md:text-4xl font-bold text-orange-400 mb-1 md:mb-2 showings-counter animated-number"
-                      data-target="3"
-                      data-original-format="3x"
+                      className="text-2xl md:text-4xl font-semibold text-orange-400 mb-1 md:mb-2 showings-counter animated-number"
+                      data-target="300"
+                      data-original-format="300%"
                     >
-                      3x
+                      300%
                     </div>
                     <div className="text-white font-semibold text-lg mb-1">Bookings</div>
                     <div className="text-white text-sm">Automated appointment setting</div>
@@ -425,7 +465,7 @@ export default function RealEstateAIDemo() {
               size="lg"
             >
               <i className="fas fa-calendar mr-2"></i>
-              Schedule AI Demo
+              Schedule Demo
             </ReactBits3DButton>
           </StarBorderOutline>
         </div>

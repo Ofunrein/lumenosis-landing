@@ -5,15 +5,19 @@ import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  weight: ['200', '300', '400', '500', '600', '700'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://lumenosis.com'),
   title: {
-    default: 'AI Automation Software for Real Estate & Home Services | Lumenosis AI',
+    default: 'Lumenosis AI - AI Automation for Real Estate and Home Services',
     template: '%s | Lumenosis AI'
   },
-  description: 'Get 3X more leads with AI automation for real estate agents & home service pros. 60-second response time, 24/7 booking, automated follow-ups. Used by 1000+ professionals. Start free consultation.',
+  description: 'Lumenosis AI provides AI automation for real estate agents and home service professionals. Get 3X more leads with 60-second response time, 24/7 booking, and automated follow-ups. Used by 1000+ professionals.',
   keywords: ['AI automation real estate', 'real estate lead generation software', 'HVAC automation software', 'real estate CRM automation', 'AI appointment booking', 'lead qualification software', 'real estate automation', 'home services AI', 'customer service automation'],
   authors: [{ name: 'Lumenosis AI' }],
   creator: 'Lumenosis AI',
@@ -34,8 +38,8 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://lumenosis.com',
     siteName: 'Lumenosis AI',
-    title: 'AI Automation Software for Real Estate & Home Services | Lumenosis AI',
-    description: 'Get 3X more leads with AI automation. 60-second response time, 24/7 booking, automated follow-ups. Used by 1000+ real estate agents & home service pros.',
+    title: 'Lumenosis AI - AI Automation for Real Estate and Home Services',
+    description: 'Lumenosis AI provides AI automation for real estate agents and home service professionals. Get 3X more leads with 60-second response time, 24/7 booking, and automated follow-ups.',
     images: [
       {
         url: 'https://lumenosis.com/lumenosis-logo.png',
@@ -47,8 +51,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Automation Software for Real Estate & Home Services | Lumenosis AI',
-    description: 'Get 3X more leads with AI automation. 60-second response time, 24/7 booking, automated follow-ups. Used by 1000+ real estate agents & home service pros.',
+    title: 'Lumenosis AI - AI Automation for Real Estate and Home Services',
+    description: 'Lumenosis AI provides AI automation for real estate agents and home service professionals. Get 3X more leads with 60-second response time, 24/7 booking, and automated follow-ups.',
     images: ['https://lumenosis.com/lumenosis-logo.png'],
   },
   verification: {
