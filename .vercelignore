@@ -21,8 +21,5 @@ out/
 *.avi
 *.mkv
 
-# Ignore large audio files
-public/audios/recording.WAV
-
 node_modules
 .next

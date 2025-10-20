@@ -181,7 +181,7 @@ export default function RealEstateAIDemo() {
           {/* Hidden Audio Element */}
           <audio
             ref={audioRef}
-            src="/audios/recording.WAV"
+            src="/audios/recording-compressed.mp3"
             preload="auto"
             onEnded={() => setIsAudioPlaying(false)}
             onPause={() => setIsAudioPlaying(false)}
