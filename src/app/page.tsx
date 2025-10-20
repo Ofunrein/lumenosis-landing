@@ -532,29 +532,7 @@ export default function HomePage() {
         {/* Mobile tint overlay for better readability */}
         <div className="mobile-tint-overlay md:hidden" />
         
-        {/* Top-level Aurora Effect - Horizontal Focus */}
-        <div className="fixed inset-x-0 top-0 h-[60vh] md:h-[60vh] z-0 pointer-events-none">
-          {/* Mobile Aurora container with wider aspect ratio */}
-          <div className="md:hidden fixed inset-x-0 top-0 h-[50vh] scale-x-150 origin-top">
-            <Aurora 
-              colorStops={["#6366f1", "#8b5cf6", "#a855f7"]}
-              blend={0.6}
-              amplitude={1.2}
-              speed={0.3}
-              className="w-full h-full opacity-70"
-            />
-          </div>
-          {/* Desktop Aurora */}
-          <div className="hidden md:block w-full h-full">
-            <Aurora 
-              colorStops={["#6366f1", "#8b5cf6", "#a855f7"]}
-              blend={0.6}
-              amplitude={1.5}
-              speed={0.3}
-              className="w-full h-full opacity-70"
-            />
-          </div>
-        </div>
+        {/* Aurora Effect handled in ReactBitsHeroSection - removed duplicate for performance */}
         
         {/* Subtle background gradients layer */}
         <div className="absolute inset-0 pointer-events-none z-[1]"
@@ -1207,7 +1185,7 @@ export default function HomePage() {
         
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-semibold text-white mb-4">
+            <h2 className="text-4xl md:text-5xl font-normal text-white mb-4">
               Join 50+ Real Estate & Home Service Pros Who <span className="gradient-text">300% Their Bookings</span>
             </h2>
             <p className="text-xl text-white">Real feedback from real estate professionals who transformed their business</p>

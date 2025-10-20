@@ -166,15 +166,15 @@ const PartnerLogosScroller = ({
         <div className="relative mx-auto flex items-center justify-center lg:max-w-5xl">
           <Carousel
             opts={{ loop: true }}
-            plugins={[AutoScroll({ playOnInit: true, speed: 0.5, stopOnInteraction: false, stopOnMouseEnter: true })]}
+            plugins={[AutoScroll({ playOnInit: true, speed: 0.3, stopOnInteraction: false, stopOnMouseEnter: true })]}
           >
-            <CarouselContent className="ml-0">
+            <CarouselContent className="ml-0" style={{ willChange: 'transform' }}>
               {logos.map((logo) => (
                 <CarouselItem
                   key={logo.id}
                   className="flex basis-1/3 justify-center pl-0 sm:basis-1/4 md:basis-1/5 lg:basis-1/6"
                 >
-                  <div className="mx-8 flex shrink-0 items-center justify-center opacity-90 hover:opacity-100 transition-opacity">
+                  <div className="mx-8 flex shrink-0 items-center justify-center opacity-90 hover:opacity-100 transition-opacity transform-gpu">
                     {logo.svg ? (
                       <div>{logo.svg}</div>
                     ) : logo.image ? (
@@ -183,6 +183,7 @@ const PartnerLogosScroller = ({
                         alt={logo.description}
                         className={logo.className}
                         loading="lazy"
+                        decoding="async"
                       />
                     ) : null}
                   </div>
