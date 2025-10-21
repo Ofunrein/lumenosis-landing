@@ -1,6 +1,6 @@
 {
-  "/blog/page": "app/blog/page.js",
   "/_not-found": "app/_not-found.js",
+  "/blog/page": "app/blog/page.js",
   "/api/workflow/[filename]/route": "app/api/workflow/[filename]/route.js",
   "/sitemap.xml/route": "app/sitemap.xml/route.js",
   "/page": "app/page.js",
