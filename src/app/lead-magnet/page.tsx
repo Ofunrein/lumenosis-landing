@@ -234,7 +234,7 @@ export default function LeadMagnetIndex() {
                          shadow-sm hover:shadow-md
                          border border-gray-200 overflow-hidden"
               >
-                <span className="relative z-10">📝 Blog</span>
+                <span className="relative z-10">Blog</span>
               </Link>
               <button
                 onClick={() => {
@@ -251,8 +251,8 @@ export default function LeadMagnetIndex() {
                          border border-white/10 overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none rounded-full" />
-                <span className="hidden sm:inline relative z-10">💰 ROI Calculator</span>
-                <span className="sm:hidden relative z-10">💰 ROI</span>
+                <span className="hidden sm:inline relative z-10">ROI Calculator</span>
+                <span className="sm:hidden relative z-10">ROI</span>
               </button>
               <Link 
                 href="https://calendly.com/lumenosis/30min" 
@@ -288,8 +288,8 @@ export default function LeadMagnetIndex() {
                      shadow-sm hover:shadow-md
                      border border-gray-200 overflow-hidden"
           >
-            <span className="relative z-10 hidden sm:inline">📝 Blog</span>
-            <span className="relative z-10 sm:hidden">📝</span>
+            <span className="relative z-10 hidden sm:inline">Blog</span>
+            <span className="relative z-10 sm:hidden">Blog</span>
           </Link>
           <button
             onClick={() => {
@@ -306,8 +306,8 @@ export default function LeadMagnetIndex() {
                      border border-white/10 overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none rounded-full" />
-            <span className="hidden sm:inline relative z-10">💰 ROI Calculator</span>
-            <span className="sm:hidden relative z-10">💰 ROI</span>
+            <span className="hidden sm:inline relative z-10">ROI Calculator</span>
+            <span className="sm:hidden relative z-10">ROI</span>
           </button>
           <Link 
             href="https://calendly.com/lumenosis/30min" 

@@ -30,7 +30,7 @@ export default function CompleteAISolutionGuide() {
                          shadow-sm hover:shadow-md
                          border border-gray-200 overflow-hidden"
               >
-                <span className="relative z-10">← Back to Blog</span>
+                <span className="relative z-10">Back to Blog</span>
               </Link>
               <Link 
                 href="https://calendly.com/lumenosis/30min" 
