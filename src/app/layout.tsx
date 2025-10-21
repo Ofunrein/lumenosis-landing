@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     default: 'Lumenosis AI - AI Agents for Real Estate',
     template: '%s | Lumenosis AI'
   },
-  description: 'Lumenosis AI provides AI automation for real estate agents and home service professionals. Get 3X more leads with 60-second response time, 24/7 booking, and automated follow-ups. Used by 1000+ professionals.',
+  description: 'Never lose another lead to slow follow-up. Lumenosis AI responds to leads in 60 seconds, qualifies buyers automatically, and books 3X more showings 24/7 while you focus on closing deals.',
   keywords: [
     'Lumenosis AI', 
     'Lumenosis', 
