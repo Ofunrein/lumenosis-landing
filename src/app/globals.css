@@ -1677,3 +1677,9 @@ video.demo-video::-webkit-media-controls-panel {
     0 0 0 1px rgba(99, 102, 241, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
+
+/* Ensure all sections and content are above Aurora background */
+section, main, header, footer {
+  position: relative;
+  z-index: 1;
+}

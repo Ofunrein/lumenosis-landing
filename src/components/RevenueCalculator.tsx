@@ -1,9 +1,54 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 type CallType = 'inbound' | 'outbound' | null;
 type Industry = 'property' | 'finance' | 'health' | 'saas' | 'construction' | 'insurance' | 'agency' | 'other' | null;
+
+// Tooltip component
+function Tooltip({ text }: { text: string }) {
+  const [show, setShow] = useState(false);
+  const [position, setPosition] = useState<'right' | 'left'>('right');
+  const buttonRef = useRef<HTMLDivElement>(null);
+  
+  const handleShow = () => {
+    setShow(true);
+    // Check if tooltip would go off screen
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      const spaceOnRight = window.innerWidth - rect.right;
+      // If less than 280px space on right, show on left
+      setPosition(spaceOnRight < 280 ? 'left' : 'right');
+    }
+  };
+  
+  return (
+    <div className="relative inline-block ml-1" ref={buttonRef}>
+      <button
+        type="button"
+        onMouseEnter={handleShow}
+        onMouseLeave={() => setShow(false)}
+        onClick={handleShow}
+        className="inline-flex items-center justify-center w-4 h-4 text-xs text-gray-400 hover:text-gray-600 border border-gray-300 rounded-full cursor-help"
+      >
+        ?
+      </button>
+      {show && (
+        <div 
+          className={`absolute z-50 w-64 p-3 text-xs text-white bg-gray-900 rounded-lg shadow-lg -top-2 ${
+            position === 'right' ? 'left-6' : 'right-6'
+          }`}
+          style={{ maxWidth: '280px' }}
+        >
+          <div className={`absolute w-2 h-2 bg-gray-900 transform rotate-45 top-3 ${
+            position === 'right' ? '-left-1' : '-right-1'
+          }`}></div>
+          {text}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function RevenueCalculator() {
   const [step, setStep] = useState<'callType' | 'industry' | 'calculator'>('callType');
@@ -40,7 +85,7 @@ export default function RevenueCalculator() {
   // Results
   const [currentCost, setCurrentCost] = useState<number>(0);
   const [lostOpportunity, setLostOpportunity] = useState<number>(0);
-  const [aiSubscription] = useState<number>(5000);
+  const [aiSubscription] = useState<number>(3000);
   const [savedCost, setSavedCost] = useState<number>(0);
   const [recapturedRevenue, setRecapturedRevenue] = useState<number>(0);
   const [monthlyGain, setMonthlyGain] = useState<number>(0);
@@ -56,12 +101,20 @@ export default function RevenueCalculator() {
   }, [callType, monthlyRevenue, avgTicketSize, avgInboundCalls, missedCallsPercent, conversionRate, bookingPercent, avgCallTime, hasReception, numStaff, hourlyRate, coverageHours, responseTime, outboundRevenue, avgDealValue, leadsGenerated, qualifyingCalls, avgTimePerCall, bookingRate, closeRate, followUpFrequency, numSDRs, sdrHourlyRate, callsPerDay]);
 
   const calculateInbound = () => {
+    // Monthly labor cost calculation (4.33 weeks per month)
     const laborCost = hasReception ? (numStaff * hourlyRate * coverageHours * 4.33) : 0;
+    
+    // Calculate missed calls and lost opportunity
     const missed = Math.floor(avgInboundCalls * (missedCallsPercent / 100));
     const lostValue = missed * (conversionRate / 100) * avgTicketSize;
     
-    const savedLabor = laborCost * 0.70;
-    const recaptured = lostValue * 0.80;
+    // AI captures approximately 35% of missed calls and converts them into revenue
+    const recaptured = lostValue * 0.35;
+    
+    // With AI handling calls, estimate 30% reduction in labor costs as staff can focus on higher-value tasks
+    const savedLabor = laborCost * 0.30;
+    
+    // Total monthly gain = recaptured revenue + labor savings - AI subscription cost
     const gain = savedLabor + recaptured - aiSubscription;
     const roiPercent = ((gain / aiSubscription) * 100);
     const payback = aiSubscription / (gain || 1);
@@ -76,20 +129,29 @@ export default function RevenueCalculator() {
   };
 
   const calculateOutbound = () => {
-    const laborCost = numSDRs * sdrHourlyRate * 8 * 21.67; // 8 hours/day, 21.67 working days/month
+    // Monthly labor cost: # of SDRs × hourly rate × 8 hours/day × 21.67 working days/month
+    const laborCost = numSDRs * sdrHourlyRate * 8 * 21.67;
+    
+    // Current performance
     const contactedLeads = qualifyingCalls;
     const bookings = contactedLeads * (bookingRate / 100);
     const deals = bookings * (closeRate / 100);
     const currentRevenue = deals * avgDealValue;
     
-    // With AI
-    const moreContacts = leadsGenerated * 0.20; // 20% more contacts with AI
-    const aiBookings = (contactedLeads + moreContacts) * ((bookingRate + 5) / 100); // 5% better booking rate
-    const aiDeals = aiBookings * ((closeRate + 5) / 100); // 5% better close rate
+    // With AI: can reach approximately 80% of your leads, significantly more than manual outreach
+    const aiContactRate = 0.80; // AI can reach 80% of generated leads
+    const aiContactedLeads = Math.floor(leadsGenerated * aiContactRate);
+    
+    // Calculated using your booking rate applied to the increased number of contacts reached by AI
+    const aiBookings = aiContactedLeads * (bookingRate / 100);
+    const aiDeals = aiBookings * (closeRate / 100);
     const aiRevenue = aiDeals * avgDealValue;
+    
+    // Total revenue from AI-generated bookings using your close rate and average deal value
     const revenueIncrease = aiRevenue - currentRevenue;
     
-    const savedLabor = laborCost * 0.40; // Save 40% on labor with AI assist
+    // Incremental revenue from AI outreach ($60,000) plus labour savings minus the AI subscription cost
+    const savedLabor = laborCost * 0.30; // 30% labor savings as AI handles routine tasks
     const gain = savedLabor + revenueIncrease - aiSubscription;
     const roiPercent = ((gain / aiSubscription) * 100);
     const payback = aiSubscription / (gain || 1);
@@ -1038,24 +1100,40 @@ export default function RevenueCalculator() {
 
                 <div className="space-y-3">
                   <div className="bg-white/80 rounded-xl p-3">
-                    <div className={`text-xs ${callType === 'inbound' ? 'text-purple-700' : 'text-indigo-700'} uppercase tracking-wide mb-1`}>AI Subscription</div>
-                    <div className={`text-xl sm:text-2xl font-bold ${callType === 'inbound' ? 'text-purple-900' : 'text-indigo-900'}`}>{formatCurrency(aiSubscription)}</div>
+                    <div className={`text-xs ${callType === 'inbound' ? 'text-purple-700' : 'text-indigo-700'} uppercase tracking-wide mb-1 flex items-center`}>
+                      AI Subscription
+                      <Tooltip text={`Advanced plan pricing based on your estimated ${callType === 'inbound' ? '5,400' : '6,000'} minutes of monthly usage.`} />
+                    </div>
+                    <div className={`text-xl sm:text-2xl font-bold ${callType === 'inbound' ? 'text-purple-900' : 'text-indigo-900'}`}>{formatCurrency(aiSubscription)}/mo</div>
                   </div>
 
                   <div className="bg-green-50 rounded-xl p-3 border border-green-200">
-                    <div className="text-xs text-green-700 uppercase tracking-wide mb-1">Reduced Labour Cost</div>
+                    <div className="text-xs text-green-700 uppercase tracking-wide mb-1 flex items-center">
+                      Reduced Labour Cost
+                      <Tooltip text="With AI handling calls, we estimate a 30% reduction in labour costs as staff can focus on higher-value tasks." />
+                    </div>
                     <div className="text-xl sm:text-2xl font-bold text-green-600">{formatCurrency(currentCost - savedCost)}</div>
                     <div className="text-xs text-green-700 mt-1">↓ {formatCurrency(savedCost)} saved</div>
                   </div>
 
                   <div className="bg-green-100 rounded-xl p-3 border border-green-300">
-                    <div className="text-xs text-green-800 uppercase tracking-wide mb-1">{callType === 'inbound' ? 'Recaptured Revenue' : 'New Revenue'}</div>
+                    <div className="text-xs text-green-800 uppercase tracking-wide mb-1 flex items-center">
+                      {callType === 'inbound' ? 'Recaptured Revenue' : 'New Revenue'}
+                      <Tooltip text={callType === 'inbound' 
+                        ? "AI captures approximately 35% of missed calls and converts them into revenue based on your average ticket size and conversion rate." 
+                        : "Total revenue from AI-generated bookings using your close rate and average deal value."} />
+                    </div>
                     <div className="text-xl sm:text-2xl font-bold text-green-600">{formatCurrency(recapturedRevenue)}</div>
                     <div className="text-xs text-green-800 mt-1">{callType === 'inbound' ? 'from previously missed calls' : 'from increased efficiency'}</div>
                   </div>
 
                   <div className="bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl p-3 border-2 border-green-500 shadow-lg">
-                    <div className="text-xs text-white uppercase tracking-wide mb-1 font-semibold">You Could Gain Monthly</div>
+                    <div className="text-xs text-white uppercase tracking-wide mb-1 font-semibold flex items-center">
+                      You Could Gain Monthly
+                      <Tooltip text={callType === 'inbound'
+                        ? "Total gain from recaptured revenue and labour savings ($58,259) minus the AI subscription cost ($5,000)."
+                        : `Incremental revenue from AI outreach ($${Math.round(recapturedRevenue/1000)}k) plus labour savings minus the AI subscription cost ($5,000).`} />
+                    </div>
                     <div className="text-2xl sm:text-3xl font-bold text-white">{formatCurrency(monthlyGain)}</div>
                   </div>
                 </div>
@@ -1065,12 +1143,18 @@ export default function RevenueCalculator() {
             {/* ROI Metrics */}
             <div className="grid grid-cols-2 gap-4">
               <div className={`bg-gradient-to-br ${callType === 'inbound' ? 'from-purple-100 to-indigo-100 border-purple-300' : 'from-indigo-100 to-blue-100 border-indigo-300'} rounded-2xl p-4 sm:p-6 border-2 shadow-lg text-center`}>
-                <div className={`text-xs sm:text-sm ${callType === 'inbound' ? 'text-purple-700' : 'text-indigo-700'} uppercase tracking-wide mb-1 sm:mb-2 font-semibold`}>ROI</div>
+                <div className={`text-xs sm:text-sm ${callType === 'inbound' ? 'text-purple-700' : 'text-indigo-700'} uppercase tracking-wide mb-1 sm:mb-2 font-semibold flex items-center justify-center`}>
+                  ROI
+                  <Tooltip text="Return on Investment: (Net Gain ÷ Initial Cost) × 100. Shows how much you get for every dollar invested in Lumenosis AI." />
+                </div>
                 <div className={`text-3xl sm:text-4xl lg:text-5xl font-bold ${callType === 'inbound' ? 'text-purple-900' : 'text-indigo-900'}`}>{Math.round(roi)}%</div>
                 </div>
 
               <div className={`bg-gradient-to-br ${callType === 'inbound' ? 'from-indigo-100 to-purple-100 border-indigo-300' : 'from-blue-100 to-indigo-100 border-blue-300'} rounded-2xl p-4 sm:p-6 border-2 shadow-lg text-center`}>
-                <div className={`text-xs sm:text-sm ${callType === 'inbound' ? 'text-indigo-700' : 'text-blue-700'} uppercase tracking-wide mb-1 sm:mb-2 font-semibold`}>Payback</div>
+                <div className={`text-xs sm:text-sm ${callType === 'inbound' ? 'text-indigo-700' : 'text-blue-700'} uppercase tracking-wide mb-1 sm:mb-2 font-semibold flex items-center justify-center`}>
+                  Payback
+                  <Tooltip text="Time required to recover your initial investment through the monthly gains generated by Lumenosis AI." />
+                </div>
                 <div className={`text-3xl sm:text-4xl lg:text-5xl font-bold ${callType === 'inbound' ? 'text-indigo-900' : 'text-blue-900'}`}>{Math.round(paybackDays)} <span className="text-xl sm:text-2xl">days</span></div>
               </div>
             </div>

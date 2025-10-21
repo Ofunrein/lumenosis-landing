@@ -174,7 +174,7 @@ const PartnerLogosScroller = ({
                   key={logo.id}
                   className="flex basis-1/3 justify-center pl-0 sm:basis-1/4 md:basis-1/5 lg:basis-1/6"
                 >
-                  <div className="mx-8 flex shrink-0 items-center justify-center opacity-90 hover:opacity-100 transition-opacity transform-gpu">
+                  <div className="mx-3 sm:mx-6 md:mx-8 flex shrink-0 items-center justify-center opacity-90 hover:opacity-100 transition-opacity transform-gpu">
                     {logo.svg ? (
                       <div>{logo.svg}</div>
                     ) : logo.image ? (

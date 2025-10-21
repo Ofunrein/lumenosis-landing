@@ -175,7 +175,7 @@ export default function RealEstateAIDemo() {
                 </svg>
               )}
             </button>
-            <span className="text-indigo-300 text-base sm:text-lg font-semibold">Play Demo</span>
+            <span className="text-indigo-300 text-base sm:text-lg font-semibold">Play Scenario</span>
           </div>
           
           {/* Hidden Audio Element */}
@@ -288,7 +288,7 @@ export default function RealEstateAIDemo() {
                         ) : (
                           <>
                             <i className="fas fa-play mr-2"></i>
-                            Play Demo
+                            Play Scenario
                           </>
                         )}
                       </ReactBits3DButton>

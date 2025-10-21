@@ -5,23 +5,44 @@ import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
+// Optimized font loading - only load weights actually used
 const inter = Inter({ 
   subsets: ['latin'],
-  weight: ['200', '300', '400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700'], // Removed 200 and 300 (not commonly used)
   display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'arial'],
 })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://lumenosis.com'),
   title: {
-    default: 'Lumenosis AI - AI Automation for Real Estate and Home Services',
+    default: 'Lumenosis AI - AI Agents for Real Estate',
     template: '%s | Lumenosis AI'
   },
   description: 'Lumenosis AI provides AI automation for real estate agents and home service professionals. Get 3X more leads with 60-second response time, 24/7 booking, and automated follow-ups. Used by 1000+ professionals.',
-  keywords: ['AI automation real estate', 'real estate lead generation software', 'HVAC automation software', 'real estate CRM automation', 'AI appointment booking', 'lead qualification software', 'real estate automation', 'home services AI', 'customer service automation'],
-  authors: [{ name: 'Lumenosis AI' }],
+  keywords: [
+    'Lumenosis AI', 
+    'Lumenosis', 
+    'lumenosis.com',
+    'AI automation real estate', 
+    'real estate lead generation software', 
+    'HVAC automation software', 
+    'real estate CRM automation', 
+    'AI appointment booking', 
+    'lead qualification software', 
+    'real estate automation', 
+    'home services AI', 
+    'customer service automation',
+    'Martin Lumenosis',
+    'Lumenosis automation',
+    'AI lead response'
+  ],
+  authors: [{ name: 'Lumenosis AI', url: 'https://lumenosis.com' }],
   creator: 'Lumenosis AI',
   publisher: 'Lumenosis AI',
+  category: 'Business Software',
+  classification: 'AI Automation Software',
   robots: {
     index: true,
     follow: true,
@@ -38,8 +59,8 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://lumenosis.com',
     siteName: 'Lumenosis AI',
-    title: 'Lumenosis AI - AI Automation for Real Estate and Home Services',
-    description: 'Lumenosis AI provides AI automation for real estate agents and home service professionals. Get 3X more leads with 60-second response time, 24/7 booking, and automated follow-ups.',
+    title: 'Lumenosis AI - AI Agents for Real Estate',
+    description: 'Lumenosis AI provides AI agents for real estate professionals. Get 3X more leads with 60-second response time, 24/7 booking, and automated follow-ups.',
     images: [
       {
         url: 'https://lumenosis.com/lumenosis-logo.png',
@@ -51,8 +72,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Lumenosis AI - AI Automation for Real Estate and Home Services',
-    description: 'Lumenosis AI provides AI automation for real estate agents and home service professionals. Get 3X more leads with 60-second response time, 24/7 booking, and automated follow-ups.',
+    title: 'Lumenosis AI - AI Agents for Real Estate',
+    description: 'Lumenosis AI provides AI agents for real estate professionals. Get 3X more leads with 60-second response time, 24/7 booking, and automated follow-ups.',
     images: ['https://lumenosis.com/lumenosis-logo.png'],
   },
   verification: {
@@ -93,9 +114,10 @@ export default function RootLayout({
         {/* Preconnect to external domains for faster loading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://assets.calendly.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://r2.leadsy.ai" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-        <link rel="dns-prefetch" href="https://assets.calendly.com" />
-        <link rel="dns-prefetch" href="https://r2.leadsy.ai" />
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
         
         {/* Leadsy.ai Tracking Script */}
         <Script 
@@ -176,12 +198,24 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               "name": "Lumenosis AI",
+              "alternateName": ["Lumenosis", "Lumenosis Automation", "Lumenosis.com"],
               "url": "https://lumenosis.com",
-              "description": "AI Automation Software for Real Estate & Home Services",
+              "description": "AI Automation Software for Real Estate & Home Services - Get 3X more leads with 60-second response time",
+              "inLanguage": "en-US",
               "potentialAction": {
                 "@type": "SearchAction",
                 "target": "https://lumenosis.com/search?q={search_term_string}",
                 "query-input": "required name=search_term_string"
+              },
+              "about": {
+                "@type": "Thing",
+                "name": "AI Automation for Business",
+                "description": "Artificial intelligence and automation solutions for real estate agents and home service professionals"
+              },
+              "mainEntity": {
+                "@type": "Organization",
+                "name": "Lumenosis AI",
+                "url": "https://lumenosis.com"
               }
             })
           }}
@@ -226,7 +260,26 @@ export default function RootLayout({
                 }
               ],
               "sameAs": [
-                "https://calendly.com/lumenosis"
+                "https://calendly.com/lumenosis",
+                "https://www.linkedin.com/in/martn-ai/",
+                "http://tiktok.com/martn.ai"
+              ],
+              "brand": {
+                "@type": "Brand",
+                "name": "Lumenosis AI",
+                "logo": "https://lumenosis.com/lumenosis-logo.png",
+                "url": "https://lumenosis.com"
+              },
+              "knowsAbout": [
+                "Artificial Intelligence",
+                "Business Automation",
+                "Real Estate Technology",
+                "Home Services Software",
+                "Lead Generation",
+                "CRM Integration",
+                "Workflow Automation",
+                "N8N Automation",
+                "AI Agents"
               ],
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
@@ -263,7 +316,7 @@ export default function RootLayout({
                   "@type": "Organization",
                   "name": "Services",
                   "description": "AI automation solutions for real estate and home services",
-                  "url": "https://lumenosis.com/#services"
+                  "url": "https://lumenosis.com/#solutions"
                 },
                 {
                   "@type": "Organization", 
@@ -348,6 +401,70 @@ export default function RootLayout({
           }}
         />
         
+        {/* Structured Data - SiteNavigationElement for Better Site Structure */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              "name": "Lumenosis AI Site Navigation",
+              "description": "Main navigation sections of Lumenosis AI website",
+              "itemListElement": [
+                {
+                  "@type": "SiteNavigationElement",
+                  "position": 1,
+                  "name": "Lumenosis AI - AI Agents for Real Estate",
+                  "description": "AI agents that respond to leads in 60 seconds and book showings 24/7",
+                  "url": "https://lumenosis.com/"
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  "position": 2,
+                  "name": "Solutions",
+                  "description": "AI automation solutions for real estate professionals",
+                  "url": "https://lumenosis.com/#solutions"
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  "position": 3,
+                  "name": "Blog",
+                  "description": "Free automation templates, guides, and real estate AI tutorials",
+                  "url": "https://lumenosis.com/lead-magnet"
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  "position": 4,
+                  "name": "Case Studies",
+                  "description": "See how agents increased showings by 212% and closed 3X more deals",
+                  "url": "https://lumenosis.com/#cases"
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  "position": 5,
+                  "name": "About Us",
+                  "description": "Learn about our team and AI automation expertise",
+                  "url": "https://lumenosis.com/#about"
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  "position": 6,
+                  "name": "Demos",
+                  "description": "Watch real AI agents qualify leads and automate workflows",
+                  "url": "https://lumenosis.com/#demos"
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  "position": 7,
+                  "name": "FAQ",
+                  "description": "Frequently asked questions about AI automation for real estate",
+                  "url": "https://lumenosis.com/#faq"
+                }
+              ]
+            })
+          }}
+        />
+        
         {/* Structured Data - BreadcrumbList for Navigation */}
         <script
           type="application/ld+json"
@@ -365,20 +482,20 @@ export default function RootLayout({
                 {
                   "@type": "ListItem", 
                   "position": 2,
-                  "name": "Services",
-                  "item": "https://lumenosis.com/#services"
+                  "name": "Overview",
+                  "item": "https://lumenosis.com/#overview"
                 },
                 {
                   "@type": "ListItem",
-                  "position": 3, 
+                  "position": 3,
+                  "name": "Solutions",
+                  "item": "https://lumenosis.com/#solutions"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4, 
                   "name": "About",
                   "item": "https://lumenosis.com/#about"
-                },
-                {
-                  "@type": "ListItem",
-                  "position": 4,
-                  "name": "Pricing", 
-                  "item": "https://lumenosis.com/#pricing"
                 },
                 {
                   "@type": "ListItem",
@@ -840,7 +957,7 @@ export default function RootLayout({
                   "@type": "ListItem",
                   "position": 4,
                   "name": "Lead Response Automation",
-                  "item": "https://lumenosis.com#services"
+                  "item": "https://lumenosis.com#solutions"
                 },
                 {
                   "@type": "ListItem",
