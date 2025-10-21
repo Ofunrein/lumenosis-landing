@@ -223,7 +223,7 @@ export default function LeadMagnetIndex() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-              <Image src="/logo.png" alt="Lumenosis AI" width={32} height={32} className="w-8 h-8" />
+              <Image src="/lumenosis-logo.png" alt="Lumenosis AI" width={32} height={32} className="w-8 h-8" />
               <span className="text-lg sm:text-xl font-semibold text-gray-900">Lumenosis AI</span>
             </Link>
             <div className="flex items-center space-x-2 sm:space-x-4">
@@ -720,7 +720,7 @@ export default function LeadMagnetIndex() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <Link href="/" className="flex items-center justify-center space-x-2 mb-4">
-              <Image src="/logo.png" alt="Lumenosis AI" width={32} height={32} className="h-8 w-auto" />
+              <Image src="/lumenosis-logo.png" alt="Lumenosis AI" width={32} height={32} className="h-8 w-auto" />
               <span className="text-xl font-semibold">Lumenosis AI</span>
             </Link>
             <p className="text-gray-400 mb-4">
