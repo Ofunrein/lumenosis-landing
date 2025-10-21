@@ -8,6 +8,29 @@ import RevenueCalculator from '../../components/RevenueCalculator';
 
 const automationWorkflows = [
   {
+    id: 'overview',
+    title: 'Overview - Start Here',
+    subtitle: 'Stop Losing $50,000+ in Commissions to Faster Agents',
+    description: 'Your complete guide to getting started with Lumenosis AI. Learn how AI agents respond to leads in 60 seconds, book 3X more showings, and help you close more deals 24/7.',
+    href: '/#solutions',
+    features: [
+      'AI agents for instant lead response',
+      'Live demo videos and case studies',
+      'Free automation resources & guides',
+      'Real results from real estate pros',
+      'Book your free strategy call',
+      'Complete AI implementation roadmap'
+    ],
+    complexity: 'Beginner',
+    setupTime: '5 minutes',
+    tools: ['AI Agents', 'Automation', 'Real Estate CRM'],
+    preview: {
+      nodes: 'Overview',
+      triggers: 'Getting Started',
+      integrations: 'All Features'
+    }
+  },
+  {
     id: 'real-estate-automation',
     title: 'Real Estate Lead Automation',
     subtitle: 'BatchData + N8N + CRM Integration',
@@ -380,6 +403,7 @@ export default function LeadMagnetIndex() {
                   {/* Icon & Title */}
                   <div className="flex items-start space-x-3 mb-4">
                     <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform ${
+                      workflow.id === 'overview' ? 'bg-gradient-to-r from-yellow-500 to-orange-500' :
                       workflow.id === 'real-estate-automation' ? 'bg-gradient-to-r from-indigo-500 to-purple-500' :
                       workflow.id === 'n8n-workflow-collection' ? 'bg-gradient-to-r from-green-500 to-blue-500' :
                       workflow.id === 'n8n-ai-agent-builder' ? 'bg-gradient-to-r from-orange-500 to-purple-500' :
@@ -389,6 +413,9 @@ export default function LeadMagnetIndex() {
                       'bg-gradient-to-r from-indigo-500 to-purple-500'
                     }`}>
                       <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        {workflow.id === 'overview' && (
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                        )}
                         {workflow.id === 'real-estate-automation' && (
                           <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
                         )}
@@ -414,6 +441,7 @@ export default function LeadMagnetIndex() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className={`text-lg font-semibold text-gray-900 mb-1 group-hover:transition-colors line-clamp-2 ${
+                        workflow.id === 'overview' ? 'group-hover:text-yellow-600' :
                         workflow.id === 'real-estate-automation' ? 'group-hover:text-indigo-600' :
                         workflow.id === 'n8n-workflow-collection' ? 'group-hover:text-green-600' :
                         workflow.id === 'n8n-ai-agent-builder' ? 'group-hover:text-orange-600' :
@@ -423,6 +451,7 @@ export default function LeadMagnetIndex() {
                         'group-hover:text-indigo-600'
                       }`}>{workflow.title}</h3>
                       <p className={`text-xs font-medium ${
+                        workflow.id === 'overview' ? 'text-yellow-600' :
                         workflow.id === 'real-estate-automation' ? 'text-indigo-600' :
                         workflow.id === 'n8n-workflow-collection' ? 'text-green-600' :
                         workflow.id === 'n8n-ai-agent-builder' ? 'text-orange-600' :
