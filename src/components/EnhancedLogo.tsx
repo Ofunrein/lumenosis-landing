@@ -72,7 +72,7 @@ const EnhancedLogo: React.FC<EnhancedLogoProps> = ({ className = '' }) => {
           {/* Logo Image */}
           <div className="relative z-10 w-full h-full">
             <Image 
-              src="/logo.png"
+              src="/lumenosis-logo.png"
               alt="Lumenosis AI Logo"
               width={40}
               height={40}

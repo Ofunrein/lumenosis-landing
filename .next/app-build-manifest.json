@@ -34,7 +34,7 @@
       "static/chunks/691-32f8092447efbaea.js",
       "static/chunks/28-80d30be3e112dff1.js",
       "static/chunks/991-8dbea50e315e384b.js",
-      "static/chunks/app/page-9d9e9b7ac8e2cb8b.js"
+      "static/chunks/app/page-112ec63e8dac90df.js"
     ],
     "/lead-magnet/layout": [
       "static/chunks/webpack-572861d9160b3561.js",
@@ -62,13 +62,6 @@
       "static/chunks/994-2fbf9ff6942e20ac.js",
       "static/chunks/app/lead-magnet/page-6760442c6cec461b.js"
     ],
-    "/lead-magnet/workflow/page": [
-      "static/chunks/webpack-572861d9160b3561.js",
-      "static/chunks/fd9d1056-15fd34ba6cdcb612.js",
-      "static/chunks/472-342fc35de4b1ac24.js",
-      "static/chunks/main-app-0d34daaa0b4448a6.js",
-      "static/chunks/app/lead-magnet/workflow/page-59c8ffbd70eea86f.js"
-    ],
     "/lead-magnet/[slug]/page": [
       "static/chunks/webpack-572861d9160b3561.js",
       "static/chunks/fd9d1056-15fd34ba6cdcb612.js",
@@ -77,6 +70,13 @@
       "static/chunks/176-bc10adf4ab79dd55.js",
       "static/chunks/691-32f8092447efbaea.js",
       "static/chunks/app/lead-magnet/[slug]/page-736c097d360a999f.js"
+    ],
+    "/lead-magnet/workflow/page": [
+      "static/chunks/webpack-572861d9160b3561.js",
+      "static/chunks/fd9d1056-15fd34ba6cdcb612.js",
+      "static/chunks/472-342fc35de4b1ac24.js",
+      "static/chunks/main-app-0d34daaa0b4448a6.js",
+      "static/chunks/app/lead-magnet/workflow/page-59c8ffbd70eea86f.js"
     ]
   }
 }

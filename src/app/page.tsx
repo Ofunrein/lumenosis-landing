@@ -1926,9 +1926,9 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center">
             {/* Center Logo */}
-            <Link href="/" className="flex items-center justify-center mb-6 hover:opacity-80 transition-opacity">
-              <Image src="/logo.png" alt="Lumenosis AI - AI Automation Software for Real Estate and Home Services" width={48} height={48} className="h-12 w-auto" loading="lazy" />
-            </Link>
+            <div className="flex items-center justify-center mb-6">
+              <Image src="/lumenosis-logo.png" alt="Lumenosis AI - AI Automation Software for Real Estate and Home Services" width={48} height={48} className="h-12 w-auto" loading="lazy" />
+            </div>
             
             {/* Horizontal Nav */}
             <nav className="flex flex-wrap justify-center space-x-4 sm:space-x-8 mb-6">
