@@ -94,6 +94,27 @@ export default function CompleteAISolutionGuide() {
               </div>
             </a>
 
+            {/* ROI Calculator */}
+            <a href="/lead-magnet#revenue-calculator" className="group block">
+              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-yellow-500/50 transition-all duration-300 hover:shadow-xl shadow-lg">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <h2 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-yellow-600 transition-colors">
+                      ROI Calculator
+                    </h2>
+                    <p className="text-gray-600 text-lg">
+                      Calculate exactly how much revenue you're losing to slow follow-up and see your potential ROI with AI automation - most agents save $50K+ per year.
+                    </p>
+                  </div>
+                  <div className="ml-6 text-yellow-600 group-hover:translate-x-2 transition-transform">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </a>
+
             {/* DESIRE - See it working */}
             <a href="/#demos" className="group block">
               <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-green-500/50 transition-all duration-300 hover:shadow-xl shadow-lg">
