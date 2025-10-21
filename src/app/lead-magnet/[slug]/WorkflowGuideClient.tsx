@@ -815,7 +815,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
                 </Link>
                 <div className="hidden sm:block w-px h-6 bg-gray-300"></div>
                 <Link href="/" className="flex items-center space-x-1 sm:space-x-2">
-                  <Image src="/logo.png" alt="Lumenosis AI" width={24} height={24} className="h-6 w-6 sm:h-8 sm:w-8" />
+                  <Image src="/lumenosis-logo.png" alt="Lumenosis AI" width={32} height={32} className="h-8 w-8" />
                   <span className="text-base sm:text-lg font-bold text-gray-900 hidden xs:inline">Lumenosis AI</span>
                 </Link>
               </div>
@@ -3657,7 +3657,7 @@ Make sure the length of the text matches 47-50 seconds. Make sure not to overspe
                 </Link>
                 <div className="hidden sm:block w-px h-6 bg-gray-300"></div>
                 <Link href="/" className="flex items-center space-x-1 sm:space-x-2">
-                  <Image src="/logo.png" alt="Lumenosis AI" width={24} height={24} className="h-6 w-6 sm:h-8 sm:w-8" />
+                  <Image src="/lumenosis-logo.png" alt="Lumenosis AI" width={32} height={32} className="h-8 w-8" />
                   <span className="text-base sm:text-lg font-bold text-gray-900 hidden xs:inline">Lumenosis AI</span>
                 </Link>
               </div>
