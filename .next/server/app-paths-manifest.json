@@ -1,5 +1,10 @@
 {
+  "/_not-found": "app/_not-found.js",
+  "/api/workflow/[filename]/route": "app/api/workflow/[filename]/route.js",
+  "/blog/page": "app/blog/page.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
   "/page": "app/page.js",
-  "/lead-magnet/[slug]/page": "app/lead-magnet/[slug]/page.js",
-  "/lead-magnet/page": "app/lead-magnet/page.js"
+  "/lead-magnet/page": "app/lead-magnet/page.js",
+  "/lead-magnet/workflow/page": "app/lead-magnet/workflow/page.js",
+  "/lead-magnet/[slug]/page": "app/lead-magnet/[slug]/page.js"
 }

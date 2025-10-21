@@ -641,11 +641,9 @@ export default function HomePage() {
           {/* Desktop Navigation */}
           <div className="hidden lg:block">
             <div className="flex space-x-6">
-              <a href="#overview" className="text-white hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">Overview</a>
               <a href="#solutions" className="text-white hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">Solutions</a>
-              <a href="#demos" className="text-white hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">Demos</a>
               <a href="#about" className="text-white hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">About</a>
-              <Link href="/lead-magnet" className="text-indigo-400 hover:text-indigo-300 px-2 py-1 rounded-md text-sm font-medium transition-colors">Resources</Link>
+              <Link href="/lead-magnet" className="text-indigo-400 hover:text-indigo-300 px-2 py-1 rounded-md text-sm font-medium transition-colors">Blog</Link>
             </div>
           </div>
           
@@ -690,12 +688,10 @@ export default function HomePage() {
               {/* 3D gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none rounded-3xl" />
               <div className="flex flex-col space-y-2 relative z-10">
-                <a href="#overview" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Overview</a>
                 <a href="#solutions" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Solutions</a>
-                <a href="#demos" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Demos</a>
                 <a href="#about" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>About</a>
                 <a href="#contact" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Contact</a>
-                <Link href="/lead-magnet" className="text-indigo-400 hover:text-indigo-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Resources</Link>
+                <Link href="/lead-magnet" className="text-indigo-400 hover:text-indigo-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Blog</Link>
                 <div className="w-full mt-4">
                   <StarBorderOutline color="#8b5cf6" speed="3s" className="w-full block p-0">
                     <ReactBits3DButton 
