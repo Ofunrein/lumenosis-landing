@@ -9,8 +9,8 @@ import RevenueCalculator from '../../components/RevenueCalculator';
 const automationWorkflows = [
   {
     id: 'complete-ai-solution-guide',
-    title: 'Stop Losing $50,000+ in Commissions to Faster Agents',
-    subtitle: 'Your Complete AI Solution Guide',
+    title: 'Capture Leads in 60 Seconds',
+    subtitle: 'Stop Losing $50,000+ in Commissions to Faster Agents',
     description: 'Discover how AI agents respond to leads in 60 seconds, book 3X more showings, and help you close more deals 24/7. Explore solutions, watch live demos, see real results, and book your free strategy call.',
     href: '/lead-magnet/complete-ai-solution-guide',
     features: [
