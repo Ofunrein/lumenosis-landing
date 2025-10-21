@@ -192,7 +192,7 @@ export default function RealEstateAIDemo() {
           />
           
           <h2 className="text-2xl sm:text-3xl font-semibold text-white md:text-4xl mb-4">
-            Watch Leads <span className="gradient-text">Convert in 60 Seconds</span>
+            Capture Leads <span className="gradient-text">in 60 Seconds</span>
           </h2>
           
           <p className="text-lg sm:text-xl text-white max-w-3xl mx-auto">
