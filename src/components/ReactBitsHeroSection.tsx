@@ -189,7 +189,7 @@ export default function ReactBitsHeroSection({ className = '' }: ReactBitsHeroSe
             Never lose another lead to slow follow-up. AI qualifies leads, books appointments, and handles follow-ups 24/7 while you focus on closing.
           </p>
           <p className="mt-3 text-base sm:text-lg text-white/90 max-w-2xl mx-auto">
-            <span className="text-green-400 font-medium">Capture every lead in 60 seconds.</span>
+            <span className="text-green-400 font-medium">Capture leads in <span className="gradient-text">60 seconds</span>.</span>
             <span className="text-indigo-400 font-medium"> Win back 15+ hours weekly.</span>
           </p>
           
