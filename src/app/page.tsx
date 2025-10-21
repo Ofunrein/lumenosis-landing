@@ -13,23 +13,9 @@ const HomepageWidget = dynamic(() => import('../components/HomepageWidget'), {
   loading: () => null,
 })
 
-const RealEstateAIDemo = dynamic(() => import('../components/RealEstateAIDemo'), {
-  loading: () => (
-    <div className="min-h-[600px] flex items-center justify-center">
-      <div className="text-indigo-400">Loading demo...</div>
-    </div>
-  ),
-})
-
-const EnhancedTestimonialsCarousel = dynamic(() => import('../components/EnhancedTestimonialsCarousel'), {
-  loading: () => (
-    <div className="min-h-[400px] flex items-center justify-center">
-      <div className="text-indigo-400">Loading testimonials...</div>
-    </div>
-  ),
-})
-
 import ReactBitsHeroSection from '../components/ReactBitsHeroSection'
+import RealEstateAIDemo from '../components/RealEstateAIDemo'
+import EnhancedTestimonialsCarousel from '../components/EnhancedTestimonialsCarousel'
 import ReactBitsServiceCards from '../components/ReactBitsServiceCards'
 import ParticleBackground from '../components/ParticleBackground'
 import MagneticButton from '../components/MagneticButton'
