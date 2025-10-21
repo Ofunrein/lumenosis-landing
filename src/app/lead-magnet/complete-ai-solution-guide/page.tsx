@@ -75,7 +75,7 @@ export default function CompleteAISolutionGuide() {
           <div className="space-y-6">
             {/* INTEREST - AI Agents for Real Estate */}
             <a href="/#solutions" className="group block">
-              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-indigo-500/50 transition-all duration-300 hover:shadow-xl shadow-lg">
+              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-indigo-500 hover:bg-indigo-50/80 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/30 shadow-lg hover:scale-[1.02]">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <h2 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">
@@ -96,7 +96,7 @@ export default function CompleteAISolutionGuide() {
 
             {/* ROI Calculator */}
             <a href="/lead-magnet#revenue-calculator" className="group block">
-              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-yellow-500/50 transition-all duration-300 hover:shadow-xl shadow-lg">
+              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-yellow-500 hover:bg-yellow-50/80 transition-all duration-300 hover:shadow-2xl hover:shadow-yellow-500/30 shadow-lg hover:scale-[1.02]">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <h2 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-yellow-600 transition-colors">
@@ -117,7 +117,7 @@ export default function CompleteAISolutionGuide() {
 
             {/* DESIRE - See it working */}
             <a href="/#demos" className="group block">
-              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-green-500/50 transition-all duration-300 hover:shadow-xl shadow-lg">
+              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-green-500 hover:bg-green-50/80 transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/30 shadow-lg hover:scale-[1.02]">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <h2 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
@@ -138,7 +138,7 @@ export default function CompleteAISolutionGuide() {
 
             {/* Free Resources */}
             <a href="/lead-magnet" className="group block">
-              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-purple-500/50 transition-all duration-300 hover:shadow-xl shadow-lg">
+              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-purple-500 hover:bg-purple-50/80 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/30 shadow-lg hover:scale-[1.02]">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <h2 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
@@ -159,7 +159,7 @@ export default function CompleteAISolutionGuide() {
 
             {/* Case Studies */}
             <a href="/#cases" className="group block">
-              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl shadow-lg">
+              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-blue-500 hover:bg-blue-50/80 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/30 shadow-lg hover:scale-[1.02]">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <h2 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
@@ -180,7 +180,7 @@ export default function CompleteAISolutionGuide() {
 
             {/* ACTION - Book now */}
             <a href="/#contact" className="group block">
-              <div className="bg-orange-50/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-orange-500/50 transition-all duration-300 hover:shadow-xl shadow-lg relative overflow-hidden">
+              <div className="bg-orange-50/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-orange-500 hover:bg-orange-100/80 transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/30 shadow-lg hover:scale-[1.02] relative overflow-hidden">
                 <div className="flex items-center justify-between relative z-10">
                   <div className="flex-1">
                     <h2 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors flex items-center gap-2">
