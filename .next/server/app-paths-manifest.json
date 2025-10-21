@@ -1,11 +1,11 @@
 {
   "/_not-found": "app/_not-found.js",
   "/blog/page": "app/blog/page.js",
+  "/api/workflow/[filename]/route": "app/api/workflow/[filename]/route.js",
   "/sitemap.xml/route": "app/sitemap.xml/route.js",
   "/page": "app/page.js",
-  "/api/workflow/[filename]/route": "app/api/workflow/[filename]/route.js",
   "/lead-magnet/complete-ai-solution-guide/page": "app/lead-magnet/complete-ai-solution-guide/page.js",
-  "/lead-magnet/[slug]/page": "app/lead-magnet/[slug]/page.js",
+  "/lead-magnet/workflow/page": "app/lead-magnet/workflow/page.js",
   "/lead-magnet/page": "app/lead-magnet/page.js",
-  "/lead-magnet/workflow/page": "app/lead-magnet/workflow/page.js"
+  "/lead-magnet/[slug]/page": "app/lead-magnet/[slug]/page.js"
 }

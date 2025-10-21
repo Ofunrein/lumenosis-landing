@@ -9,17 +9,17 @@ import RevenueCalculator from '../../components/RevenueCalculator';
 const automationWorkflows = [
   {
     id: 'complete-ai-solution-guide',
-    title: 'Complete AI Agent Solution Guide',
-    subtitle: 'Your Roadmap to 3X More Deals with AI Automation',
-    description: 'Everything you need to transform your real estate business with AI. Explore AI solutions, watch live demos, see real results, and discover how to book 3X more showings while working less.',
+    title: 'Stop Losing $50,000+ in Commissions to Faster Agents',
+    subtitle: 'Your Complete AI Solution Guide',
+    description: 'Discover how AI agents respond to leads in 60 seconds, book 3X more showings, and help you close more deals 24/7. Explore solutions, watch live demos, see real results, and book your free strategy call.',
     href: '/lead-magnet/complete-ai-solution-guide',
     features: [
-      'Interactive AI solution explorer',
+      'AI solutions that respond in 60 seconds',
       'Live demo videos of AI in action',
-      'Real case studies & success stories',
-      'Step-by-step implementation guide',
-      'Free strategy call booking',
-      'Complete feature breakdown'
+      'Real case studies from agents like you',
+      'Complete roadmap to 3X more deals',
+      'Free 30-minute strategy call',
+      'Interactive solution explorer'
     ],
     complexity: 'Beginner',
     setupTime: '10 minutes',
