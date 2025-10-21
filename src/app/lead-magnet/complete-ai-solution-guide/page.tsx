@@ -95,7 +95,7 @@ export default function CompleteAISolutionGuide() {
             </a>
 
             {/* ROI Calculator */}
-            <a href="/lead-magnet/#revenue-calculator" className="group block">
+            <Link href="/lead-magnet#revenue-calculator" className="group block" scroll={true}>
               <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/30 hover:border-yellow-500 hover:bg-yellow-50/80 transition-all duration-300 hover:shadow-2xl hover:shadow-yellow-500/30 shadow-lg hover:scale-[1.02]">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
@@ -113,7 +113,7 @@ export default function CompleteAISolutionGuide() {
                   </div>
                 </div>
               </div>
-            </a>
+            </Link>
 
             {/* DESIRE - See it working */}
             <a href="/#demos" className="group block">
