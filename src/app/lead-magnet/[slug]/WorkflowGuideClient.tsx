@@ -219,34 +219,41 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
           }}
         />
         
-        {/* Header */}
-        <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-gray-100">
+        {/* Header - Consistent across all pages */}
+        <header className="border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
             <div className="flex items-center justify-between">
+              <Link href="/" className="flex items-center">
+                <span className="text-lg sm:text-xl font-semibold text-gray-900">Lumenosis AI</span>
+              </Link>
               <div className="flex items-center space-x-2 sm:space-x-4">
-                <Link href="/lead-magnet" className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-gray-900 transition-colors">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-sm hidden xs:inline">Back to Blog</span>
-                  <span className="text-sm xs:hidden">Back</span>
+                <Link
+                  href="/lead-magnet"
+                  className="relative px-4 py-2 rounded-full text-gray-700 font-medium text-xs sm:text-sm
+                           bg-white hover:bg-gray-50
+                           transition-all duration-300 ease-out
+                           shadow-sm hover:shadow-md
+                           border border-gray-200 overflow-hidden"
+                >
+                  <span className="relative z-10">Back to Blog</span>
                 </Link>
-                <div className="hidden sm:block w-px h-6 bg-gray-300"></div>
-                <Link href="/" className="flex items-center space-x-1 sm:space-x-2">
-                  <Image src="/logo.png" alt="Lumenosis AI" width={24} height={24} className="h-6 w-6 sm:h-8 sm:w-8" />
-                  <span className="text-base sm:text-lg font-bold text-gray-900 hidden xs:inline">Lumenosis AI</span>
+                <Link 
+                  href="https://calendly.com/lumenosis/30min" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={() => analytics.leadMagnet.consultationClicked('header')}
+                  className="relative px-4 py-2 rounded-full text-white font-medium text-xs sm:text-sm
+                           bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-700
+                           hover:from-purple-500 hover:via-indigo-500 hover:to-purple-600
+                           transition-all duration-300 ease-out
+                           shadow-[inset_0_2px_4px_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.1),0_4px_8px_rgba(0,0,0,0.3)]
+                           border border-white/10 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none rounded-full" />
+                  <span className="hidden sm:inline relative z-10">Schedule a Demo</span>
+                  <span className="sm:hidden relative z-10">Demo</span>
                 </Link>
               </div>
-              <Link 
-                href="https://calendly.com/lumenosis/30min" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                onClick={() => analytics.leadMagnet.consultationClicked('header')}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-2 sm:px-4 rounded-lg transition-colors text-xs sm:text-sm"
-              >
-                <span className="hidden sm:inline">Schedule Free Consultation</span>
-                <span className="sm:hidden">Free Call</span>
-              </Link>
             </div>
           </div>
         </header>
