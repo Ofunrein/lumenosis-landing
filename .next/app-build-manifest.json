@@ -50,17 +50,7 @@
       "static/chunks/main-app-0d34daaa0b4448a6.js",
       "static/chunks/176-bc10adf4ab79dd55.js",
       "static/chunks/691-32f8092447efbaea.js",
-      "static/chunks/app/lead-magnet/complete-ai-solution-guide/page-f21dea9f56357419.js"
-    ],
-    "/lead-magnet/page": [
-      "static/chunks/webpack-ac73e0a7ac5f329f.js",
-      "static/chunks/fd9d1056-15fd34ba6cdcb612.js",
-      "static/chunks/472-342fc35de4b1ac24.js",
-      "static/chunks/main-app-0d34daaa0b4448a6.js",
-      "static/chunks/176-bc10adf4ab79dd55.js",
-      "static/chunks/691-32f8092447efbaea.js",
-      "static/chunks/994-2fbf9ff6942e20ac.js",
-      "static/chunks/app/lead-magnet/page-35b9c99f87439999.js"
+      "static/chunks/app/lead-magnet/complete-ai-solution-guide/page-1ad1e7980168e2c6.js"
     ],
     "/lead-magnet/workflow/page": [
       "static/chunks/webpack-ac73e0a7ac5f329f.js",
@@ -76,7 +66,17 @@
       "static/chunks/main-app-0d34daaa0b4448a6.js",
       "static/chunks/176-bc10adf4ab79dd55.js",
       "static/chunks/691-32f8092447efbaea.js",
-      "static/chunks/app/lead-magnet/[slug]/page-abe8385c1bd8ff2f.js"
+      "static/chunks/app/lead-magnet/[slug]/page-1d5d60ce855e628d.js"
+    ],
+    "/lead-magnet/page": [
+      "static/chunks/webpack-ac73e0a7ac5f329f.js",
+      "static/chunks/fd9d1056-15fd34ba6cdcb612.js",
+      "static/chunks/472-342fc35de4b1ac24.js",
+      "static/chunks/main-app-0d34daaa0b4448a6.js",
+      "static/chunks/176-bc10adf4ab79dd55.js",
+      "static/chunks/691-32f8092447efbaea.js",
+      "static/chunks/994-2fbf9ff6942e20ac.js",
+      "static/chunks/app/lead-magnet/page-9f3ebb297af9d580.js"
     ]
   }
 }

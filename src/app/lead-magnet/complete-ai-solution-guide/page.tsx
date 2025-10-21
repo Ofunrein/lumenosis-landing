@@ -185,7 +185,7 @@ export default function CompleteAISolutionGuide() {
                 <div className="flex items-center justify-between relative z-10">
                   <div className="flex-1">
                     <h2 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors flex items-center gap-2">
-                      Book Your Free Strategy Call
+                      Book Your Strategy Call
                       <span className="inline-flex items-center px-3 py-1 text-xs font-semibold bg-orange-500/20 text-orange-700 rounded-full">
                         Limited Slots
                       </span>

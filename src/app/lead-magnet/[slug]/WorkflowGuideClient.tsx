@@ -642,7 +642,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
                           onClick={() => analytics.leadMagnet.consultationClicked('getting-started')}
                           className="inline-flex items-center justify-center border border-indigo-500 text-indigo-600 hover:bg-indigo-50 font-medium py-3 px-6 rounded-lg transition-colors"
                         >
-                          💬 Need Help? Book Free Consultation
+                          💬 Need Help? Book Consultation
                         </Link>
                       </div>
 
@@ -1375,7 +1375,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
                       onClick={() => analytics.leadMagnet.consultationClicked('footer')}
                       className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
                     >
-                      Schedule Free 30-Minute Setup Call
+                      Schedule 30-Minute Setup Call
                       <svg className="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                       </svg>
@@ -2116,7 +2116,7 @@ export default function WorkflowGuideClient({ slug }: WorkflowGuideClientProps) 
                           onClick={() => analytics.leadMagnet.consultationClicked('troubleshooting')}
                           className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
                         >
-                          Schedule Free 30-Minute Setup Call
+                          Schedule 30-Minute Setup Call
                           <svg className="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                           </svg>
@@ -3532,7 +3532,7 @@ Make sure the length of the text matches 47-50 seconds. Make sure not to overspe
                     onClick={() => analytics.leadMagnet.consultationClicked('footer')}
                     className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
                   >
-                    Schedule Free 30-Minute Setup Call
+                          Schedule 30-Minute Setup Call
                     <svg className="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
@@ -4262,7 +4262,7 @@ Make sure the length of the text matches 47-50 seconds. Make sure not to overspe
                               onClick={() => analytics.leadMagnet.consultationClicked('footer')}
                               className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
                             >
-                              Schedule Free 30-Minute Strategy Call
+                              Schedule 30-Minute Strategy Call
                               <svg className="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                               </svg>

@@ -11,14 +11,14 @@ const automationWorkflows = [
     id: 'complete-ai-solution-guide',
     title: 'Capture Leads in 60 Seconds',
     subtitle: 'Stop Losing $50,000+ in Commissions to Faster Agents',
-    description: 'Discover how AI agents respond to leads in 60 seconds, book 3X more showings, and help you close more deals 24/7. Explore solutions, watch live demos, see real results, and book your free strategy call.',
+    description: 'Discover how AI agents respond to leads in 60 seconds, book 3X more showings, and help you close more deals 24/7. Explore solutions, watch live demos, see real results, and book your strategy call.',
     href: '/lead-magnet/complete-ai-solution-guide',
     features: [
       'AI solutions that respond in 60 seconds',
       'Live demo videos of AI in action',
       'Real case studies from agents like you',
       'Complete roadmap to 3X more deals',
-      'Free 30-minute strategy call',
+      '30-minute strategy call',
       'Interactive solution explorer'
     ],
     complexity: 'Beginner',
@@ -689,7 +689,7 @@ export default function LeadMagnetIndex() {
                           rel="noopener noreferrer"
                           className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold py-4 px-6 rounded-xl text-center hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-[1.02] shadow-lg"
                         >
-                          💡 Book Free Revenue Strategy Call
+                          💡 Book Revenue Strategy Call
                         </Link>
                         <Link 
                           href="/"
