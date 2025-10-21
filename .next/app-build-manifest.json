@@ -34,7 +34,21 @@
       "static/chunks/691-32f8092447efbaea.js",
       "static/chunks/28-80d30be3e112dff1.js",
       "static/chunks/991-8dbea50e315e384b.js",
-      "static/chunks/app/page-e7313c5ce2991484.js"
+      "static/chunks/app/page-7095afda5dae24b3.js"
+    ],
+    "/lead-magnet/workflow/page": [
+      "static/chunks/webpack-7d05999ba25fb676.js",
+      "static/chunks/fd9d1056-15fd34ba6cdcb612.js",
+      "static/chunks/472-342fc35de4b1ac24.js",
+      "static/chunks/main-app-0d34daaa0b4448a6.js",
+      "static/chunks/app/lead-magnet/workflow/page-59c8ffbd70eea86f.js"
+    ],
+    "/lead-magnet/layout": [
+      "static/chunks/webpack-7d05999ba25fb676.js",
+      "static/chunks/fd9d1056-15fd34ba6cdcb612.js",
+      "static/chunks/472-342fc35de4b1ac24.js",
+      "static/chunks/main-app-0d34daaa0b4448a6.js",
+      "static/chunks/app/lead-magnet/layout-0dd7d1727c8f9b83.js"
     ],
     "/lead-magnet/page": [
       "static/chunks/webpack-7d05999ba25fb676.js",
@@ -45,20 +59,6 @@
       "static/chunks/691-32f8092447efbaea.js",
       "static/chunks/994-2fbf9ff6942e20ac.js",
       "static/chunks/app/lead-magnet/page-f0df8f75902a255a.js"
-    ],
-    "/lead-magnet/layout": [
-      "static/chunks/webpack-7d05999ba25fb676.js",
-      "static/chunks/fd9d1056-15fd34ba6cdcb612.js",
-      "static/chunks/472-342fc35de4b1ac24.js",
-      "static/chunks/main-app-0d34daaa0b4448a6.js",
-      "static/chunks/app/lead-magnet/layout-0dd7d1727c8f9b83.js"
-    ],
-    "/lead-magnet/workflow/page": [
-      "static/chunks/webpack-7d05999ba25fb676.js",
-      "static/chunks/fd9d1056-15fd34ba6cdcb612.js",
-      "static/chunks/472-342fc35de4b1ac24.js",
-      "static/chunks/main-app-0d34daaa0b4448a6.js",
-      "static/chunks/app/lead-magnet/workflow/page-59c8ffbd70eea86f.js"
     ],
     "/lead-magnet/[slug]/page": [
       "static/chunks/webpack-7d05999ba25fb676.js",

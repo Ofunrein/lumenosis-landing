@@ -642,7 +642,9 @@ export default function HomePage() {
           <div className="hidden lg:block">
             <div className="flex space-x-6">
               <a href="#solutions" className="text-white hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">Solutions</a>
+              <a href="#cases" className="text-white hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">Cases</a>
               <a href="#about" className="text-white hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">About</a>
+              <a href="#contact" className="text-white hover:text-white px-2 py-1 rounded-md text-sm font-medium transition-colors">Contact</a>
               <Link href="/lead-magnet" className="text-indigo-400 hover:text-indigo-300 px-2 py-1 rounded-md text-sm font-medium transition-colors">Blog</Link>
             </div>
           </div>
@@ -689,6 +691,7 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none rounded-3xl" />
               <div className="flex flex-col space-y-2 relative z-10">
                 <a href="#solutions" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Solutions</a>
+                <a href="#cases" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Cases</a>
                 <a href="#about" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>About</a>
                 <a href="#contact" className="text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Contact</a>
                 <Link href="/lead-magnet" className="text-indigo-400 hover:text-indigo-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" onClick={toggleMobileMenu}>Blog</Link>
