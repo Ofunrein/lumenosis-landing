@@ -6,36 +6,14 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { analytics, useScrollTracking, useTimeTracking } from '../lib/analytics'
+import RealEstateAIDemo from '../components/RealEstateAIDemo'
+import ReactBitsServiceCards from '../components/ReactBitsServiceCards'
+import EnhancedTestimonialsCarousel from '../components/EnhancedTestimonialsCarousel'
 
 // Dynamically import heavy components for better performance
 const HomepageWidget = dynamic(() => import('../components/HomepageWidget'), {
   ssr: false,
   loading: () => null,
-})
-
-const RealEstateAIDemo = dynamic(() => import('../components/RealEstateAIDemo'), {
-  loading: () => (
-    <div className="min-h-[600px] flex items-center justify-center">
-      <div className="text-indigo-400">Loading demo...</div>
-    </div>
-  ),
-})
-
-const EnhancedTestimonialsCarousel = dynamic(() => import('../components/EnhancedTestimonialsCarousel'), {
-  loading: () => (
-    <div className="min-h-[400px] flex items-center justify-center">
-      <div className="text-indigo-400">Loading testimonials...</div>
-    </div>
-  ),
-})
-
-// Dynamically import ReactBitsServiceCards (uses Framer Motion)
-const ReactBitsServiceCards = dynamic(() => import('../components/ReactBitsServiceCards'), {
-  loading: () => (
-    <div className="min-h-[300px] flex items-center justify-center">
-      <div className="text-indigo-400">Loading services...</div>
-    </div>
-  ),
 })
 
 import ReactBitsHeroSection from '../components/ReactBitsHeroSection'
